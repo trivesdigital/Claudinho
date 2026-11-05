@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400;1,6..96,500&family=Cormorant+Garamond:wght@300;400&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,500&display=swap">
+<style>
+html,body{margin:0;background:#000}
+.c{position:relative;width:1080px;height:1350px;overflow:hidden}
+.c>img{position:absolute;inset:0;width:100%;height:100%}
+.t{position:absolute;inset:0;color:#fff}
+.t>*{position:absolute;white-space:nowrap}
+/* A — sans pesada + serifa itálica (ref 1) */
+.a .l1{left:84px;top:96px;font:500 36px/1 Poppins;letter-spacing:-.01em}
+.a .l2{left:80px;top:128px;font:700 150px/1 Poppins;letter-spacing:-.055em}
+.a .l3{right:80px;top:200px;font:italic 400 250px/1 "Bodoni Moda";letter-spacing:-.03em}
+.a .l4{right:84px;top:160px;font:500 26px/1.15 Poppins;letter-spacing:.18em;text-transform:uppercase;text-align:right}
+/* B — caixa alta condensada + selo (ref 2) */
+.b .l1{left:0;right:0;top:92px;text-align:center;font:500 24px/1 Poppins;letter-spacing:.32em;text-transform:uppercase;padding-left:.32em}
+.b .l2{left:80px;right:80px;top:120px;text-align:center;font:400 210px/.86 Anton;letter-spacing:-.005em;text-transform:uppercase}
+.b .l3{left:80px;right:80px;top:300px;text-align:center;font:400 210px/.86 Anton;letter-spacing:-.005em;text-transform:uppercase}
+.b .l4{left:50%;top:282px;transform:translateX(-50%) rotate(-3deg);font:italic 500 40px/1 Poppins;letter-spacing:-.01em;border:2px solid #fff;padding:6px 22px 8px;border-radius:99px;backdrop-filter:blur(6px);background:rgba(255,255,255,.12)}
+/* C — serifa gigante fina + frases pequenas encaixadas (ref 3) */
+.cc .l1{left:84px;top:104px;font:300 40px/1 Poppins;letter-spacing:-.01em}
+.cc .l1 b{font-weight:600}
+.cc .l2{left:66px;top:118px;font:300 330px/1 "Cormorant Garamond";letter-spacing:-.045em}
+.cc .l3{left:84px;top:410px;font:500 38px/1 Poppins;letter-spacing:-.015em}
+.cc .l4{right:84px;top:396px;font:300 30px/1.1 Poppins;text-align:right}
+.cc .l4 b{font-weight:600}
+</style></head><body>
+<div class="c" id="c">
+  <img src="foto.jpg">
+  <div class="t" id="t"></div>
+  <img src="frente.png">
+</div>
+<script>
+const v=new URLSearchParams(location.search).get('v')||'a';
+const T={
+ a:`<div class="l1">Como eu construiria uma</div><div class="l2">Marca</div><div class="l4">do<br>zero</div><div class="l3">Pessoal</div>`,
+ b:`<div class="l1">Como eu construiria uma</div><div class="l2">Marca</div><div class="l3">Pessoal</div><div class="l4">do zero</div>`,
+ cc:`<div class="l1">Como eu construiria uma <b>marca</b></div><div class="l2">pessoal</div><div class="l3">do zero</div><div class="l4">sem depender de<br><b>orçamento grande</b></div>`
+};
+const t=document.getElementById('t'); t.className='t '+v; t.innerHTML=T[v];
+function fit(sel,target,prop){const e=document.querySelector(sel);if(!e)return;const r=document.createRange();r.selectNodeContents(e);
+ const w=r.getBoundingClientRect().width;const fs=parseFloat(getComputedStyle(e).fontSize);e.style.fontSize=(fs*target/w)+'px'}
+document.fonts.ready.then(()=>{
+ if(v==='a'){fit('.l3',760)}
+ if(v==='b'){fit('.l2',700);fit('.l3',920)}
+ if(v==='cc'){fit('.l2',930)}
+ document.body.dataset.ok=1});
+</script></body></html>

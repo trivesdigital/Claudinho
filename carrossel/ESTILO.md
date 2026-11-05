@@ -51,12 +51,12 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 > Escreva um carrossel no estilo Zanellato sobre **[TEMA]**, em JSON no formato de `exemplos/marca-pessoal.json`.
 > Slide 1 tipo "capa" (pre / linha1 / linha2 gigante / pos). De 4 a 6 slides "conteudo" numerados 01, 02…, cada um com título imperativo curto, subtítulo com a tensão e corpo de até 330 caracteres (pode usar `itens`). Último slide tipo "cta" com kicker "O resumo", título em 2 linhas de contraste, texto de 1 frase e chamada "**Salva esse post e segue** {handle}". Português do Brasil, frases curtas, sem emoji.
 
-## Capa (recorte, minimalista)
-Perfil chique, público AAA: menos é mais. Composição em camadas (`carrosseis/<nome>/capa/capa.html`):
-foto → texto → recorte da foto (tudo que não é céu), então o texto fica **atrás** da bandeira/mastro/morro.
-- Chamada em caixa alta pequena (Poppins 400, 19 px, espaçamento .46em)
-- Título em Poppins 200 + palavra-chave em Poppins 300 itálico, centralizado, ~800 px de largura
-- Complemento ("— DO ZERO") pequeno, alinhado ao fim do título, em área limpa
-- Tudo branco. Sem selos, sem neon, sem pesos pesados
-- Margem de segurança de 80 px em todos os lados
+## Capa (hook em destaque + recorte da pessoa)
+Objetivo: parar o scroll sendo elegante. O hook é o herói.
+- Camadas (`carrosseis/<nome>/capa/capa.html`): foto → título → **recorte só da pessoa** (`pessoa.png`) → selo.
+  A pessoa (boné, mão) fica **na frente** da palavra gigante; árvores/fundo ficam atrás.
+- Hierarquia por tamanho: chamada pequena espaçada (Poppins 500, caixa alta) → palavra média (Anton) → **palavra gigante** (Anton, largura total entre margens) com leve sobreposição.
+- Selo em itálico (Poppins 500) branco sólido com texto escuro, levemente inclinado, encaixado entre as linhas.
+- Tudo branco/neutro, sem neon. Margem de segurança de 80 px.
+- Referências de tipografia: contraste de peso/estilo, escala extrema, palavras pequenas encaixadas nos vãos.
 O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.
