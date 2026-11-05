@@ -13,9 +13,9 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 ## Visual
 | Elemento | Especificação |
 |---|---|
-| Fundo | Cinza claro `#F2F2F2`, grade fina de 120 px — tudo monocromático |
-| Texto | Preto `#111` · corpo `#222` · secundário `#7A7A7A` |
-| Destaque | Sem cor: preto. O @ do CTA vai sublinhado. Fotos em preto e branco |
+| Fundo | Verde Trives escuro `#10241D`, grade fina de 120 px |
+| Texto | Branco `#FFF` · corpo `#E3ECE8` · secundário `#8FA59C` |
+| Destaque | Verde Trives `#00FF80` (chamada pequena, pontos da lista, @ do CTA). Fotos em preto e branco |
 | Topo | Nada (sem logo e sem nome) |
 | Rodapé | Nenhum (opcional por slide, só texto) |
 
@@ -24,8 +24,8 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 |---|---|
 | Títulos, subtítulos, corpo | **Poppins** (700 / 400) |
 | Título da capa | **Archivo** 800, entrelinha bem apertada |
-| Título do resumo/CTA e símbolo | **Source Serif 4** 700/900 |
-| Chamada pequena e marca | **IBM Plex Mono**, caixa alta, espaçamento largo |
+| Título do resumo/CTA | **Poppins** 700 |
+| Chamada pequena | **Poppins** 600, caixa alta, espaçamento largo |
 
 ## Tipos de slide
 - **capa**: `foto` (obrigatória), `recorte` (PNG da pessoa sem fundo, mesmo enquadramento da foto, para a pessoa ficar **na frente** do título como na referência), `pre` (texto pequeno), `linha1`, `linha2` (gigante), `pos`, `posicao` (topo/meio/base).
