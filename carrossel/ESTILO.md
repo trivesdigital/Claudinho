@@ -13,9 +13,9 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 ## Visual
 | Elemento | Especificação |
 |---|---|
-| Fundo | Papel `#F3F1EE`, grade fina de 120 px, brilho rosado no canto superior esquerdo |
-| Texto | Tinta `#1B1A19` · corpo `#2A2826` · secundário `#7A736C` |
-| Destaque | Vermelho `#9A2B22` (chamada pequena, pontos da lista, @ do CTA) |
+| Fundo | Cinza claro `#F2F2F2`, grade fina de 120 px — tudo monocromático |
+| Texto | Preto `#111` · corpo `#222` · secundário `#7A7A7A` |
+| Destaque | Sem cor: preto. O @ do CTA vai sublinhado. Fotos em preto e branco |
 | Topo | Nada (sem logo e sem nome) |
 | Rodapé | Nenhum (opcional por slide, só texto) |
 
