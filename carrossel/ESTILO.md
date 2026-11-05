@@ -13,7 +13,7 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 ## Visual
 | Elemento | Especificação |
 |---|---|
-| Fundo | Branco `#FFF` na maioria; 1 ou 2 slides em verde Trives escuro `#10241D` (campo `tema: "escuro"` no slide). Fundo nunca colorido além disso |
+| Fundo | Branco `#FFF` com grade fina na maioria; 1 ou 2 slides em verde Trives escuro `#10241D` com pontos finos + luz verde no canto (sem grade) |
 | Texto | Preto `#111` no branco · branco no verde |
 | Destaque | Verde `#0E6B47` no branco · verde Trives `#00FF80` no verde escuro. Fotos sempre coloridas |
 | Topo | Nada (sem logo e sem nome) |

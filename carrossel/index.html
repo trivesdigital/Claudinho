@@ -80,6 +80,8 @@ body.render .frame .num{display:none}
 .paper::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(900px 700px at 0% 0%,var(--glow),transparent 70%)}
 .paper>*{position:relative;z-index:2}
+.t-escuro.paper::before{background-image:radial-gradient(rgba(255,255,255,.075) 1.6px,transparent 1.8px);background-size:30px 30px;background-position:0 0}
+.t-escuro.paper::after{background:radial-gradient(1100px 900px at 100% 0%,rgba(0,255,128,.10),transparent 65%),radial-gradient(900px 700px at 0% 100%,rgba(0,0,0,.28),transparent 70%)}
 /* cabeçalho */
 .hd{position:absolute;left:92px;right:92px;top:58px;display:flex;justify-content:space-between;align-items:center;z-index:5}
 .mark{font:900 68px/1 "Source Serif 4",serif;letter-spacing:-.04em;color:var(--ink);display:flex;align-items:center}
