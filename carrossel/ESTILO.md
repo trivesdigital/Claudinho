@@ -17,7 +17,7 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 | Texto | Tinta `#1B1A19` · corpo `#2A2826` · secundário `#7A736C` |
 | Destaque | Vermelho `#9A2B22` (chamada pequena, pontos da lista, @ do CTA) |
 | Topo | Símbolo "Z" em serifa (esq.) · `Z·A·N·E·L·L·A·T·O` em mono espaçado (dir.) |
-| Rodapé | Ícones salvar + enviar · "Salvar e arrastar →" (no CTA: "Comece agora →") |
+| Rodapé | Nenhum (opcional por slide, só texto) |
 
 ## Tipografia
 | Uso | Fonte |
@@ -29,7 +29,7 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 
 ## Tipos de slide
 - **capa**: `foto` (obrigatória), `recorte` (PNG da pessoa sem fundo, mesmo enquadramento da foto, para a pessoa ficar **na frente** do título como na referência), `pre` (texto pequeno), `linha1`, `linha2` (gigante), `pos`, `posicao` (topo/meio/base).
-- **conteudo**: `numero` ("03"), `titulo`, `subtitulo`, `imagem` (opcional), `texto`, `itens`, `texto_final`.
+- **conteudo**: `numero` ("03"), `titulo`, `subtitulo`, `imagem` + `imagem2` (1 imagem única ou 2 lado a lado), `posicao_imagem`, `altura`, `legenda`, `texto`, `itens`, `texto_final`.
 - **foto**: foto cheia com `kicker`, `titulo` e `texto` por cima.
 - **cta**: `kicker` ("O resumo"), `titulo`, `texto`, `chamada` (use `{handle}`), `foto` redonda opcional.
 

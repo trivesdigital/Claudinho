@@ -12,7 +12,7 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const MIME = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
-const IMG_KEYS = ["foto", "recorte", "imagem", "logo"];
+const IMG_KEYS = ["foto", "recorte", "imagem", "imagem2", "logo"];
 
 function inlineImages(obj, baseDir) {
   for (const k of IMG_KEYS) {
