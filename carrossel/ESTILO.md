@@ -15,7 +15,7 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 |---|---|
 | Fundo | Branco `#FFF` com grade fina na maioria; 1 ou 2 slides em verde Trives escuro `#10241D` flat com granulado leve (vintage), sem grade e sem gradiente |
 | Texto | Preto `#111` no branco · branco no verde |
-| Destaque | Verde `#0E6B47` no branco · verde Trives `#00FF80` no verde escuro. Fotos sempre coloridas |
+| Destaque | Discreto: verde escuro `#14291F` no branco · champanhe `#D9CFB8` no verde. Sem neon. Fotos sempre coloridas |
 | Topo | Nada (sem logo e sem nome) |
 | Rodapé | Nenhum (opcional por slide, só texto) |
 
@@ -51,9 +51,12 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 > Escreva um carrossel no estilo Zanellato sobre **[TEMA]**, em JSON no formato de `exemplos/marca-pessoal.json`.
 > Slide 1 tipo "capa" (pre / linha1 / linha2 gigante / pos). De 4 a 6 slides "conteudo" numerados 01, 02…, cada um com título imperativo curto, subtítulo com a tensão e corpo de até 330 caracteres (pode usar `itens`). Último slide tipo "cta" com kicker "O resumo", título em 2 linhas de contraste, texto de 1 frase e chamada "**Salva esse post e segue** {handle}". Português do Brasil, frases curtas, sem emoji.
 
-## Capa criativa (recorte)
-Quando a foto tem céu limpo, a capa é composta em camadas (`carrosseis/<nome>/capa/capa.html`):
-foto → texto → recorte da foto (tudo que não é céu). Assim o texto fica **atrás** da bandeira, do morro e da pessoa.
-Tipografia abstrata: linha fina em itálico (Poppins 300), palavra-chave gigante em Archivo 900 ajustada à largura,
-palavra em Poppins 200 itálico sobreposta, e selo em verde Trives `#00FF80`. Margem de segurança de 80 px em todos os lados.
+## Capa (recorte, minimalista)
+Perfil chique, público AAA: menos é mais. Composição em camadas (`carrosseis/<nome>/capa/capa.html`):
+foto → texto → recorte da foto (tudo que não é céu), então o texto fica **atrás** da bandeira/mastro/morro.
+- Chamada em caixa alta pequena (Poppins 400, 19 px, espaçamento .46em)
+- Título em Poppins 200 + palavra-chave em Poppins 300 itálico, centralizado, ~800 px de largura
+- Complemento ("— DO ZERO") pequeno, alinhado ao fim do título, em área limpa
+- Tudo branco. Sem selos, sem neon, sem pesos pesados
+- Margem de segurança de 80 px em todos os lados
 O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.
