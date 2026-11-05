@@ -1,13 +1,86 @@
 {
-  "marca": {"mark": "", "brand": "", "handle": "@zanellato", "tema": "escuro", "cor": "", "logo": ""},
+  "marca": {
+    "mark": "",
+    "brand": "",
+    "handle": "@zanellato",
+    "tema": "claro",
+    "cor": "",
+    "logo": ""
+  },
   "slides": [
-    {"tipo": "capa", "foto": "fotos/capa.jpg", "foco": "50% 20%", "pre": "Como eu\nconstruiria uma", "linha1": "Marca", "linha2": "Pessoal", "pos": "do zero", "posicao": "base", "escurecer": 18, "cor_texto": "claro"},
-    {"tipo": "conteudo", "numero": "01", "titulo": "Defina sua mensagem", "subtitulo": "Antes de postar, saiba o que quer que lembrem de você.", "texto": "Marca pessoal não começa no conteúdo.\n\nComeça na clareza de **quem você ajuda** e **como você ajuda**.\n\nSe você não sabe explicar em uma frase, ninguém vai lembrar."},
-    {"tipo": "conteudo", "numero": "02", "titulo": "Monte um sistema simples", "subtitulo": "Você não precisa de estratégia complexa. Precisa de um motor que se repete.", "texto": "Seu sistema precisa responder três perguntas:", "itens": "1. Sobre o que você fala? (3 a 5 temas centrais)\n2. Como você expressa? (vídeo falando, cenas do dia, texto na tela)\n3. Com que frequência aparece? (um ritmo que você não vai quebrar)", "texto_final": "Quando você segue um sistema, crescer vira conta, não motivação."},
-    {"tipo": "conteudo", "numero": "03", "titulo": "Documente, não performe", "subtitulo": "A maioria trava na câmera porque acha que precisa \"impressionar\".", "imagem": "fotos/cena.jpg", "altura": 400, "foco": "50% 40%", "texto": "Não precisa. As pessoas se conectam pelo processo, não pela perfeição.\n\nQuando o conteúdo parece real, confiam em você mais rápido."},
-    {"tipo": "conteudo", "numero": "04", "titulo": "Foque em valor, não em viral", "subtitulo": "Viral passa. Valor acumula.", "texto": "Você entrega valor de três formas:", "itens": "Educação | ensinar algo prático\nPerspectiva | mudar como a pessoa pensa\nInspiração | mostrar o que é possível na prática", "texto_final": "Se cada post ajuda alguém a avançar, sua audiência se constrói sozinha.\nViral é acidente. Valor é intenção."},
-    {"tipo": "conteudo", "numero": "05", "titulo": "Mostre os bastidores", "subtitulo": "O que acontece fora da câmera também é conteúdo.", "imagem": "fotos/rosto.jpg", "imagem2": "fotos/celular.jpg", "altura": 460, "legenda": "Pensar · Executar", "texto": "Reuniões, decisões, rotina. **Quem vê o processo confia no resultado.**"},
-    {"tipo": "conteudo", "numero": "06", "titulo": "Construa em público", "subtitulo": "Autoridade não se anuncia. Se testemunha.", "texto": "O jeito mais rápido de virar referência é mostrar o caminho, não só o resultado.\n\nCompartilhe o que está aprendendo. Mostre o que está testando.\n\nQuando as pessoas te veem crescer, elas crescem junto. É assim que marca vira comunidade."},
-    {"tipo": "cta", "kicker": "O resumo", "titulo": "Menos dopamina.\nMais cinema.", "texto": "Marca não se constrói no viral. Se constrói na intenção, repetida todo dia.", "chamada": "**Salva esse post e segue** {handle}"}
+    {
+      "tipo": "capa",
+      "foto": "fotos/capa.jpg",
+      "foco": "50% 20%",
+      "pre": "Como eu\nconstruiria uma",
+      "linha1": "Marca",
+      "linha2": "Pessoal",
+      "pos": "do zero",
+      "posicao": "base",
+      "escurecer": 18,
+      "cor_texto": "claro"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "01",
+      "titulo": "Defina sua mensagem",
+      "subtitulo": "Antes de postar, saiba o que quer que lembrem de você.",
+      "texto": "Marca pessoal não começa no conteúdo.\n\nComeça na clareza de **quem você ajuda** e **como você ajuda**.\n\nSe você não sabe explicar em uma frase, ninguém vai lembrar."
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "02",
+      "titulo": "Monte um sistema simples",
+      "subtitulo": "Você não precisa de estratégia complexa. Precisa de um motor que se repete.",
+      "texto": "Seu sistema precisa responder três perguntas:",
+      "itens": "1. Sobre o que você fala? (3 a 5 temas centrais)\n2. Como você expressa? (vídeo falando, cenas do dia, texto na tela)\n3. Com que frequência aparece? (um ritmo que você não vai quebrar)",
+      "texto_final": "Quando você segue um sistema, crescer vira conta, não motivação."
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "03",
+      "titulo": "Documente, não performe",
+      "subtitulo": "A maioria trava na câmera porque acha que precisa \"impressionar\".",
+      "imagem": "fotos/cena.jpg",
+      "altura": 400,
+      "foco": "50% 40%",
+      "texto": "Não precisa. As pessoas se conectam pelo processo, não pela perfeição.\n\nQuando o conteúdo parece real, confiam em você mais rápido."
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "04",
+      "titulo": "Foque em valor, não em viral",
+      "subtitulo": "Viral passa. Valor acumula.",
+      "texto": "Você entrega valor de três formas:",
+      "itens": "Educação | ensinar algo prático\nPerspectiva | mudar como a pessoa pensa\nInspiração | mostrar o que é possível na prática",
+      "texto_final": "Se cada post ajuda alguém a avançar, sua audiência se constrói sozinha.\nViral é acidente. Valor é intenção.",
+      "tema": "escuro"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "05",
+      "titulo": "Mostre os bastidores",
+      "subtitulo": "O que acontece fora da câmera também é conteúdo.",
+      "imagem": "fotos/rosto.jpg",
+      "imagem2": "fotos/celular.jpg",
+      "altura": 460,
+      "legenda": "Pensar · Executar",
+      "texto": "Reuniões, decisões, rotina. **Quem vê o processo confia no resultado.**"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "06",
+      "titulo": "Construa em público",
+      "subtitulo": "Autoridade não se anuncia. Se testemunha.",
+      "texto": "O jeito mais rápido de virar referência é mostrar o caminho, não só o resultado.\n\nCompartilhe o que está aprendendo. Mostre o que está testando.\n\nQuando as pessoas te veem crescer, elas crescem junto. É assim que marca vira comunidade."
+    },
+    {
+      "tipo": "cta",
+      "kicker": "O resumo",
+      "titulo": "Menos dopamina.\nMais cinema.",
+      "texto": "Marca não se constrói no viral. Se constrói na intenção, repetida todo dia.",
+      "chamada": "**Salva esse post e segue** {handle}",
+      "tema": "escuro"
+    }
   ]
 }

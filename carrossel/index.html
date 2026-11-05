@@ -63,16 +63,14 @@ body.render .frame .num{display:none}
    SLIDE — 1080 x 1350 (4:5)
    ============================================================ */
 .slide{
-  --bg:#F2F2F2; --ink:#111111; --body:#222222; --muted:#7A7A7A; --grid:rgba(0,0,0,.05);
-  --glow:rgba(255,255,255,0); --ac:#1B3229;
+  --bg:#FFFFFF; --ink:#111111; --body:#222222; --muted:#7A7A7A; --grid:rgba(0,0,0,.045);
+  --glow:rgba(255,255,255,0); --ac:#0E6B47;
   position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--bg);color:var(--ink);
   font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased;
 }
 .slide.t-escuro{--bg:#10241D;--ink:#FFFFFF;--body:#E3ECE8;--muted:#8FA59C;--grid:rgba(255,255,255,.045);--glow:rgba(0,0,0,0);--ac:#00FF80}
 .slide b,.slide strong{font-weight:700;color:var(--ink)}
 .slide em{font-style:normal;color:var(--ac)}
-.slide img{filter:grayscale(1) contrast(1.05)}
-.slide.cor img{filter:none}
 .cta em{font-weight:700}
 .slide i.sf{font-family:"Source Serif 4",serif;font-style:italic;font-weight:600;letter-spacing:-.01em}
 /* papel: grade + brilho */
@@ -106,7 +104,7 @@ body.render .frame .num{display:none}
 .lst .no{font-weight:700;color:var(--ink);margin-right:18px}
 .pics{display:flex;gap:20px;margin-top:44px}
 .pics.first{margin-top:0;margin-bottom:48px}
-.pic{flex:1;min-width:0;border-radius:22px;overflow:hidden;background:#d9d9d9}
+.pic{flex:1;min-width:0;border-radius:22px;overflow:hidden;background:#e6e6e6}
 .pic img{width:100%;height:100%;object-fit:cover;display:block}
 .cap{margin-top:14px;font:500 19px Poppins,sans-serif;letter-spacing:.02em;color:var(--muted)}
 .pics.first+.cap{margin:-34px 0 48px}
@@ -205,7 +203,7 @@ body.render .frame .num{display:none}
    ESTADO + EXEMPLO
    ============================================================ */
 const EXEMPLO = {
-  marca:{mark:"", brand:"", handle:"@zanellato", tema:"escuro", cor:"", logo:""},
+  marca:{mark:"", brand:"", handle:"@zanellato", tema:"claro", cor:"", logo:""},
   slides:[
     {tipo:"capa", foto:"", recorte:"", foco:"50% 30%", pre:"Como eu\nconstruiria uma", linha1:"Marca", linha2:"Pessoal", pos:"do zero", posicao:"topo", escurecer:10, cor_texto:"claro"},
     {tipo:"conteudo", numero:"01", titulo:"Defina sua mensagem", subtitulo:"Antes de postar, saiba o que quer que lembrem de você.", texto:"Marca pessoal não começa no conteúdo.\n\nComeça na clareza de **quem você ajuda** e **como você ajuda**."},
@@ -243,6 +241,7 @@ const TIPOS = {
     ["escurecer","num","Escurecer foto (0–80%)"],
   ]},
   conteudo:{nome:"Conteúdo", campos:[
+    ["tema","sel","Fundo",["","claro","escuro"]],
     ["numero","text","Número (ex.: 03)"],
     ["titulo","area","Título"],
     ["subtitulo","area","Subtítulo (negrito pequeno)"],
@@ -266,6 +265,7 @@ const TIPOS = {
     ["rodape","text","Rodapé (opcional)"],
   ]},
   cta:{nome:"CTA", campos:[
+    ["tema","sel","Fundo",["","claro","escuro"]],
     ["foto","img","Foto redonda (opcional)"],
     ["kicker","text","Chamada pequena (ex.: O resumo)"],
     ["titulo","area","Título (serifa)"],
@@ -305,7 +305,7 @@ const img = (src, cls, foco) => src
   : (cls==="bgimg" ? `<div class="ph">Adicione sua foto</div>` : "");
 
 function renderSlide(s, i, total){
-  const tema = "t-"+(state.marca.tema||"claro");
+  const tema = "t-"+(s.tema||state.marca.tema||"claro");
   const acc = state.marca.cor ? `--ac:${esc(state.marca.cor)};` : "";
   const last = i === total-1;
   if (s.tipo === "capa"){

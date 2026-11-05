@@ -3,7 +3,7 @@
     "mark": "",
     "brand": "",
     "handle": "@zanellato",
-    "tema": "escuro",
+    "tema": "claro",
     "cor": "",
     "logo": ""
   },
@@ -51,7 +51,8 @@
       "subtitulo": "Viral passa. Valor acumula.",
       "texto": "Você entrega valor de três formas:",
       "itens": "Educação | ensinar algo prático\nPerspectiva | mudar como a pessoa pensa\nInspiração | mostrar o que é possível na prática",
-      "texto_final": "Se cada post ajuda alguém a avançar, sua audiência se constrói sozinha.\nViral é acidente. Valor é intenção."
+      "texto_final": "Se cada post ajuda alguém a avançar, sua audiência se constrói sozinha.\nViral é acidente. Valor é intenção.",
+      "tema": "escuro"
     },
     {
       "tipo": "conteudo",
@@ -66,7 +67,8 @@
       "titulo": "Menos dopamina.\nMais cinema.",
       "texto": "Marca não se constrói no viral. Se constrói na intenção, repetida todo dia.",
       "chamada": "**Salva esse post e segue** {handle}",
-      "rodape": "Comece agora"
+      "rodape": "Comece agora",
+      "tema": "escuro"
     }
   ]
 }
