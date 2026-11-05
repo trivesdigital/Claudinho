@@ -1,5 +1,5 @@
 {
-  "marca": {"mark": "Z", "brand": "Z·A·N·E·L·L·A·T·O", "handle": "@zanellato", "tema": "claro", "cor": "", "logo": ""},
+  "marca": {"mark": "", "brand": "", "handle": "@zanellato", "tema": "claro", "cor": "", "logo": ""},
   "slides": [
     {"tipo": "capa", "foto": "fotos/capa.jpg", "foco": "50% 20%", "pre": "Como eu\nconstruiria uma", "linha1": "Marca", "linha2": "Pessoal", "pos": "do zero", "posicao": "base", "escurecer": 18, "cor_texto": "claro"},
     {"tipo": "conteudo", "numero": "01", "titulo": "Defina sua mensagem", "subtitulo": "Antes de postar, saiba o que quer que lembrem de você.", "texto": "Marca pessoal não começa no conteúdo.\n\nComeça na clareza de **quem você ajuda** e **como você ajuda**.\n\nSe você não sabe explicar em uma frase, ninguém vai lembrar."},

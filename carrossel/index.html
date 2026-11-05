@@ -154,7 +154,7 @@ body.render .frame .num{display:none}
     <div><label>Tema</label><select data-m="tema"><option value="claro">Claro (papel)</option><option value="escuro">Escuro</option></select></div>
     <div><label>Cor de destaque</label><input type="text" data-m="cor" placeholder="auto"></div>
   </div>
-  <label>Símbolo (topo esquerdo)</label><input type="text" data-m="mark" placeholder="Z">
+  <label>Símbolo (topo esquerdo)</label><input type="text" data-m="mark" placeholder="vazio = sem símbolo">
   <label>Logo (opcional — substitui o símbolo)</label>
   <div class="img-field"><input type="text" data-m="logo" placeholder="vazio = usa o símbolo"><input type="file" accept="image/*" data-mfile="logo"><button class="small" data-pick>Enviar</button></div>
 
@@ -202,7 +202,7 @@ body.render .frame .num{display:none}
    ESTADO + EXEMPLO
    ============================================================ */
 const EXEMPLO = {
-  marca:{mark:"Z", brand:"Z·A·N·E·L·L·A·T·O", handle:"@zanellato", tema:"claro", cor:"", logo:""},
+  marca:{mark:"", brand:"", handle:"@zanellato", tema:"claro", cor:"", logo:""},
   slides:[
     {tipo:"capa", foto:"", recorte:"", foco:"50% 30%", pre:"Como eu\nconstruiria uma", linha1:"Marca", linha2:"Pessoal", pos:"do zero", posicao:"topo", escurecer:10, cor_texto:"claro"},
     {tipo:"conteudo", numero:"01", titulo:"Defina sua mensagem", subtitulo:"Antes de postar, saiba o que quer que lembrem de você.", texto:"Marca pessoal não começa no conteúdo.\n\nComeça na clareza de **quem você ajuda** e **como você ajuda**."},
@@ -293,7 +293,8 @@ const paras = s => String(s||"").trim().split(/\n\s*\n/).filter(Boolean).map(p=>
 const footer = (txt) => txt ? `<div class="ft"><div class="lb">${esc(txt)}</div></div>` : "";
 function header(){
   const m = state.marca;
-  const mark = m.logo ? `<img src="${esc(m.logo)}" alt="">` : esc(m.mark||"Z");
+  const mark = m.logo ? `<img src="${esc(m.logo)}" alt="">` : esc(m.mark||"");
+  if (!m.logo && !m.mark && !m.brand) return "";
   return `<div class="hd"><div class="mark">${mark}</div><div class="brand">${esc(m.brand||"")}</div></div>`;
 }
 const img = (src, cls, foco) => src

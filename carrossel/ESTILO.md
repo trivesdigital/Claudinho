@@ -16,7 +16,7 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 | Fundo | Papel `#F3F1EE`, grade fina de 120 px, brilho rosado no canto superior esquerdo |
 | Texto | Tinta `#1B1A19` · corpo `#2A2826` · secundário `#7A736C` |
 | Destaque | Vermelho `#9A2B22` (chamada pequena, pontos da lista, @ do CTA) |
-| Topo | Símbolo "Z" em serifa (esq.) · `Z·A·N·E·L·L·A·T·O` em mono espaçado (dir.) |
+| Topo | Nada (sem logo e sem nome) |
 | Rodapé | Nenhum (opcional por slide, só texto) |
 
 ## Tipografia
