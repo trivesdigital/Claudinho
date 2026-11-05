@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerador de Carrossel Zanellato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link crossorigin="anonymous" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;0,8..60,900;1,8..60,600&display=swap">
+<style>
+/* ============================================================
+   UI DO EDITOR
+   ============================================================ */
+:root{
+  --ui-bg:#0d0f0e; --ui-panel:#141816; --ui-line:#232a26; --ui-ink:#eef2ef;
+  --ui-muted:#8b958f; --ui-green:#e36a5a; --ui-warn:#ffb648; --ui-err:#ff5d5d;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--ui-bg);color:var(--ui-ink);font:14px/1.45 Poppins,system-ui,sans-serif;display:flex;overflow:hidden}
+aside{width:440px;min-width:440px;height:100vh;overflow-y:auto;background:var(--ui-panel);border-right:1px solid var(--ui-line);padding:20px 20px 80px}
+main{flex:1;height:100vh;overflow:auto;padding:28px}
+aside h1{font:700 20px Poppins,sans-serif;margin:0 0 2px;letter-spacing:-.02em}
+aside h1 b{color:var(--ui-green)}
+.sub{color:var(--ui-muted);font-size:12px;margin-bottom:18px}
+aside h2{font:600 11px Poppins,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ui-muted);margin:22px 0 10px}
+label{display:block;font-size:11px;color:var(--ui-muted);margin:10px 0 4px}
+input[type=text],input[type=number],textarea,select{width:100%;background:#0b0d0c;border:1px solid var(--ui-line);color:var(--ui-ink);border-radius:8px;padding:8px 10px;font:13px Poppins,sans-serif}
+textarea{resize:vertical;min-height:58px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ui-green)}
+.row{display:flex;gap:8px}.row>*{flex:1}
+button,.btn{background:#1d2420;color:var(--ui-ink);border:1px solid var(--ui-line);border-radius:8px;padding:8px 12px;font:500 12px Poppins,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+button:hover{border-color:var(--ui-green)}
+button.primary{background:var(--ui-green);color:#fff;border-color:var(--ui-green);font-weight:700}
+button.small{padding:4px 8px;font-size:11px}
+.card{border:1px solid var(--ui-line);border-radius:12px;padding:12px 14px;margin-bottom:12px;background:#111412}
+.card.sel{border-color:var(--ui-green)}
+.card-h{display:flex;align-items:center;gap:8px}
+.card-h strong{font:600 13px Poppins,sans-serif;flex:1}
+.pill{font:600 10px Poppins,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:#1f2a24;color:var(--ui-green)}
+.img-field{display:flex;gap:6px}.img-field input[type=text]{flex:1}
+.img-field input[type=file]{display:none}
+.hint{font-size:11px;color:var(--ui-muted);margin-top:4px}
+.checks{font-size:12px;border-radius:10px;padding:10px 12px;background:#0b0d0c;border:1px solid var(--ui-line)}
+.checks div{margin:2px 0}.ok{color:var(--ui-green)}.warn{color:var(--ui-warn)}.err{color:var(--ui-err)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.toolbar .zoom{margin-left:auto;display:flex;gap:6px;align-items:center;color:var(--ui-muted);font-size:12px}
+#stage{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.frame{position:relative;flex:none;border-radius:6px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.45);cursor:pointer}
+.frame .num{position:absolute;left:8px;top:8px;z-index:50;font:700 11px Poppins;background:rgba(0,0,0,.6);color:#fff;padding:2px 7px;border-radius:99px}
+.frame .slide{transform-origin:0 0}
+details summary{cursor:pointer;color:var(--ui-muted);font-size:12px;margin:8px 0}
+#status{font-size:12px;color:var(--ui-muted)}
+/* modo render (exportação headless): só os slides, escala 1 */
+body.render{display:block;overflow:visible;background:#000}
+body.render aside, body.render .toolbar{display:none}
+body.render main{height:auto;padding:0}
+body.render #stage{gap:0;display:block}
+body.render .frame{border-radius:0;box-shadow:none;margin:0}
+body.render .frame .num{display:none}
+
+/* ============================================================
+   SLIDE — 1080 x 1350 (4:5)
+   ============================================================ */
+.slide{
+  --bg:#F3F1EE; --ink:#1B1A19; --body:#2A2826; --muted:#7A736C; --grid:rgba(30,25,20,.055);
+  --glow:rgba(232,203,198,.55); --ac:#9A2B22;
+  position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--bg);color:var(--ink);
+  font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased;
+}
+.slide.t-escuro{--bg:#050706;--ink:#FAFAFA;--body:#E4E8E6;--muted:#8A948F;--grid:rgba(255,255,255,.05);--glow:rgba(154,43,34,.18);--ac:#E36A5A}
+.slide b,.slide strong{font-weight:700;color:var(--ink)}
+.slide em{font-style:normal;color:var(--ac)}
+.slide i.sf{font-family:"Source Serif 4",serif;font-style:italic;font-weight:600;letter-spacing:-.01em}
+/* papel: grade + brilho */
+.paper::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:120px 120px;background-position:0 -1px}
+.paper::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(900px 700px at 0% 0%,var(--glow),transparent 70%)}
+.paper>*{position:relative;z-index:2}
+/* cabeçalho */
+.hd{position:absolute;left:92px;right:92px;top:58px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.mark{font:900 68px/1 "Source Serif 4",serif;letter-spacing:-.04em;color:var(--ink);display:flex;align-items:center}
+.mark span{color:var(--ac)}
+.mark img{height:58px;width:auto;display:block}
+.brand{font:400 22px "IBM Plex Mono",monospace;letter-spacing:.32em;color:var(--ink);text-transform:uppercase}
+/* rodapé */
+.ft{position:absolute;left:0;right:0;bottom:66px;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:5}
+.ft .ic{display:flex;gap:26px}
+.ft svg{width:28px;height:28px;fill:var(--ink)}
+.ft .lb{font:600 23px Poppins,sans-serif;color:var(--ink);letter-spacing:-.005em}
+/* corpo do slide de conteúdo */
+.body{position:absolute;left:92px;right:92px;top:200px;bottom:200px;display:flex;flex-direction:column;justify-content:center;padding-bottom:70px}
+.kick{font:400 22px "IBM Plex Mono",monospace;letter-spacing:.45em;text-transform:uppercase;color:var(--ac);margin-bottom:34px}
+.ttl{font:700 74px/1.04 Poppins,sans-serif;letter-spacing:-.035em;margin:0;color:var(--ink);max-width:820px}
+.ttl .n{letter-spacing:-.04em}
+.st{font:700 25px/1.32 Poppins,sans-serif;letter-spacing:-.01em;margin:16px 0 0;max-width:600px;color:var(--ink)}
+.txt{margin-top:46px;font:400 35px/1.3 Poppins,sans-serif;letter-spacing:-.012em;color:var(--body)}
+.txt p{margin:0 0 26px}.txt p:last-child{margin-bottom:0}
+.lst{list-style:none;margin:0 0 26px;padding:0;font-size:35px;line-height:1.5}
+.lst li b{font-weight:700}
+.lst .dot{color:var(--ac);margin:0 14px;font-weight:700}
+.lst .ds{color:var(--muted)}
+.lst .no{font-weight:700;color:var(--ink);margin-right:18px}
+.pic{margin-top:40px;border-radius:26px;overflow:hidden;background:#d8d4cf}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+/* CTA / resumo */
+.ctt{font:700 104px/1.02 "Source Serif 4",serif;letter-spacing:-.025em;margin:0;color:var(--ink)}
+.ctt em{font-style:italic}
+.ctx{margin-top:40px;font:400 31px/1.42 Poppins,sans-serif;color:var(--muted);max-width:560px}
+.cta{margin-top:70px;font:700 31px Poppins,sans-serif;letter-spacing:-.01em;color:var(--ink)}
+.cta em{color:var(--ac)}
+.avatar{width:132px;height:132px;border-radius:50%;overflow:hidden;margin-bottom:40px;border:4px solid var(--bg);box-shadow:0 0 0 2px var(--ac)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+/* foto cheia (capa e slide de foto) */
+.bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.cut{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;pointer-events:none}
+.ph{position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;
+  background:repeating-linear-gradient(135deg,#2a2f2c 0 26px,#252a27 26px 52px);color:#7d877f;font:600 30px Poppins;letter-spacing:.1em;text-transform:uppercase}
+.shade{position:absolute;inset:0;z-index:1}
+/* capa */
+.cover-t{position:absolute;left:0;right:0;z-index:3;display:flex;justify-content:center}
+.cover-t .blk{display:inline-flex;flex-direction:column;color:var(--cv)}
+.cover-t .r1{display:flex;align-items:flex-end;justify-content:flex-end;gap:12px}
+.cover-t .pre{font:500 30px/.95 Archivo,sans-serif;letter-spacing:-.045em;text-align:right;padding-bottom:.32em;white-space:pre-line}
+.cover-t .l1,.cover-t .l2{font-family:Archivo,sans-serif;font-weight:800;letter-spacing:-.065em;line-height:.8;white-space:nowrap}
+.cover-t .l2{margin-top:.02em}
+.cover-t .pos{font:500 36px/1 Archivo,sans-serif;letter-spacing:-.04em;text-align:right;margin-top:10px;padding-right:.1em}
+.cover-t em{color:var(--ac);font-style:normal}
+.cover-sw{position:absolute;right:70px;bottom:62px;z-index:5;font:600 22px Poppins;color:var(--cv);opacity:.9}
+/* slide de foto */
+.ph-txt{position:absolute;left:92px;right:92px;bottom:190px;z-index:3;color:#fff}
+.ph-txt .kick{color:var(--ac)}
+.ph-txt .ttl,.ph-txt b{color:#fff}
+.ph-txt .txt{color:rgba(255,255,255,.86);margin-top:26px}
+.on-photo .ft svg{fill:#fff}.on-photo .ft .lb{color:#fff}
+.on-photo .mark,.on-photo .brand{color:#fff}
+</style>
+</head>
+<body>
+<aside>
+  <h1>Carrossel <b>Zanellato</b></h1>
+  <div class="sub">Capa com foto · slides de texto/imagem · CTA sempre no final.</div>
+
+  <h2>Marca</h2>
+  <div class="row">
+    <div><label>Marca (topo direito)</label><input type="text" data-m="brand"></div>
+    <div><label>@ do Instagram</label><input type="text" data-m="handle"></div>
+  </div>
+  <div class="row">
+    <div><label>Tema</label><select data-m="tema"><option value="claro">Claro (papel)</option><option value="escuro">Escuro</option></select></div>
+    <div><label>Cor de destaque</label><input type="text" data-m="cor" placeholder="auto"></div>
+  </div>
+  <label>Símbolo (topo esquerdo)</label><input type="text" data-m="mark" placeholder="Z">
+  <label>Logo (opcional — substitui o símbolo)</label>
+  <div class="img-field"><input type="text" data-m="logo" placeholder="vazio = usa o símbolo"><input type="file" accept="image/*" data-mfile="logo"><button class="small" data-pick>Enviar</button></div>
+
+  <h2>Checagem</h2>
+  <div class="checks" id="checks"></div>
+
+  <h2>Slides</h2>
+  <div id="cards"></div>
+  <div class="row" style="margin-top:6px">
+    <select id="newType">
+      <option value="conteudo">Conteúdo (texto + imagem opcional)</option>
+      <option value="foto">Foto cheia + texto</option>
+      <option value="capa">Capa</option>
+      <option value="cta">CTA / Resumo</option>
+    </select>
+    <button id="add" style="flex:none">+ Adicionar</button>
+  </div>
+
+  <h2>Dados (JSON)</h2>
+  <details><summary>Importar / exportar roteiro</summary>
+    <textarea id="json" style="min-height:220px;font:12px ui-monospace,monospace"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button id="jsonLoad">Aplicar JSON</button>
+      <button id="jsonCopy">Atualizar do editor</button>
+      <label class="btn" style="margin:0;justify-content:center">Abrir arquivo<input type="file" id="jsonFile" accept=".json" hidden></label>
+    </div>
+  </details>
+</aside>
+
+<main>
+  <div class="toolbar">
+    <button class="primary" id="exportZip">⬇ Baixar PNGs (.zip)</button>
+    <button id="exportJson">Salvar roteiro .json</button>
+    <button id="reset">Carregar exemplo</button>
+    <span id="status"></span>
+    <div class="zoom">Zoom <input type="range" id="zoom" min="0.2" max="0.7" step="0.02" value="0.34"></div>
+  </div>
+  <div id="stage"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+/* ============================================================
+   ESTADO + EXEMPLO
+   ============================================================ */
+const EXEMPLO = {
+  marca:{mark:"Z", brand:"Z·A·N·E·L·L·A·T·O", handle:"@zanellato", tema:"claro", cor:"", logo:""},
+  slides:[
+    {tipo:"capa", foto:"", recorte:"", foco:"50% 30%", pre:"Como eu\nconstruiria uma", linha1:"Marca", linha2:"Pessoal", pos:"do zero", posicao:"topo", escurecer:10, cor_texto:"claro"},
+    {tipo:"conteudo", numero:"01", titulo:"Defina sua mensagem", subtitulo:"Antes de postar, saiba o que quer que lembrem de você.", texto:"Marca pessoal não começa no conteúdo.\n\nComeça na clareza de **quem você ajuda** e **como você ajuda**."},
+    {tipo:"conteudo", numero:"02", titulo:"Monte um sistema simples", subtitulo:"Você não precisa de estratégia complexa. Precisa de um motor que se repete.", texto:"Seu sistema precisa responder três perguntas:", itens:"1. Sobre o que você fala? (3 a 5 temas centrais)\n2. Como você expressa? (vídeo falando, cenas do dia, texto na tela)\n3. Com que frequência aparece? (um ritmo que você não vai quebrar)", texto_final:"Quando você segue um sistema, crescer vira conta, não motivação."},
+    {tipo:"conteudo", numero:"03", titulo:"Documente, não performe", subtitulo:"A maioria trava na câmera porque acha que precisa \"impressionar\".", texto:"Não precisa. As pessoas se conectam pelo processo, não pela perfeição.\n\nDocumente seu trabalho, sua rotina, seus aprendizados, suas ideias.\n\nMostre o que você está construindo e como você pensa.\nQuando o conteúdo parece real, confiam em você mais rápido."},
+    {tipo:"conteudo", numero:"04", titulo:"Foque em valor, não em viral", subtitulo:"Viral passa. Valor acumula.", texto:"Você entrega valor de três formas:", itens:"Educação | ensinar algo prático\nPerspectiva | mudar como a pessoa pensa\nInspiração | mostrar o que é possível na prática", texto_final:"Se cada post ajuda alguém a avançar, sua audiência se constrói sozinha.\nViral é acidente. Valor é intenção."},
+    {tipo:"conteudo", numero:"05", titulo:"Construa em público", subtitulo:"Autoridade não se anuncia. Se testemunha.", texto:"O jeito mais rápido de virar referência é mostrar o caminho, não só o resultado.\n\nCompartilhe o que está aprendendo. Mostre o que está testando.\n\nQuando as pessoas te veem crescer, elas crescem junto."},
+    {tipo:"cta", kicker:"O resumo", titulo:"Menos dopamina.\nMais cinema.", texto:"Marca não se constrói no viral. Se constrói na intenção, repetida todo dia.", chamada:"**Salva esse post e segue** {handle}", rodape:"Comece agora"}
+  ]
+};
+let state;
+let sel = 0;
+const LS = "carrossel-zanellato-v1";
+try { state = JSON.parse(localStorage.getItem(LS)) } catch(e) {}
+if (!state || !state.slides) state = structuredClone(EXEMPLO);
+
+const save = () => { try { localStorage.setItem(LS, JSON.stringify(state)) } catch(e) { setStatus("Fotos grandes demais para salvar no navegador — salve o roteiro .json.") } };
+
+/* ============================================================
+   CAMPOS POR TIPO
+   ============================================================ */
+const TIPOS = {
+  capa:{nome:"Capa", campos:[
+    ["foto","img","Foto de fundo (obrigatória)"],
+    ["recorte","img","Recorte da pessoa (PNG sem fundo, mesmo enquadramento) — fica por cima do texto"],
+    ["foco","text","Foco da foto (ex.: 50% 30%)"],
+    ["pre","area","Texto pequeno antes (ao lado da linha 1)"],
+    ["linha1","text","Linha 1 (grande)"],
+    ["linha2","text","Linha 2 (gigante)"],
+    ["pos","text","Texto pequeno depois"],
+    ["posicao","sel","Posição do título",["topo","meio","base"]],
+    ["cor_texto","sel","Cor do texto",["claro","escuro"]],
+    ["escurecer","num","Escurecer foto (0–80%)"],
+  ]},
+  conteudo:{nome:"Conteúdo", campos:[
+    ["numero","text","Número (ex.: 03)"],
+    ["titulo","area","Título"],
+    ["subtitulo","area","Subtítulo (negrito pequeno)"],
+    ["imagem","img","Imagem (opcional)"],
+    ["altura","num","Altura da imagem (px)"],
+    ["texto","area","Texto (linha em branco = novo parágrafo)"],
+    ["itens","area","Lista — uma por linha: Termo | descrição"],
+    ["texto_final","area","Texto depois da lista"],
+    ["rodape","text","Rodapé (padrão: Salvar e arrastar)"],
+  ]},
+  foto:{nome:"Foto cheia", campos:[
+    ["foto","img","Foto (obrigatória)"],
+    ["foco","text","Foco da foto (ex.: 50% 40%)"],
+    ["kicker","text","Chamada pequena"],
+    ["titulo","area","Título"],
+    ["texto","area","Texto"],
+    ["rodape","text","Rodapé (padrão: Salvar e arrastar)"],
+  ]},
+  cta:{nome:"CTA", campos:[
+    ["foto","img","Foto redonda (opcional)"],
+    ["kicker","text","Chamada pequena (ex.: O resumo)"],
+    ["titulo","area","Título (serifa)"],
+    ["texto","area","Texto"],
+    ["chamada","area","CTA — use {handle} para o @"],
+    ["rodape","text","Rodapé (padrão: Comece agora)"],
+  ]},
+};
+
+/* ============================================================
+   FORMATAÇÃO DE TEXTO
+   **negrito**  *destaque na cor*  _serifa itálica_
+   ============================================================ */
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function fmt(s){
+  return esc(s)
+    .replace(/\{handle\}/g, "<em>"+esc(state.marca.handle||"")+"</em>")
+    .replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")
+    .replace(/\*(.+?)\*/g,"<em>$1</em>")
+    .replace(/(^|[\s(])_(.+?)_(?=[\s.,!?;:)]|$)/g,'$1<i class="sf">$2</i>')
+    .replace(/\n/g,"<br>");
+}
+const paras = s => String(s||"").trim().split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${fmt(p)}</p>`).join("");
+
+/* ============================================================
+   RENDER DE CADA SLIDE
+   ============================================================ */
+const ICONS = `<div class="ic"><svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 0 1 1 1v19l-7-4.5L5 22V3a1 1 0 0 1 1-1z"/></svg><svg viewBox="0 0 24 24"><path d="M22 2 2 10.5l8.2 3.3L13.5 22z"/></svg></div>`;
+const footer = (txt) => `<div class="ft">${ICONS}<div class="lb">${esc(txt)} →</div></div>`;
+function header(){
+  const m = state.marca;
+  const mark = m.logo ? `<img src="${esc(m.logo)}" alt="">` : esc(m.mark||"Z");
+  return `<div class="hd"><div class="mark">${mark}</div><div class="brand">${esc(m.brand||"")}</div></div>`;
+}
+const img = (src, cls, foco) => src
+  ? `<img class="${cls}" src="${esc(src)}" style="object-position:${esc(foco||"50% 50%")}" alt="">`
+  : (cls==="bgimg" ? `<div class="ph">Adicione sua foto</div>` : "");
+
+function renderSlide(s, i, total){
+  const tema = "t-"+(state.marca.tema||"claro");
+  const acc = state.marca.cor ? `--ac:${esc(state.marca.cor)};` : "";
+  const last = i === total-1;
+  if (s.tipo === "capa"){
+    const dark = s.cor_texto === "escuro";
+    const shade = Math.max(0, Math.min(80, Number(s.escurecer ?? 15)))/100;
+    const pos = s.posicao==="base" ? "bottom:150px" : s.posicao==="meio" ? "top:50%;transform:translateY(-50%)" : "top:118px";
+    const grad = s.posicao==="base"
+      ? `linear-gradient(0deg,rgba(0,0,0,${shade+.25}) 0%,rgba(0,0,0,${shade}) 45%,rgba(0,0,0,${shade*.4}) 100%)`
+      : `linear-gradient(180deg,rgba(0,0,0,${shade+.15}) 0%,rgba(0,0,0,${shade*.5}) 45%,rgba(0,0,0,${shade*.3}) 100%)`;
+    return `<div class="slide ${tema}" style="${acc}--cv:${dark?"#141414":"#fff"}">
+      ${img(s.foto,"bgimg",s.foco)}
+      <div class="shade" style="background:${dark?"none":grad}"></div>
+      <div class="cover-t" style="${pos}"><div class="blk" data-fit>
+        <div class="r1">${s.pre?`<div class="pre">${fmt(s.pre)}</div>`:""}<div class="l1">${fmt(s.linha1)}</div></div>
+        <div class="l2">${fmt(s.linha2)}</div>
+        ${s.pos?`<div class="pos">${fmt(s.pos)}</div>`:""}
+      </div></div>
+      ${s.recorte?img(s.recorte,"cut",s.foco):""}
+    </div>`;
+  }
+  if (s.tipo === "foto"){
+    return `<div class="slide ${tema} on-photo" style="${acc}">
+      ${img(s.foto,"bgimg",s.foco)}
+      <div class="shade" style="background:linear-gradient(0deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 42%,rgba(0,0,0,0) 70%),linear-gradient(180deg,rgba(0,0,0,.35),transparent 20%)"></div>
+      ${header()}
+      <div class="ph-txt">
+        ${s.kicker?`<div class="kick">${fmt(s.kicker)}</div>`:""}
+        ${s.titulo?`<h2 class="ttl">${fmt(s.titulo)}</h2>`:""}
+        ${s.texto?`<div class="txt">${paras(s.texto)}</div>`:""}
+      </div>
+      ${footer(s.rodape||(last?"Comece agora":"Salvar e arrastar"))}
+    </div>`;
+  }
+  if (s.tipo === "cta"){
+    return `<div class="slide paper ${tema}" style="${acc}">
+      ${header()}
+      <div class="body">
+        ${s.foto?`<div class="avatar"><img src="${esc(s.foto)}" alt=""></div>`:""}
+        ${s.kicker?`<div class="kick">${fmt(s.kicker)}</div>`:""}
+        <h2 class="ctt">${fmt(s.titulo)}</h2>
+        ${s.texto?`<div class="ctx">${fmt(s.texto)}</div>`:""}
+        <div class="cta">${fmt(s.chamada || "Salva esse post e segue {handle}")}</div>
+      </div>
+      ${footer(s.rodape||"Comece agora")}
+    </div>`;
+  }
+  /* conteudo */
+  const itens = String(s.itens||"").split("\n").map(l=>l.trim()).filter(Boolean).map(l=>{
+    const nm = l.match(/^(\d+)[.)]\s*(.*)$/);
+    if (nm) return `<li><span class="no">${nm[1]}.</span>${fmt(nm[2]).replace(/\(([^)]*)\)/g,'<span class="ds">($1)</span>')}</li>`;
+    const [t,...d] = l.split("|"); const ds = d.join("|").trim();
+    return `<li><b>${fmt(t.trim())}</b>${ds?`<span class="dot">·</span><span class="ds">${fmt(ds)}</span>`:""}</li>`;
+  }).join("");
+  const num = s.numero ? `<span class="n">${esc(s.numero)}.</span> ` : "";
+  return `<div class="slide paper ${tema}" style="${acc}">
+    ${header()}
+    <div class="body">
+      <h2 class="ttl">${num}${fmt(s.titulo)}</h2>
+      ${s.subtitulo?`<div class="st">${fmt(s.subtitulo)}</div>`:""}
+      ${s.imagem?`<div class="pic" style="height:${Number(s.altura)||380}px"><img src="${esc(s.imagem)}" alt=""></div>`:""}
+      ${(s.texto||itens||s.texto_final)?`<div class="txt">${paras(s.texto)}${itens?`<ul class="lst">${itens}</ul>`:""}${paras(s.texto_final)}</div>`:""}
+    </div>
+    ${footer(s.rodape||(last?"Comece agora":"Salvar e arrastar"))}
+  </div>`;
+}
+
+/* ajusta o título da capa para ocupar ~68% da largura */
+function fitCovers(root){
+  root.querySelectorAll("[data-fit]").forEach(blk=>{
+    const l1 = blk.querySelector(".l1"), l2 = blk.querySelector(".l2");
+    l2.style.fontSize = "200px"; l1.style.fontSize = "100px";
+    const w2 = l2.scrollWidth || 1;
+    const size2 = Math.min(330, 200 * 740 / w2);
+    l2.style.fontSize = size2+"px";
+    // linha 1: ~50% do tamanho, sem passar da largura da linha 2
+    let size1 = size2*0.56; l1.style.fontSize = size1+"px";
+    const r1 = blk.querySelector(".r1");
+    const maxW = l2.scrollWidth;
+    if (r1.scrollWidth > maxW) { size1 *= maxW / r1.scrollWidth; l1.style.fontSize = size1+"px"; }
+    const pre = blk.querySelector(".pre"); if (pre) pre.style.fontSize = Math.max(22, size2*0.135)+"px";
+    const pos = blk.querySelector(".pos"); if (pos) pos.style.fontSize = Math.max(26, size2*0.15)+"px";
+  });
+}
+
+/* ============================================================
+   PREVIEW
+   ============================================================ */
+const stage = document.getElementById("stage");
+const isRender = new URLSearchParams(location.search).has("render");
+if (isRender) document.body.classList.add("render");
+let zoom = isRender ? 1 : 0.34;
+
+async function renderAll(){
+  const n = state.slides.length;
+  stage.innerHTML = state.slides.map((s,i)=>
+    `<div class="frame" data-i="${i}" style="width:${1080*zoom}px;height:${1350*zoom}px"><span class="num">${String(i+1).padStart(2,"0")}</span>
+      <div style="transform:scale(${zoom});transform-origin:0 0;width:1080px;height:1350px">${renderSlide(s,i,n)}</div></div>`).join("");
+  try { await document.fonts.ready } catch(e){}
+  fitCovers(stage);
+  stage.querySelectorAll(".frame").forEach(f=>f.onclick=()=>{ sel=+f.dataset.i; renderCards(); document.querySelector(`.card[data-i="${sel}"]`)?.scrollIntoView({behavior:"smooth",block:"start"}) });
+  renderChecks();
+}
+
+/* ============================================================
+   CHECAGEM DAS REGRAS DO ESTILO
+   ============================================================ */
+function checks(){
+  const out = [], S = state.slides;
+  if (!S.length) return [["err","Nenhum slide."]];
+  if (S[0].tipo!=="capa") out.push(["err","O 1º slide precisa ser a CAPA."]);
+  else if (!S[0].foto) out.push(["err","A capa precisa de uma FOTO."]);
+  else out.push(["ok","Capa com foto ✓"]);
+  if (S[S.length-1].tipo!=="cta") out.push(["err","O último slide precisa ser o CTA."]);
+  else out.push(["ok","CTA no final ✓"]);
+  if (S.length<4) out.push(["warn",`Só ${S.length} slides — ideal entre 5 e 9.`]);
+  else if (S.length>10) out.push(["warn",`${S.length} slides — o Instagram aceita até 20, mas acima de 10 a retenção cai.`]);
+  else out.push(["ok",`${S.length} slides ✓`]);
+  S.forEach((s,i)=>{
+    const len = [s.texto,s.itens,s.texto_final].join(" ").length;
+    if (s.tipo==="conteudo" && len>330) out.push(["warn",`Slide ${i+1}: texto longo (${len} caracteres). Corte para caber com folga.`]);
+    if (s.tipo==="foto" && !s.foto) out.push(["warn",`Slide ${i+1}: slide de foto sem foto.`]);
+  });
+  return out;
+}
+function renderChecks(){
+  document.getElementById("checks").innerHTML = checks().map(([c,t])=>`<div class="${c}">${c==="ok"?"●":c==="warn"?"▲":"✕"} ${t}</div>`).join("");
+}
+
+/* ============================================================
+   EDITOR
+   ============================================================ */
+const cards = document.getElementById("cards");
+let t;
+const changed = () => { clearTimeout(t); t = setTimeout(()=>{ save(); renderAll() }, 180) };
+
+function resizeImage(file, keepPng){
+  return new Promise(res=>{
+    const r = new FileReader();
+    r.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const max = 2160, k = Math.min(1, max/Math.max(im.width,im.height));
+        const c = document.createElement("canvas"); c.width = Math.round(im.width*k); c.height = Math.round(im.height*k);
+        c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+        res(keepPng || file.type==="image/png" ? c.toDataURL("image/png") : c.toDataURL("image/jpeg",0.9));
+      };
+      im.src = r.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+function field(s, i, [key,type,label,opts]){
+  const v = s[key] ?? "";
+  const shown = typeof v==="string" && v.startsWith("data:") ? "(imagem enviada)" : v;
+  if (type==="img") return `<label>${label}</label><div class="img-field"><input type="text" data-k="${key}" value="${esc(shown)}" placeholder="URL ou envie"><input type="file" accept="image/*" data-file="${key}"><button class="small" data-pick>Enviar</button>${v?`<button class="small" data-clear="${key}">✕</button>`:""}</div>`;
+  if (type==="area") return `<label>${label}</label><textarea data-k="${key}">${esc(v)}</textarea>`;
+  if (type==="sel") return `<label>${label}</label><select data-k="${key}">${opts.map(o=>`<option ${o===v?"selected":""}>${o}</option>`).join("")}</select>`;
+  return `<label>${label}</label><input type="${type==="num"?"number":"text"}" data-k="${key}" value="${esc(v)}">`;
+}
+
+function renderCards(){
+  cards.innerHTML = state.slides.map((s,i)=>{
+    const T = TIPOS[s.tipo] || TIPOS.conteudo;
+    const open = i===sel;
+    return `<div class="card ${open?"sel":""}" data-i="${i}">
+      <div class="card-h"><span class="pill">${String(i+1).padStart(2,"0")}</span><strong>${T.nome}${s.titulo||s.linha2?` — ${esc(String(s.titulo||s.linha2).replace(/[*_]/g,"").slice(0,26))}`:""}</strong>
+        <button class="small" data-act="up">↑</button><button class="small" data-act="down">↓</button><button class="small" data-act="dup">⧉</button><button class="small" data-act="del">✕</button></div>
+      ${open ? T.campos.map(c=>field(s,i,c)).join("") + `<div class="hint">Formatação: **negrito** · *destaque na cor* · _serifa itálica_</div>` : ""}
+    </div>`;
+  }).join("");
+}
+
+cards.addEventListener("click", e=>{
+  const card = e.target.closest(".card"); if(!card) return;
+  const i = +card.dataset.i;
+  const act = e.target.dataset.act;
+  if (e.target.dataset.pick !== undefined){ e.target.parentNode.querySelector("input[type=file]").click(); return }
+  if (e.target.dataset.clear){ state.slides[i][e.target.dataset.clear]=""; renderCards(); changed(); return }
+  if (act){
+    const S = state.slides;
+    if (act==="up" && i>0){ [S[i-1],S[i]]=[S[i],S[i-1]]; sel=i-1 }
+    if (act==="down" && i<S.length-1){ [S[i+1],S[i]]=[S[i],S[i+1]]; sel=i+1 }
+    if (act==="dup"){ S.splice(i+1,0,structuredClone(S[i])); sel=i+1 }
+    if (act==="del" && confirm("Remover este slide?")){ S.splice(i,1); sel=Math.max(0,i-1) }
+    renderCards(); changed(); return;
+  }
+  if (e.target.closest(".card-h") && sel!==i){ sel=i; renderCards() }
+});
+cards.addEventListener("input", e=>{
+  const card = e.target.closest(".card"); const k = e.target.dataset.k; if(!card||!k) return;
+  if (e.target.value==="(imagem enviada)") return;
+  state.slides[+card.dataset.i][k] = e.target.type==="number" ? Number(e.target.value) : e.target.value;
+  changed();
+});
+cards.addEventListener("change", async e=>{
+  const card = e.target.closest(".card"); const k = e.target.dataset.file; if(!card||!k||!e.target.files[0]) return;
+  setStatus("Processando imagem…");
+  state.slides[+card.dataset.i][k] = await resizeImage(e.target.files[0], k==="recorte");
+  setStatus(""); renderCards(); changed();
+});
+
+/* marca */
+document.querySelectorAll("[data-m]").forEach(el=>{
+  const k = el.dataset.m; const v = state.marca[k]||"";
+  el.value = typeof v==="string"&&v.startsWith("data:") ? "(imagem enviada)" : v;
+  el.addEventListener("input",()=>{ if(el.value!=="(imagem enviada)"){ state.marca[k]=el.value; changed() } });
+});
+document.querySelector("aside").addEventListener("click", e=>{
+  if (e.target.dataset.pick!==undefined && e.target.closest(".img-field")?.querySelector("[data-mfile]")) e.target.parentNode.querySelector("input[type=file]").click();
+});
+document.querySelector("[data-mfile]").addEventListener("change", async e=>{
+  if(!e.target.files[0]) return;
+  state.marca.logo = await resizeImage(e.target.files[0], true);
+  document.querySelector('[data-m="logo"]').value="(imagem enviada)"; changed();
+});
+
+document.getElementById("add").onclick = ()=>{
+  const tipo = document.getElementById("newType").value;
+  const base = {capa:{tipo,foto:"",foco:"50% 30%",pre:"",linha1:"Título",linha2:"Gigante",pos:"",posicao:"topo",escurecer:15,cor_texto:"claro"},
+    conteudo:{tipo,numero:"",titulo:"Novo slide",subtitulo:"",texto:""},
+    foto:{tipo,foto:"",kicker:"",titulo:"",texto:""},
+    cta:{tipo,kicker:"O resumo",titulo:"Frase final.",texto:"",chamada:"Salva esse post e segue {handle}"}}[tipo];
+  // novo conteúdo entra antes do CTA final
+  const S = state.slides; let at = S.length;
+  if (tipo!=="cta" && S.length && S[S.length-1].tipo==="cta") at = S.length-1;
+  if (tipo==="capa") at = 0;
+  S.splice(at,0,base); sel=at; renderCards(); changed();
+};
+
+/* JSON */
+const jsonBox = document.getElementById("json");
+const jsonOut = () => JSON.stringify(state,null,2);
+document.getElementById("jsonCopy").onclick = ()=> jsonBox.value = jsonOut();
+document.getElementById("jsonLoad").onclick = ()=> loadJson(jsonBox.value);
+document.getElementById("jsonFile").onchange = async e=>{ const f=e.target.files[0]; if(f) loadJson(await f.text()) };
+function loadJson(txt){
+  try{
+    const d = typeof txt==="string" ? JSON.parse(txt) : txt;
+    if(!Array.isArray(d.slides)) throw new Error("JSON sem 'slides'");
+    state = {marca:{...EXEMPLO.marca,...(d.marca||{})}, slides:d.slides};
+    sel=0; syncMarca(); renderCards(); save(); renderAll(); setStatus("Roteiro carregado.");
+  }catch(err){ alert("JSON inválido: "+err.message) }
+}
+function syncMarca(){ document.querySelectorAll("[data-m]").forEach(el=>{ const v=state.marca[el.dataset.m]||""; el.value = typeof v==="string"&&v.startsWith("data:")?"(imagem enviada)":v }) }
+window.loadCarrossel = async d => { loadJson(d); await renderAll(); return state.slides.length };
+
+document.getElementById("reset").onclick = ()=>{ if(confirm("Substituir pelo exemplo?")){ state=structuredClone(EXEMPLO); sel=0; syncMarca(); renderCards(); save(); renderAll() } };
+document.getElementById("exportJson").onclick = ()=> download(new Blob([jsonOut()],{type:"application/json"}), "carrossel.json");
+document.getElementById("zoom").oninput = e=>{ zoom=+e.target.value; renderAll() };
+
+/* ============================================================
+   EXPORTAÇÃO PNG
+   ============================================================ */
+function setStatus(t){ document.getElementById("status").textContent = t }
+function download(blob, name){ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000) }
+document.getElementById("exportZip").onclick = async ()=>{
+  const errs = checks().filter(c=>c[0]==="err");
+  if (errs.length && !confirm("O carrossel não segue as regras:\n\n"+errs.map(e=>"• "+e[1]).join("\n")+"\n\nExportar mesmo assim?")) return;
+  const zip = new JSZip();
+  const nodes = [...stage.querySelectorAll(".slide")];
+  for (let i=0;i<nodes.length;i++){
+    setStatus(`Gerando ${i+1}/${nodes.length}…`);
+    const url = await htmlToImage.toPng(nodes[i], {width:1080,height:1350,pixelRatio:1,cacheBust:true,style:{transform:"none"}});
+    zip.file(String(i+1).padStart(2,"0")+".png", url.split(",")[1], {base64:true});
+  }
+  download(await zip.generateAsync({type:"blob"}), "carrossel-zanellato.zip");
+  setStatus("Pronto ✓");
+};
+
+syncMarca(); renderCards(); renderAll();
+</script>
+</body>
+</html>
