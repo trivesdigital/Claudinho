@@ -9,16 +9,9 @@
   },
   "slides": [
     {
-      "tipo": "capa",
-      "foto": "fotos/capa.jpg",
-      "foco": "50% 20%",
-      "pre": "Como eu\nconstruiria uma",
-      "linha1": "Marca",
-      "linha2": "Pessoal",
-      "pos": "do zero",
-      "posicao": "base",
-      "escurecer": 18,
-      "cor_texto": "claro"
+      "tipo": "pronta",
+      "foto": "capa/capa.png",
+      "obs": "Capa composta em capa/capa.html (texto entre o céu e o recorte da foto). Gerar com: node carrosseis/01-marca-pessoal/capa/render.js"
     },
     {
       "tipo": "conteudo",

@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Poppins:ital,wght@0,300;0,800;1,200;1,300&display=swap">
+<style>
+html,body{margin:0;background:#000}
+.c{position:relative;width:1080px;height:1350px;overflow:hidden}
+.c>img{position:absolute;inset:0;width:100%;height:100%}
+.t{position:absolute;inset:0;color:#fff;font-family:Poppins,sans-serif}
+.pre{position:absolute;left:80px;top:80px;font:italic 300 40px/1 Poppins;letter-spacing:-.01em}
+.pill{position:absolute;right:80px;top:76px;background:#00FF80;color:#14291F;font:800 34px/1 Poppins;letter-spacing:-.02em;padding:12px 22px 13px;border-radius:99px;transform:rotate(-4deg)}
+.marca{position:absolute;left:80px;top:122px;font:900 272px/1 Archivo;letter-spacing:-.06em;white-space:nowrap}
+.pessoal{position:absolute;right:80px;top:300px;white-space:nowrap;font:italic 200 214px/1 Poppins;letter-spacing:-.045em}
+</style></head><body>
+<div class="c">
+  <img src="foto.jpg">
+  <div class="t">
+    <div class="pre">Como eu construiria uma</div>
+    <div class="pill">do zero</div>
+    <div class="marca">MARCA</div>
+    <div class="pessoal">pessoal</div>
+  </div>
+  <img src="frente.png">
+</div>
+<script>
+document.fonts.ready.then(()=>{const m=document.querySelector('.marca');const w=m.getBoundingClientRect().width;
+m.style.fontSize=(272*920/w)+'px';document.body.dataset.ok=1});
+</script></body></html>

@@ -50,3 +50,10 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 ## Prompt para gerar o roteiro com IA
 > Escreva um carrossel no estilo Zanellato sobre **[TEMA]**, em JSON no formato de `exemplos/marca-pessoal.json`.
 > Slide 1 tipo "capa" (pre / linha1 / linha2 gigante / pos). De 4 a 6 slides "conteudo" numerados 01, 02…, cada um com título imperativo curto, subtítulo com a tensão e corpo de até 330 caracteres (pode usar `itens`). Último slide tipo "cta" com kicker "O resumo", título em 2 linhas de contraste, texto de 1 frase e chamada "**Salva esse post e segue** {handle}". Português do Brasil, frases curtas, sem emoji.
+
+## Capa criativa (recorte)
+Quando a foto tem céu limpo, a capa é composta em camadas (`carrosseis/<nome>/capa/capa.html`):
+foto → texto → recorte da foto (tudo que não é céu). Assim o texto fica **atrás** da bandeira, do morro e da pessoa.
+Tipografia abstrata: linha fina em itálico (Poppins 300), palavra-chave gigante em Archivo 900 ajustada à largura,
+palavra em Poppins 200 itálico sobreposta, e selo em verde Trives `#00FF80`. Margem de segurança de 80 px em todos os lados.
+O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.

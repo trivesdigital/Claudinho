@@ -310,6 +310,9 @@ function renderSlide(s, i, total){
   const tema = "t-"+(s.tema||state.marca.tema||"claro");
   const acc = state.marca.cor ? `--ac:${esc(state.marca.cor)};` : "";
   const last = i === total-1;
+  if (s.tipo === "pronta"){
+    return `<div class="slide ${tema}">${s.foto?`<img class="bgimg" src="${esc(s.foto)}" alt="">`:`<div class="ph">Imagem pronta</div>`}</div>`;
+  }
   if (s.tipo === "capa"){
     const dark = s.cor_texto === "escuro";
     const shade = Math.max(0, Math.min(80, Number(s.escurecer ?? 15)))/100;
@@ -425,7 +428,7 @@ async function renderAll(){
 function checks(){
   const out = [], S = state.slides;
   if (!S.length) return [["err","Nenhum slide."]];
-  if (S[0].tipo!=="capa") out.push(["err","O 1º slide precisa ser a CAPA."]);
+  if (S[0].tipo!=="capa" && S[0].tipo!=="pronta") out.push(["err","O 1º slide precisa ser a CAPA."]);
   else if (!S[0].foto) out.push(["err","A capa precisa de uma FOTO."]);
   else out.push(["ok","Capa com foto ✓"]);
   if (S[S.length-1].tipo!=="cta") out.push(["err","O último slide precisa ser o CTA."]);
