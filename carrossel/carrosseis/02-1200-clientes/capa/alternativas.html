@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Big+Shoulders+Display:wght@900&family=Cormorant+Garamond:wght@300;400&family=Instrument+Serif:ital@0;1&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap">
+<style>
+html,body{margin:0;background:#000}
+.c{position:relative;width:1080px;height:1350px;overflow:hidden}
+.c>img{position:absolute;inset:0;width:100%;height:100%}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.14),rgba(0,0,0,0) 45%)}
+.L{position:absolute;inset:0;color:#fff}
+.L>div{position:absolute;white-space:nowrap;line-height:1}
+.bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+.pill{background:#fff;color:#111;border-radius:99px;padding:8px 22px 10px}
+</style></head><body>
+<div class="c"><img src="foto.jpg"><div class="shade"></div><div class="L" id="back"></div><img src="pessoa.png"><div class="L" id="front"></div></div>
+<script>
+const v=new URLSearchParams(location.search).get('v');
+/* cada item: [camada, html, css, posição]  posição: {x|r|cx, base (linha de base), fit (largura)} */
+const S={
+ 1:[ // cascata
+  ['back','O que',"font:600 64px Poppins;letter-spacing:-.03em",{x:84,base:190}],
+  ['back','+1.200 clientes',"font:800 104px Poppins;letter-spacing:-.05em",{x:150,base:292,fit:760}],
+  ['back','me ensinaram sobre',"font:500 26px Poppins;letter-spacing:.32em;text-transform:uppercase",{r:84,base:344}],
+  ['back','Crescer',"font:italic 400 300px 'Instrument Serif';letter-spacing:-.02em",{cx:540,base:600,fit:900}],
+ ],
+ 2:[ // editorial encaixado
+  ['back','crescer',"font:300 400px 'Cormorant Garamond';letter-spacing:-.05em",{cx:540,base:612,fit:940}],
+  ['back','O que <b style="font-weight:700">+1.200 clientes</b>',"font:300 38px Poppins;letter-spacing:-.02em",{x:84,base:0,rel:'xh',dy:-34}],
+  ['back','me ensinaram <i style="font-family:\'Instrument Serif\';font-size:48px">sobre</i>',"font:300 38px Poppins;letter-spacing:-.02em",{r:84,base:0,rel:'xh',dy:-34}],
+ ],
+ 3:[ // número + pilha
+  ['back','O que',"font:italic 500 34px Poppins;transform:rotate(-4deg)",{x:84,base:150,pill:1}],
+  ['back','+1.200',"font:900 330px 'Big Shoulders Display';letter-spacing:-.01em",{x:80,base:430,fit:560}],
+  ['back','<span style="font:800 54px Poppins;letter-spacing:-.03em">CLIENTES</span>',"",{x:670,base:262}],
+  ['back','me ensinaram',"font:italic 300 54px Poppins;letter-spacing:-.03em",{x:670,base:340}],
+  ['back','sobre',"font:400 74px 'Instrument Serif';font-style:italic",{x:670,base:422}],
+  ['back','CRESCER',"font:900 220px Archivo;font-stretch:125%;letter-spacing:-.04em",{cx:540,base:632,fit:920}],
+ ],
+ 4:[ // mistura na mesma linha
+  ['back','O que',"font:italic 300 62px Poppins;letter-spacing:-.03em",{x:84,base:200}],
+  ['back','+1.200<span style="font:italic 400 150px \'Instrument Serif\';letter-spacing:-.02em;margin-left:18px">clientes</span>',"font:900 200px Archivo;font-stretch:75%;letter-spacing:-.04em",{x:80,base:372,fit:920}],
+  ['back','me ensinaram sobre',"font:500 26px Poppins;letter-spacing:.5em;text-transform:uppercase",{x:84,base:428}],
+  ['back','CRESCER',"font:900 230px Archivo;font-stretch:62%;letter-spacing:-.01em",{x:80,base:640,fit:920}],
+ ]
+}[v];
+function ink(e){const r=document.createRange();r.selectNodeContents(e);return r.getBoundingClientRect()}
+const made=S.map(([layer,html,css,p])=>{const d=document.createElement('div');d.innerHTML=html+'<i class="bl"></i>';d.style.cssText=css;
+   if(p.pill)d.classList.add('pill');document.getElementById(layer).appendChild(d);return [d,p]});
+Promise.all([...new Set(S.map(x=>x[2]))].filter(Boolean).map(c=>document.fonts.load(c.split(';')[0].replace('font:','')).catch(()=>0)))
+ .then(()=>document.fonts.ready).then(()=>new Promise(r=>setTimeout(r,300))).then(()=>{
+ let giant=null;
+ for(const [d,p] of made){
+   if(p.fit){const fs=parseFloat(getComputedStyle(d).fontSize);const w=ink(d).width;const k=p.fit/w;
+     d.style.fontSize=fs*k+'px'; d.querySelectorAll('span,b,i:not(.bl)').forEach(s=>{const f=parseFloat(getComputedStyle(s).fontSize);if(f)s.style.fontSize=f*k+'px'})}
+ }
+ for(const [d,p] of made){
+   let base=p.base;
+   if(p.rel==='xh'&&giant){base=giant.xTop+(p.dy||0)}
+   d.style.top='0px'; const b=d.querySelector('.bl').getBoundingClientRect().top - d.getBoundingClientRect().top;
+   d.style.top=(base-b)+'px';
+   const w=d.getBoundingClientRect().width;
+   if(p.x!=null)d.style.left=p.x+'px'; if(p.r!=null)d.style.left=(1080-p.r-w)+'px'; if(p.cx!=null)d.style.left=(p.cx-w/2)+'px';
+   if(p.fit && !giant && (v==='2')){ // topo da altura-x da palavra gigante
+     const fs=parseFloat(d.style.fontSize); giant={xTop:base-fs*.40};
+   }
+ }
+ document.body.dataset.ok=1});
+</script></body></html>
