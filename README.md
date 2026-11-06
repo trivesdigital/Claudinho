@@ -5,14 +5,15 @@
 Gerador de carrosséis para Instagram (1080 × 1350) no estilo da referência "Marca Pessoal do zero":
 capa sempre com foto, slides de texto/imagem e CTA obrigatório no final.
 
-**Usar no navegador:** abra `carrossel/index.html`, edite os slides à esquerda, envie as fotos e clique em **Baixar PNGs (.zip)**.
-
-**Exportar pela linha de comando** (precisa de `npm i playwright`):
+**Motor (recomendado):** um comando gera capa + slides + prévia + relatório de problemas:
 
 ```bash
-node carrossel/exportar.js carrossel/exemplos/marca-pessoal.json
+node carrossel/gerar.js carrossel/carrosseis/03-follow-up/roteiro.json
 ```
 
-As imagens saem em `carrossel/saida/<nome>/01.png, 02.png…`. Fotos locais ficam em `carrossel/fotos/` (não vão para o git).
+Foto de capa e recorte da pessoa: `python3 carrossel/recorte.py` (veja as instruções no topo do arquivo).
+Modelo de roteiro: `carrossel/carrosseis/_modelo/roteiro.json`. Fluxo e regras: `.claude/skills/carrossel/SKILL.md`.
 
-Regras de estilo, fontes e prompt de copy: [`carrossel/ESTILO.md`](carrossel/ESTILO.md).
+**Editor no navegador (opcional):** abra `carrossel/index.html` para ajustar à mão e baixar os PNGs.
+
+Regras de estilo detalhadas: [`carrossel/ESTILO.md`](carrossel/ESTILO.md).

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>Capa Motor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@0;1&family=Poppins:ital,wght@0,300;0,500;0,600;0,800;1,500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<style>
+html,body{margin:0;background:#000}
+.c{position:relative;width:1080px;height:1350px;overflow:hidden}
+.c>img,.c>svg{position:absolute;inset:0;width:100%;height:100%}
+.shade{position:absolute;inset:0}
+.L{position:absolute;inset:0;color:#fff}
+.L>div{position:absolute;white-space:nowrap;line-height:1}
+.bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+.pill{color:#111;background:#fff;border-radius:99px;padding:8px 24px 10px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+</style></head><body>
+<div class="c"><img id="foto"><div class="shade" id="shade"></div><div class="L" id="back"></div><svg id="sv" viewBox="0 0 1080 1350"></svg><img id="pessoa"><div class="L" id="front"></div></div>
+<script>
+/* Presets de capa. Cada linha: fonte, ajuste de largura (fit), caixa alta, risco, selo.
+   gap = espaço entre a linha e a de baixo. A última linha tem a linha de base em `base`. */
+const LAYOUTS = {
+  riscado:   { align:"left",   lines:[
+    {font:"600 52px Poppins", ls:"-.02em", gap:26},
+    {font:"400 230px Anton", fit:640, upper:1, strike:1, gap:24},
+    {font:"400 300px Anton", fit:920, upper:1} ]},
+  padrao:    { align:"center", lines:[
+    {font:"500 24px Poppins", ls:".42em", upper:1, gap:30},
+    {font:"400 230px Anton", fit:600, upper:1, gap:70},
+    {font:"italic 500 42px Poppins", pill:1},
+    {font:"400 300px Anton", fit:920, upper:1} ]},
+  "dois-pesos": { align:"left", lines:[
+    {font:"500 24px Poppins", ls:".42em", upper:1, gap:40},
+    {font:"300 150px Poppins", ls:"-.05em", fit:920, gap:34},
+    {font:"800 170px Poppins", ls:"-.06em", fit:920} ]},
+  serifa:    { align:"left",   lines:[
+    {font:"600 56px Poppins", ls:"-.03em", gap:30},
+    {font:"italic 400 200px 'Instrument Serif'", fit:920, gap:36},
+    {font:"900 200px Archivo", stretch:"62%", fit:920, upper:1} ]}
+};
+const M = 80; // margem de segurança
+
+function inkW(e){const r=document.createRange();r.selectNodeContents(e);return r.getBoundingClientRect().width}
+function metrics(text, font, stretch){
+  const c=document.createElement("canvas").getContext("2d"); c.font=(stretch?`${stretch==="62%"?"extra-condensed":"normal"} `:"")+font;
+  const m=c.measureText(text||"H"); return {asc:m.actualBoundingBoxAscent, desc:Math.max(0,m.actualBoundingBoxDescent)};
+}
+
+window.loadCapa = async function(spec){
+  const L = LAYOUTS[spec.layout||"riscado"]; if(!L) return {avisos:["layout desconhecido: "+spec.layout]};
+  const avisos=[];
+  document.getElementById("foto").src = spec.foto;
+  const p=document.getElementById("pessoa"); if(spec.pessoa) p.src=spec.pessoa; else p.remove();
+  const esc = spec.escurecer ?? .2;
+  document.getElementById("shade").style.background=`linear-gradient(180deg,rgba(0,0,0,${esc}),rgba(0,0,0,0) 55%)`;
+  const textos = spec.linhas||[];
+  if (textos.length !== L.lines.length) avisos.push(`layout "${spec.layout}" espera ${L.lines.length} linhas, recebeu ${textos.length}`);
+  const align = spec.alinhar==="centro"?"center":spec.alinhar==="esquerda"?"left":L.align;
+  const els = L.lines.map((cfg,i)=>{
+    const d=document.createElement("div");
+    let t=textos[i]||""; if(cfg.upper) t=t.toUpperCase();
+    d.innerHTML=t.replace(/&/g,"&amp;").replace(/</g,"&lt;")+'<i class="bl"></i>';
+    d.style.font=cfg.font; if(cfg.ls) d.style.letterSpacing=cfg.ls; if(cfg.stretch) d.style.fontStretch=cfg.stretch;
+    if(cfg.pill) d.classList.add("pill");
+    document.getElementById(cfg.pill?"front":"back").appendChild(d);
+    return {d,cfg,t};
+  });
+  await Promise.all(L.lines.map(c=>document.fonts.load(c.font).catch(()=>0)));
+  await document.fonts.ready; await new Promise(r=>setTimeout(r,250));
+  // ajusta larguras
+  els.forEach(({d,cfg})=>{ if(cfg.fit){ const fs=parseFloat(getComputedStyle(d).fontSize); d.style.fontSize=fs*cfg.fit/inkW(d)+"px" } });
+  // empilha de baixo para cima a partir da linha de base da última linha
+  const placeAt=(d,base)=>{ d.style.top="0px"; const b=d.querySelector(".bl").getBoundingClientRect().top-d.getBoundingClientRect().top; d.style.top=(base-b)+"px" };
+  const pos=[]; let below=null;
+  for(let i=els.length-1;i>=0;i--){
+    const {d,cfg,t}=els[i]; if(cfg.pill) continue;
+    const fs=parseFloat(d.style.fontSize||getComputedStyle(d).fontSize);
+    const mt=metrics(t, cfg.font.replace(/\d+px/, fs+"px"), cfg.stretch);
+    let base;
+    if(!below) base = spec.base ?? 664;
+    else { const gap = (els[i].cfg.gap ?? 30); base = below.top - gap - mt.desc; }
+    placeAt(d,base); pos[i]={base, top:base-mt.asc, bottom:base+mt.desc};
+    below=pos[i];
+  }
+  // selo: centralizado no vão entre a linha de cima e a de baixo
+  els.forEach(({d,cfg},i)=>{ if(!cfg.pill) return;
+    const up=pos[i-1], dn=pos[i+1]; const h=d.getBoundingClientRect().height;
+    d.style.top=((up.bottom+dn.top)/2-h/2)+"px"; d.style.transform="rotate(-3deg)"; });
+  // alinhamento horizontal
+  els.forEach(({d})=>{ const w=d.getBoundingClientRect().width; d.style.left = align==="center" ? (540-w/2)+"px" : M+"px" });
+  // risco à mão
+  els.forEach(({d,cfg,t},i)=>{ if(!cfg.strike) return; const r=d.getBoundingClientRect(); const fs=parseFloat(d.style.fontSize);
+    const y=pos[i].base-fs*.36, rc=rough.svg(document.getElementById("sv")), sv=document.getElementById("sv");
+    sv.appendChild(rc.curve([[r.left-14,y+10],[r.left+r.width*.5,y-6],[r.right+18,y+4]],{stroke:"#fff",strokeWidth:9,roughness:1.4,seed:4}));
+    sv.appendChild(rc.curve([[r.left-6,y+26],[r.left+r.width*.55,y+10],[r.right+10,y+20]],{stroke:"#fff",strokeWidth:5,roughness:1.6,seed:9})); });
+  // auditoria de margens
+  els.forEach(({d,t})=>{ const r=d.getBoundingClientRect();
+    if(r.left<M-2||r.right>1080-M+2) avisos.push(`capa: "${t}" fora da margem lateral`);
+    if(r.top<M-2) avisos.push(`capa: "${t}" encosta no topo (abaixe "base")`); });
+  return {avisos};
+};
+</script></body></html>

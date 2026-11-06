@@ -1,0 +1,21 @@
+{
+  "capa": {
+    "foto": "capa/foto.jpg",
+    "pessoa": "capa/pessoa.png",
+    "layout": "riscado",
+    "linhas": ["Seu problema não é", "Tráfego", "É o follow-up"],
+    "base": 664
+  },
+  "marca": {"handle": "@zanellato", "tema": "claro"},
+  "slides": [
+    {"tipo": "conteudo", "numero": "01", "titulo": "Título curto e afirmativo", "subtitulo": "Uma linha com a tensão.",
+     "texto": "Uma frase com [[círculo]] ou {{sublinhado}} à mão.",
+     "desenho": "grafico", "rotulos": "eixo|tempo 1, tempo 2, tempo 3|anotação",
+     "exemplo": "Situação real, curta, em 1–2 linhas.",
+     "gancho": "Frase que só o próximo slide responde"},
+    {"tipo": "conteudo", "tema": "escuro", "numero": "02", "titulo": "…", "subtitulo": "…", "texto": "…",
+     "desenho": "bolhas", "rotulos": "pequeno|legenda|grande|legenda", "exemplo": "…", "gancho": "…"},
+    {"tipo": "cta", "tema": "escuro", "kicker": "O resumo", "titulo": "Frase-resumo com {{palavra}}.\nSegunda linha.",
+     "texto": "Uma frase de fechamento.", "chamada": "Comente **PALAVRA** e …"}
+  ]
+}
