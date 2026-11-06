@@ -67,12 +67,11 @@ O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.
   que abre uma pergunta respondida só no slide seguinte. Uma linha, sem ponto final. Ex.: "E o maior vazamento nem está no anúncio".
 - **Desenhos à mão** (`"desenho"` + `"rotulos"` separados por `|`), estilo rabisco (rough.js):
   `alvo` (lista riscada → alvo), `funil` (funil com furos), `bolhas` (pequeno vs grande), `grafico` (curva caindo), `pipeline` (3 etapas).
-- **Exemplo concreto** (`"exemplo"`): nota em letra de mão numa moldura desenhada com fita, logo acima do gancho. Uma situação real, curta.
+- **Na prática** (`"exemplo"`): situação real e curta em Poppins 29 px (legível), com rótulo "NA PRÁTICA" e um traço vertical à mão na cor de destaque. Nada de caixa ou letra de mão no exemplo.
 - Desenhos disponíveis: `alvo` (lista riscada → alvo com dardo), `funil` (leads entrando, furos pingando R$), `iceberg` (ponta = cliente novo, base submersa),
   `grafico` (curva caindo com marcadores quente/morno/frio — rótulos: eixo|tempos|anotação|marcadores), `pipeline` (rótulos `nome:número`, calcula a % entre etapas), `bolhas`.
 - Marcações no texto: `[[palavra]]` = círculo à mão · `{{palavra}}` = sublinhado à mão.
-- **Menos é mais:** cada slide = título + subtítulo (1 linha) + desenho simples + exemplo + gancho. Sem parágrafo extra.
-- Desenhos limpos: traço pouco tremido, poucos rótulos, um único elemento na cor de destaque. Sem bonequinhos, hachuras ou enfeites.
+- Estrutura do slide: título + subtítulo + 1 frase curta (com círculo/sublinhado à mão) + desenho + **Na prática** + gancho.
 - Um desenho por slide no máximo; ele ocupa o espaço livre entre o texto e o gancho, centralizado.
 - **Margens:** 128 px nas laterais e 150 px em cima e embaixo. Tudo alinhado à mesma margem esquerda.
 - **Gancho:** sempre na mesma posição (embaixo, alinhado à esquerda com o texto), letra de mão + seta curta; só o traço da seta varia levemente.

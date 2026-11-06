@@ -111,8 +111,8 @@ body.render .frame .num{display:none}
 .flow .txt{font-size:31px;margin-top:38px}
 .draw{position:relative;width:100%;flex:1 1 auto;min-height:220px;max-height:430px;margin:auto 0}
 .spacer{flex:1 1 auto}
-.ex{position:relative;align-self:stretch;margin-top:30px;padding:20px 28px 22px;font:600 40px/1.15 Caveat,cursive;color:var(--ink)}
-.ex .exl{display:block;font:600 15px/1 Poppins,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--ac);margin-bottom:10px}
+.ex{position:relative;align-self:stretch;margin-top:30px;padding:2px 0 4px 30px;font:400 29px/1.38 Poppins,sans-serif;letter-spacing:-.01em;color:var(--body)}
+.ex .exl{display:block;font:600 16px/1 Poppins,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--ac);margin-bottom:12px}
 .ovl{position:absolute;left:0;top:0;width:1080px;height:1350px;z-index:6;pointer-events:none;overflow:visible}
 .ovl text{font-family:Caveat,cursive;font-weight:600}
 .gancho{position:relative;z-index:5;margin-top:36px;align-self:flex-start;padding-right:84px;font:600 44px/1.1 Caveat,cursive;color:var(--ink);opacity:.9;max-width:100%}
@@ -402,7 +402,7 @@ function renderSlide(s, i, total){
       ${corpo}
       ${pos==="depois do texto"?pics:""}
       ${s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:`<div class="spacer"></div>`}
-      ${s.exemplo?`<div class="ex"><span class="exl">Exemplo</span>${fmt(s.exemplo)}</div>`:""}
+      ${s.exemplo?`<div class="ex"><span class="exl">Na prática</span>${fmt(s.exemplo)}</div>`:""}
       ${s.gancho?`<div class="gancho" data-v="${i}">${fmt(s.gancho)}</div>`:""}
     </div>
     ${footer(s.rodape)}
@@ -422,7 +422,7 @@ function drawAll(root){
     const svg=document.createElementNS(NS,"svg"); svg.setAttribute("class","ovl"); svg.setAttribute("viewBox","0 0 1080 1350"); sl.appendChild(svg);
     const cs=getComputedStyle(sl); const ink=cs.getPropertyValue("--ink").trim()||"#111", ac=cs.getPropertyValue("--ac").trim()||ink, muted=cs.getPropertyValue("--muted").trim()||"#777";
     const rc=rough.svg(svg); let seed=hashSeed(sl.textContent.slice(0,60)+idx);
-    const O=(o={})=>Object.assign({stroke:ink,strokeWidth:2.4,roughness:1.05,bowing:.9,seed:(seed=seed+11)},o);
+    const O=(o={})=>Object.assign({stroke:ink,strokeWidth:2.6,roughness:1.4,bowing:1.2,seed:(seed=seed+11)},o);
     const add=n=>svg.appendChild(n);
     const txt=(x,y,t,size=40,anchor="start",fill=ink,rot=0)=>{const e=document.createElementNS(NS,"text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("font-size",size);e.setAttribute("text-anchor",anchor);e.setAttribute("fill",fill);if(rot)e.setAttribute("transform",`rotate(${rot} ${x} ${y})`);e.textContent=t;add(e)};
     const arrow=(x1,y1,x2,y2,o={})=>{const mx=(x1+x2)/2+(o.bend||0), my=(y1+y2)/2-(o.lift??30);
@@ -441,8 +441,7 @@ function drawAll(root){
       add(rc.line(x2,y2,x2-L*Math.cos(a-0.5),y2-L*Math.sin(a-0.5),O({strokeWidth:2.6,...o})));
       add(rc.line(x2,y2,x2-L*Math.cos(a+0.5),y2-L*Math.sin(a+0.5),O({strokeWidth:2.6,...o})))};
     sl.querySelectorAll(".ex").forEach(e=>{const b=offs(e,sl);
-      add(rc.rectangle(b.x,b.y,b.w,b.h,O({stroke:ac,strokeWidth:2.4,roughness:1.4})));
-      add(rc.line(b.x+b.w-90,b.y-12,b.x+b.w-20,b.y+14,O({stroke:muted,strokeWidth:10,roughness:.8})))});
+      add(rc.line(b.x+4,b.y+2,b.x+2,b.y+b.h,O({stroke:ac,strokeWidth:4,roughness:1.2})))});
     const g=sl.querySelector(".gancho");
     if(g){const b=offs(g,sl); const r=b.x+b.w, my=b.y+b.h*.55, v=+(g.dataset.v||0)%3;
       if(v===0) head([[r-70,my+2],[r-38,my-6],[r-6,my+2]]);
@@ -456,56 +455,51 @@ function drawAll(root){
       const fill=(o={})=>O({fill:ac,fillStyle:"hachure",hachureGap:10,fillWeight:1.4,stroke:ac,...o});
       const dot=(cx,cy,r=7,c=ac)=>add(rc.circle(cx,cy,r*2,O({fill:c,fillStyle:"solid",stroke:c,roughness:.8})));
       if(k==="alvo"){
-        const lw=w*.24, lh=Math.min(h-70,300), lx=x+w*.06, ly=y+(h-70-lh)/2;
+        const lw=w*.30, lh=h-80, lx=x+10, ly=y+16;
         add(rc.rectangle(lx,ly,lw,lh,O()));
-        for(let i=0;i<4;i++){ const yy=ly+56+i*((lh-90)/3); add(rc.line(lx+28,yy,lx+lw-28-(i%2)*30,yy,O({strokeWidth:1.8,stroke:muted}))) }
-        add(rc.line(lx-12,ly+lh+12,lx+lw+12,ly-12,O({stroke:ac,strokeWidth:3.4})));
-        txt(lx+lw/2,ly+lh+56,L[0]||"",34,"middle",muted);
-        const r=Math.min(lh/2,w*.17), cx=x+w*.74, cy=ly+lh/2;
-        [1,.62].forEach(f=>add(rc.circle(cx,cy,2*r*f,O())));
-        add(rc.circle(cx,cy,2*r*.22,O({fill:ac,fillStyle:"solid",stroke:ac})));
-        txt(cx,ly+lh+56,L[1]||"",38,"middle",ink);
-        arrow(lx+lw+44,cy,cx-r-30,cy,{lift:36});
+        for(let i=0;i<5;i++){ const yy=ly+46+i*((lh-80)/4); add(rc.line(lx+28,yy,lx+lw-28-(i%2)*36,yy,O({strokeWidth:2,stroke:muted}))) }
+        add(rc.line(lx-10,ly-8,lx+lw+10,ly+lh+8,O({stroke:ac,strokeWidth:4}))); add(rc.line(lx+lw+10,ly-8,lx-10,ly+lh+8,O({stroke:ac,strokeWidth:4})));
+        txt(lx+lw/2,ly+lh+52,L[0]||"",36,"middle",muted);
+        const r=Math.min(lh/2,w*.2), cx=x+w-r-24, cy=ly+lh/2;
+        [1,.66,.33].forEach((f,i)=>add(rc.circle(cx,cy,2*r*f,O(i===2?{fill:ac,fillStyle:"solid",stroke:ac}:{}))));
+        txt(cx,ly+lh+52,L[1]||"",40,"middle",ink);
+        arrow(lx+lw+34,cy,cx-r-22,cy,{lift:42});
       } else if(k==="funil"){
-        const top=y+30, neck=y+h*.62, cx=x+w*.5, tw=w*.46, nw=w*.09;
+        const top=y+24, neck=y+h*.64, cx=x+w*.5, tw=w*.48, nw=w*.10;
         add(rc.line(cx-tw/2,top,cx-nw/2,neck,O())); add(rc.line(cx+tw/2,top,cx+nw/2,neck,O()));
-        add(rc.ellipse(cx,top,tw,32,O()));
-        add(rc.line(cx-nw/2,neck,cx-nw/2,neck+44,O())); add(rc.line(cx+nw/2,neck,cx+nw/2,neck+44,O()));
-        txt(cx,top-30,L[0]||"leads",36,"middle",muted);
-        txt(cx,neck+100,L[4]||"vendas",40,"middle",ink);
+        add(rc.ellipse(cx,top,tw,36,O()));
+        add(rc.line(cx-nw/2,neck,cx-nw/2,neck+56,O())); add(rc.line(cx+nw/2,neck,cx+nw/2,neck+56,O()));
+        txt(cx,top+12,L[0]||"leads",38,"middle",muted);
+        txt(cx,neck+108,L[4]||"vendas",44,"middle",ink);
         const edge=(t,side)=>[cx+side*(tw/2+(nw/2-tw/2)*t), top+(neck-top)*t];
-        [[.25,-1],[.45,1],[.7,-1]].forEach(([t,side],i)=>{ const [hx,hy]=edge(t,side);
-          add(rc.circle(hx,hy,12,O({fill:ac,fillStyle:"solid",stroke:ac})));
-          txt(hx+side*30, hy+10, L[i+1]||"", 34, side<0?"end":"start", ink)});
-      } else if(k==="iceberg"){
-        const wl=y+h*.30, cx=x+w*.5;
-        add(rc.line(x,wl,x+w,wl,O({stroke:muted,strokeWidth:2})));
-        add(rc.polygon([[cx-60,wl],[cx-14,wl-h*.18],[cx+50,wl]],O()));
-        add(rc.polygon([[cx-70,wl],[cx-w*.34,wl+h*.34],[cx-w*.16,wl+h*.64],[cx+w*.2,wl+h*.62],[cx+w*.36,wl+h*.30],[cx+60,wl]],O({stroke:ac,strokeWidth:2.8})));
-        txt(cx+76,wl-h*.10,L[0]||"",36,"start",ink);
-        txt(cx,wl+h*.38,L[2]||"",50,"middle",ink);
-        txt(cx,wl+h*.38+46,L[3]||"",32,"middle",muted);
-      } else if(k==="bolhas"){
-        const c1x=x+w*.20, c2x=x+w*.66, cy=y+h*.5;
-        add(rc.circle(c1x,cy,h*.42,O()));
-        add(rc.circle(c2x,cy,h*.86,fill({hachureGap:14,fillWeight:1.6})));
-        txt(c1x,cy+10,L[0]||"novo",40,"middle",ink); txt(c1x,cy+h*.21+48,L[1]||"",36,"middle",muted);
-        txt(c2x,cy+14,L[2]||"base",56,"middle",ink); txt(c2x,cy+h*.43+48,L[3]||"",36,"middle",muted);
+        [[.22,-1],[.42,1],[.66,-1]].forEach(([t,side],i)=>{ const [hx,hy]=edge(t,side);
+          add(rc.circle(hx,hy,15,O({fill:ac,fillStyle:"solid",stroke:ac})));
+          for(let j=1;j<=2;j++) add(rc.circle(hx-side*4*j,hy+22*j,8,O({fill:ac,fillStyle:"solid",stroke:ac,roughness:1})));
+          txt(hx+side*34, hy+10, L[i+1]||"", 36, side<0?"end":"start", ac, side*-2)});
+      } else if(k==="bolhas"||k==="iceberg"){
+        const c1x=x+w*.19, c2x=x+w*.64, cy=y+h*.46, R1=Math.min(h*.50,w*.28), R2=Math.min(h*.88,w*.48);
+        add(rc.circle(c1x,cy,R1,O()));
+        add(rc.circle(c2x,cy,R2,O({stroke:ac,fill:ac,fillStyle:"hachure",hachureGap:15,fillWeight:1.4})));
+        txt(c1x,cy+12,L[0]||"novo",40,"middle",ink);
+        txt(c1x,cy+R1/2+50,L[1]||"",34,"middle",muted);
+        txt(c2x,cy+16,L[2]||"base",58,"middle",ink);
+        txt(c2x,cy+R2/2+50,L[3]||"",34,"middle",muted);
       } else if(k==="grafico"){
-        const ox=x+56, oy=y+h-60, ex=x+w-20, ey=y+24, W=ex-ox, H=oy-ey;
+        const ox=x+60, oy=y+h-64, ex=x+w-20, ey=y+16, W=ex-ox, H=oy-ey;
         add(rc.line(ox,oy,ex,oy,O())); add(rc.line(ox,oy,ox,ey,O()));
-        const f=t=>ey+H*(0.06+0.86*(1-Math.exp(-t*3.2)));
-        const pts=Array.from({length:12},(_,i)=>{const t=i/11; return [ox+14+t*(W-40), f(t)]});
-        add(rc.curve(pts,O({stroke:ac,strokeWidth:3.6,roughness:.8})));
-        txt(ox-20,ey+6,L[0]||"",32,"end",muted,-90);
-        const ticks=(L[1]||"").split(",").map(t=>t.trim()).filter(Boolean), tv=[.04,.36,.86];
-        ticks.forEach((t,i)=>{const tx=ox+14+tv[i]*(W-40); add(rc.line(tx,oy-8,tx,oy+8,O({strokeWidth:2}))); txt(tx,oy+44,t,32,"middle",muted)});
-        if(L[2]){ txt(ox+W*.60,ey+H*.28,L[2],38,"middle",ink); arrow(ox+W*.64,ey+H*.36,ox+W*.80,ey+H*.74,{lift:-6,bend:24}) }
+        add(rc.line(ex,oy,ex-18,oy-10,O())); add(rc.line(ex,oy,ex-18,oy+10,O()));
+        add(rc.line(ox,ey,ox-10,ey+18,O())); add(rc.line(ox,ey,ox+10,ey+18,O()));
+        const pts=[[ox+10,ey+30],[ox+W*.12,ey+H*.2],[ox+W*.25,ey+H*.52],[ox+W*.45,ey+H*.74],[ox+W*.7,ey+H*.86],[ex-30,ey+H*.9]];
+        add(rc.curve(pts,O({stroke:ac,strokeWidth:4.4,roughness:1.1})));
+        txt(ox-20,ey+6,L[0]||"",34,"end",muted,-90);
+        const ticks=(L[1]||"").split(",").map(t=>t.trim()).filter(Boolean);
+        ticks.forEach((t,i)=>{const tx=ox+W*[.1,.42,.82][i]; add(rc.line(tx,oy-8,tx,oy+8,O({strokeWidth:2}))); txt(tx,oy+46,t,34,"middle",muted)});
+        if(L[2]){ txt(ox+W*.6,ey+H*.42,L[2],42,"middle",ink,-4); arrow(ox+W*.62,ey+H*.48,ox+W*.73,ey+H*.8,{lift:-10,bend:20}) }
       } else if(k==="pipeline"){
         const n=3, gap=86, bw=(w-2*gap)/n, by=y+h*.12, bh=Math.min(h*.56,230);
         const P=L.slice(0,3).map(t=>{const [a,b]=t.split(":");return {nome:(a||"").trim(),num:(b||"").trim()}});
         P.forEach((p,i)=>{ const bx=x+i*(bw+gap);
-          add(rc.rectangle(bx,by,bw,bh,O(i===n-1?{stroke:ac,strokeWidth:3.2}:{})));
+          add(rc.rectangle(bx,by,bw,bh,O(i===n-1?{stroke:ac,strokeWidth:4}:{})));
           txt(bx+bw/2,by+52,p.nome,38,"middle",muted);
           if(p.num) txt(bx+bw/2,by+bh*.5+58,p.num,96,"middle",ink);
           if(i<n-1){ arrow(bx+bw+12,by+bh/2,bx+bw+gap-12,by+bh/2,{lift:12});

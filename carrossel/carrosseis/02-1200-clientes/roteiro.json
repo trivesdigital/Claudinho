@@ -16,12 +16,13 @@
       "tipo": "conteudo",
       "numero": "01",
       "titulo": "Ninguém compra o seu serviço",
-      "subtitulo": "Ele compra a certeza de que vai dar certo.",
+      "subtitulo": "Em 9 anos, nunca vi um cliente fechar pela lista de entregáveis.",
       "gancho": "Mas um erro mata até a melhor promessa",
       "desenho": "alvo",
       "rotulos": "lista de entregáveis|resultado",
       "altura_desenho": 380,
-      "exemplo": "“4 posts por semana” não fecha contrato. “Agenda cheia até março” fecha."
+      "exemplo": "“4 posts por semana” não fecha contrato. “Agenda cheia até março” fecha.",
+      "texto": "Ele fecha quando sente [[certeza]] de que vai dar certo."
     },
     {
       "tipo": "conteudo",
@@ -32,7 +33,8 @@
       "rotulos": "leads|atendimento lento|sem roteiro|ninguém faz follow-up|vendas",
       "altura_desenho": 430,
       "gancho": "E o maior vazamento nem está no anúncio",
-      "exemplo": "De 100 leads, se 40 esperam horas por resposta, você pagou por 40 conversas que nem aconteceram."
+      "exemplo": "De 100 leads, se 40 esperam horas por resposta, você pagou por 40 conversas que nem aconteceram.",
+      "texto": "Mais verba num funil furado é só {{vazamento mais caro}}."
     },
     {
       "tipo": "conteudo",
@@ -40,33 +42,36 @@
       "numero": "03",
       "titulo": "Está na base que você já tem",
       "subtitulo": "Todo mundo corre atrás do cliente novo. Quase ninguém volta no antigo.",
-      "desenho": "iceberg",
-      "rotulos": "cliente novo||sua base|já confia em você",
+      "desenho": "bolhas",
+      "rotulos": "cliente novo|caro e lento|sua base|já confia em você",
       "altura_desenho": 400,
       "gancho": "Só que um detalhe decide quem leva esse cliente",
-      "exemplo": "Uma mensagem para quem comprou há 6 meses não custa nada em mídia."
+      "exemplo": "Uma mensagem para quem comprou há 6 meses não custa nada em mídia.",
+      "texto": "Quem já te conhece compra mais rápido, negocia menos e [[indica]]."
     },
     {
       "tipo": "conteudo",
       "numero": "04",
       "titulo": "Velocidade vale mais que preço",
-      "subtitulo": "Quem responde primeiro, leva. Mesmo sendo mais caro.",
+      "subtitulo": "O cliente não espera. Ele procura o próximo.",
       "desenho": "grafico",
-      "rotulos": "chance de fechar|5 min, 1 hora, 1 dia|aqui o concorrente responde|quente, morno, frio",
+      "rotulos": "chance de fechar|5 min, 1 hora, 1 dia|aqui o concorrente responde",
       "altura_desenho": 420,
       "gancho": "E nada disso se sustenta sem a última peça",
-      "exemplo": "O lead chamou às 21h. A resposta veio às 9h. Ele já tinha fechado com outro."
+      "exemplo": "O lead chamou às 21h. A resposta veio às 9h. Ele já tinha fechado com outro.",
+      "texto": "Quase nunca se perde por preço. Perde-se para quem {{respondeu primeiro}}."
     },
     {
       "tipo": "conteudo",
       "numero": "05",
       "titulo": "Previsibilidade é o verdadeiro luxo",
-      "subtitulo": "Toda semana, só três números importam.",
+      "subtitulo": "Crescer sem saber de onde vem o próximo mês não é crescer. É torcer.",
       "desenho": "pipeline",
       "rotulos": "entrou:100|proposta:30|fechou:9|",
       "altura_desenho": 330,
       "gancho": "Se tivesse que resumir tudo em uma frase",
-      "exemplo": "Se de 100 leads saem 9 vendas, você já sabe quantos leads precisa para bater a meta do mês."
+      "exemplo": "Se de 100 leads saem 9 vendas, você já sabe quantos leads precisa para bater a meta do mês.",
+      "texto": "Toda semana, olhe só para três números:"
     },
     {
       "tipo": "cta",
