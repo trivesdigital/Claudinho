@@ -19,8 +19,8 @@ html,body{margin:0;background:#000}
    gap = espaço entre a linha e a de baixo. A última linha tem a linha de base em `base`. */
 const LAYOUTS = {
   riscado:   { align:"left",   lines:[
-    {font:"600 52px Poppins", ls:"-.02em", gap:26},
-    {font:"400 230px Anton", fit:640, upper:1, strike:1, gap:24},
+    {font:"600 52px Poppins", ls:"-.02em", gap:16},
+    {font:"400 230px Anton", fit:640, upper:1, strike:1, gap:16},
     {font:"400 300px Anton", fit:920, upper:1} ]},
   padrao:    { align:"center", lines:[
     {font:"500 24px Poppins", ls:".42em", upper:1, gap:30},
@@ -39,9 +39,18 @@ const LAYOUTS = {
 const M = 80; // margem de segurança
 
 function inkW(e){const r=document.createRange();r.selectNodeContents(e);return r.getBoundingClientRect().width}
-function metrics(text, font, stretch){
-  const c=document.createElement("canvas").getContext("2d"); c.font=(stretch?`${stretch==="62%"?"extra-condensed":"normal"} `:"")+font;
-  const m=c.measureText(text||"H"); return {asc:m.actualBoundingBoxAscent, desc:Math.max(0,m.actualBoundingBoxDescent)};
+function profile(text, font, stretch, ls, left){
+  // para cada coluna x (0..1079): quanto a tinta sobe (asc) e desce (desc) a partir da linha de base
+  const fs=parseFloat(font.match(/([\d.]+)px/)[1]), W=1080, H=Math.ceil(fs*2.4), base=Math.round(fs*1.6);
+  const cv=document.createElement("canvas"); cv.width=W; cv.height=H; const c=cv.getContext("2d");
+  c.font=font; if(stretch) try{ c.fontStretch = stretch==="62%"?"extra-condensed":"normal" }catch(e){}
+  if(ls) try{ c.letterSpacing = (/em$/.test(ls)? parseFloat(ls)*fs+"px" : ls) }catch(e){}
+  c.fillStyle="#000"; c.fillText(text,left,base);
+  const d=c.getImageData(0,0,W,H).data, asc=new Array(W).fill(null), desc=new Array(W).fill(null);
+  for(let x=0;x<W;x++){ for(let y=0;y<H;y++) if(d[(y*W+x)*4+3]>60){ asc[x]=base-y; break }
+    for(let y=H-1;y>=0;y--) if(d[(y*W+x)*4+3]>60){ desc[x]=y-base; break } }
+  const vals=a=>a.filter(v=>v!=null);
+  return {asc, desc, maxAsc:Math.max(0,...vals(asc)), maxDesc:Math.max(0,...vals(desc))};
 }
 
 window.loadCapa = async function(spec){
@@ -67,25 +76,46 @@ window.loadCapa = async function(spec){
   await document.fonts.ready; await new Promise(r=>setTimeout(r,250));
   // ajusta larguras
   els.forEach(({d,cfg})=>{ if(cfg.fit){ const fs=parseFloat(getComputedStyle(d).fontSize); d.style.fontSize=fs*cfg.fit/inkW(d)+"px" } });
-  // empilha de baixo para cima a partir da linha de base da última linha
+  // alinhamento horizontal primeiro (o encaixe vertical depende da posição x)
+  els.forEach(({d})=>{ const w=d.getBoundingClientRect().width; d.style.left = align==="center" ? (540-w/2)+"px" : M+"px" });
+  // empilha de baixo para cima: cada linha desce até ficar a `gap` px da linha de baixo no ponto mais próximo (acentos incluídos)
   const placeAt=(d,base)=>{ d.style.top="0px"; const b=d.querySelector(".bl").getBoundingClientRect().top-d.getBoundingClientRect().top; d.style.top=(base-b)+"px" };
   const pos=[]; let below=null;
   for(let i=els.length-1;i>=0;i--){
     const {d,cfg,t}=els[i]; if(cfg.pill) continue;
     const fs=parseFloat(d.style.fontSize||getComputedStyle(d).fontSize);
-    const mt=metrics(t, cfg.font.replace(/\d+px/, fs+"px"), cfg.stretch);
+    const left=d.getBoundingClientRect().left - document.querySelector(".c").getBoundingClientRect().left;
+    const F=cfg.font.replace(/[\d.]+px/, fs+"px");
+    const semAcento=t.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    let pr=profile(t,F,cfg.stretch,cfg.ls,left), prB = semAcento===t ? pr : profile(semAcento,F,cfg.stretch,cfg.ls,left);
     let base;
     if(!below) base = spec.base ?? 664;
-    else { const gap = (els[i].cfg.gap ?? 30); base = below.top - gap - mt.desc; }
-    placeAt(d,base); pos[i]={base, top:base-mt.asc, bottom:base+mt.desc};
+    else {
+      const gap=(cfg.gap ?? 14)*(spec.espaco ?? 1), gapA=Math.min(gap,6);
+      const fitBase=(P)=>{ let best=Infinity;
+        for(let x=0;x<1080;x++){ if(P.desc[x]==null) continue;
+          if(below.absTopB[x]!=null) best=Math.min(best, below.absTopB[x]-gap-P.desc[x]);
+          if(below.absTop[x]!=null)  best=Math.min(best, below.absTop[x]-gapA-P.desc[x]); }
+        return best===Infinity ? below.top-gap-P.maxDesc : best };
+      base=fitBase(pr);
+      // encaixe: se um acento da linha de baixo bate na de cima, desloca a de cima até 90px à direita
+      if(align!=="center" && spec.encaixe!==false){
+        let bestDx=0, bestB=base;
+        for(let dx=6; dx<=90; dx+=6){ const P=profile(t,F,cfg.stretch,cfg.ls,left+dx); const b=fitBase(P); if(b>bestB+14){ bestB=b; bestDx=dx } }
+        if(bestDx){ d.style.left=(left+bestDx)+"px"; pr=profile(t,F,cfg.stretch,cfg.ls,left+bestDx); prB = semAcento===t ? pr : profile(semAcento,F,cfg.stretch,cfg.ls,left+bestDx); base=bestB }
+      }
+      if(below.pillGap) base -= below.pillGap;
+    }
+    placeAt(d,base);
+    const absTop=pr.asc.map(v=>v==null?null:base-v), absTopB=prB.asc.map(v=>v==null?null:base-v);
+    pos[i]={base, top:base-pr.maxAsc, bottom:base+pr.maxDesc, absTop, absTopB, pillGap:0};
+    if(i>0 && els[i-1].cfg.pill){ const ph=els[i-1].d.getBoundingClientRect().height; pos[i].pillGap = ph*0.55 }
     below=pos[i];
   }
   // selo: centralizado no vão entre a linha de cima e a de baixo
   els.forEach(({d,cfg},i)=>{ if(!cfg.pill) return;
     const up=pos[i-1], dn=pos[i+1]; const h=d.getBoundingClientRect().height;
     d.style.top=((up.bottom+dn.top)/2-h/2)+"px"; d.style.transform="rotate(-3deg)"; });
-  // alinhamento horizontal
-  els.forEach(({d})=>{ const w=d.getBoundingClientRect().width; d.style.left = align==="center" ? (540-w/2)+"px" : M+"px" });
   // risco à mão
   els.forEach(({d,cfg,t},i)=>{ if(!cfg.strike) return; const r=d.getBoundingClientRect(); const fs=parseFloat(d.style.fontSize);
     const y=pos[i].base-fs*.36, rc=rough.svg(document.getElementById("sv")), sv=document.getElementById("sv");
