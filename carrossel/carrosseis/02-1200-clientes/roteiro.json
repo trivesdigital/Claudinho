@@ -1,12 +1,80 @@
 {
-  "marca": {"mark": "", "brand": "", "handle": "@zanellato", "tema": "claro", "cor": "", "logo": ""},
+  "marca": {
+    "mark": "",
+    "brand": "",
+    "handle": "@zanellato",
+    "tema": "claro",
+    "cor": "",
+    "logo": ""
+  },
   "slides": [
-    {"tipo": "pronta", "foto": "capa/capa.png"},
-    {"tipo": "conteudo", "numero": "01", "titulo": "Ninguém compra o seu serviço", "subtitulo": "Compram a certeza de que vai dar certo.", "texto": "Em 9 anos, nunca vi um cliente fechar pela lista de entregáveis.\n\nEle fecha quando enxerga **o resultado com clareza** — e confia em quem está do outro lado.\n\nVenda menos processo. Venda mais destino."},
-    {"tipo": "conteudo", "numero": "02", "titulo": "Tráfego não salva operação quebrada", "subtitulo": "Anúncio só acelera o que já existe.", "texto": "Antes de investir mais em mídia, olhe para dentro:", "itens": "Atendimento | quanto tempo o lead espera?\nComercial | existe roteiro ou improviso?\nFollow-up | alguém volta a falar com quem não fechou?", "texto_final": "Se a operação vaza, mais tráfego é só **vazamento mais caro**."},
-    {"tipo": "conteudo", "tema": "escuro", "numero": "03", "titulo": "O dinheiro está na base que você já tem", "subtitulo": "A maioria das empresas corre atrás de cliente novo e esquece o antigo.", "texto": "Clientes antigos, leads perdidos, propostas recusadas.\n\nQuem já te conhece compra mais rápido, negocia menos e indica.\n\n**Reativar é o crescimento mais barato que existe.**"},
-    {"tipo": "conteudo", "numero": "04", "titulo": "Velocidade vale mais que preço", "subtitulo": "O cliente não espera. Ele procura o próximo.", "texto": "Perdi a conta de quantas vendas vi irem para o concorrente mais caro.\n\nO motivo quase nunca é preço. É quem **respondeu primeiro**, com clareza e com segurança.\n\nResponder rápido é uma decisão de empresa, não de vendedor."},
-    {"tipo": "conteudo", "numero": "05", "titulo": "Previsibilidade é o verdadeiro luxo", "subtitulo": "Crescer sem saber de onde vem o próximo mês não é crescer. É torcer.", "texto": "Toda semana, três perguntas:", "itens": "1. Quantas oportunidades entraram? (e de onde vieram)\n2. Quantas viraram proposta? (e por quê não as outras)\n3. Quantas fecharam? (e quanto custou cada uma)", "texto_final": "Quem responde isso de cabeça dorme melhor."},
-    {"tipo": "cta", "tema": "escuro", "kicker": "O resumo", "titulo": "Crescer é processo.\nNão é sorte.", "texto": "+1.200 clientes depois, a lição é sempre a mesma: quem organiza a casa, escala.", "chamada": "Comente **MÉTODO** e eu te mostro por onde começar."}
+    {
+      "tipo": "pronta",
+      "foto": "capa/capa.png"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "01",
+      "titulo": "Ninguém compra o seu serviço",
+      "subtitulo": "Em 9 anos, nunca vi um cliente fechar pela lista de entregáveis.",
+      "texto": "Ele fecha quando sente [[certeza]] de que vai dar certo.\n\nVenda menos processo. Venda mais destino.",
+      "gancho": "Mas um erro mata até a melhor promessa",
+      "desenho": "alvo",
+      "rotulos": "lista de entregáveis|resultado",
+      "altura_desenho": 380
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "02",
+      "titulo": "Tráfego não salva operação quebrada",
+      "subtitulo": "Anúncio só acelera o que já existe — inclusive os furos.",
+      "texto": "Mais verba num funil furado é só {{vazamento mais caro}}.",
+      "desenho": "funil",
+      "rotulos": "leads|atendimento lento|sem roteiro|ninguém faz follow-up|vendas",
+      "altura_desenho": 430,
+      "gancho": "E o maior vazamento nem está no anúncio"
+    },
+    {
+      "tipo": "conteudo",
+      "tema": "escuro",
+      "numero": "03",
+      "titulo": "Está na base que você já tem",
+      "subtitulo": "Todo mundo corre atrás do cliente novo. Quase ninguém volta no antigo.",
+      "texto": "Quem já te conhece compra mais rápido, negocia menos e [[indica]].",
+      "desenho": "bolhas",
+      "rotulos": "cliente novo|caro e lento|sua base|já confia em você",
+      "altura_desenho": 400,
+      "gancho": "Só que um detalhe decide quem leva esse cliente"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "04",
+      "titulo": "Velocidade vale mais que preço",
+      "subtitulo": "O cliente não espera. Ele procura o próximo.",
+      "texto": "Vi muita venda ir para o concorrente mais caro. O motivo? Ele {{respondeu primeiro}}.",
+      "desenho": "grafico",
+      "rotulos": "chance de fechar|5 min, 1 hora, 1 dia|aqui o concorrente responde",
+      "altura_desenho": 420,
+      "gancho": "E nada disso se sustenta sem a última peça"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "05",
+      "titulo": "Previsibilidade é o verdadeiro luxo",
+      "subtitulo": "Crescer sem saber de onde vem o próximo mês não é crescer. É torcer.",
+      "texto": "Toda semana, olhe só para três números:",
+      "desenho": "pipeline",
+      "rotulos": "entrou|proposta|fechou|quem sabe isso de cabeça, dorme melhor",
+      "altura_desenho": 330,
+      "gancho": "Se tivesse que resumir tudo em uma frase"
+    },
+    {
+      "tipo": "cta",
+      "tema": "escuro",
+      "kicker": "O resumo",
+      "titulo": "Crescer é {{processo}}.\nNão é sorte.",
+      "texto": "+1.200 clientes depois, a lição é sempre a mesma: quem organiza a casa, escala.",
+      "chamada": "Comente **MÉTODO** e eu te mostro por onde começar."
+    }
   ]
 }

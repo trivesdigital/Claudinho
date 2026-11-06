@@ -6,7 +6,7 @@
 <title>Gerador de Carrossel Zanellato</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link crossorigin="anonymous" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;0,8..60,900;1,8..60,600&display=swap">
+<link crossorigin="anonymous" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Caveat:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;0,8..60,900;1,8..60,600&display=swap">
 <style>
 /* ============================================================
    UI DO EDITOR
@@ -105,6 +105,11 @@ body.render .frame .num{display:none}
 .lst .ds{color:var(--muted)}
 .lst .no{font-weight:700;color:var(--ink);margin-right:18px}
 .pics{display:flex;gap:20px;margin-top:44px}
+.draw{position:relative;margin-top:36px;width:100%}
+.ovl{position:absolute;left:0;top:0;width:1080px;height:1350px;z-index:6;pointer-events:none;overflow:visible}
+.ovl text{font-family:Caveat,cursive;font-weight:600}
+.gancho{position:absolute;right:160px;bottom:92px;z-index:5;font:600 48px/1.1 Caveat,cursive;color:var(--ink);opacity:.92;text-align:right;max-width:760px}
+.hc,.hu{position:relative;white-space:nowrap}
 .pics.first{margin-top:0;margin-bottom:48px}
 .pic{flex:1;min-width:0;border-radius:22px;overflow:hidden;background:#e6e6e6}
 .pic img{width:100%;height:100%;object-fit:cover;display:block}
@@ -198,6 +203,7 @@ body.render .frame .num{display:none}
   <div id="stage"></div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
@@ -256,6 +262,9 @@ const TIPOS = {
     ["texto","area","Texto (linha em branco = novo parágrafo)"],
     ["itens","area","Lista — uma por linha: Termo | descrição"],
     ["texto_final","area","Texto depois da lista"],
+    ["desenho","sel","Desenho à mão",["","alvo","funil","bolhas","grafico","pipeline"]],
+    ["rotulos","text","Rótulos do desenho (separe com |)"],
+    ["gancho","area","Gancho para o próximo slide (letra de mão)"],
     ["rodape","text","Rodapé (opcional)"],
   ]},
   foto:{nome:"Foto cheia", campos:[
@@ -284,6 +293,8 @@ const TIPOS = {
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function fmt(s){
   return esc(s)
+    .replace(/\[\[(.+?)\]\]/g,'<span class="hc">$1</span>')
+    .replace(/\{\{(.+?)\}\}/g,'<span class="hu">$1</span>')
     .replace(/\{handle\}/g, "<em>"+esc(state.marca.handle||"")+"</em>")
     .replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")
     .replace(/\*(.+?)\*/g,"<em>$1</em>")
@@ -353,6 +364,7 @@ function renderSlide(s, i, total){
         <h2 class="ctt">${fmt(s.titulo)}</h2>
         ${s.texto?`<div class="ctx">${fmt(s.texto)}</div>`:""}
         <div class="cta">${fmt(s.chamada || "Salva esse post e segue {handle}")}</div>
+        ${s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(s.rotulos||"")}" style="height:${Number(s.altura_desenho)||300}px"></div>`:""}
       </div>
       ${footer(s.rodape)}
     </div>`;
@@ -380,9 +392,100 @@ function renderSlide(s, i, total){
       ${pos==="depois do subtítulo"?pics:""}
       ${corpo}
       ${pos==="depois do texto"?pics:""}
+      ${s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(s.rotulos||"")}" style="height:${Number(s.altura_desenho)||360}px"></div>`:""}
     </div>
+    ${s.gancho?`<div class="gancho">${fmt(s.gancho)}</div>`:""}
     ${footer(s.rodape)}
   </div>`;
+}
+
+/* ============================================================
+   DESENHOS À MÃO (rough.js)
+   ============================================================ */
+function offs(el, root){ let x=0,y=0,e=el; while(e && e!==root){ x+=e.offsetLeft; y+=e.offsetTop; e=e.offsetParent } return {x,y,w:el.offsetWidth,h:el.offsetHeight} }
+function hashSeed(str){ let h=7; for(const c of str) h=(h*31+c.charCodeAt(0))%100000; return h||1 }
+function drawAll(root){
+  if (!window.rough) return;
+  root.querySelectorAll(".slide").forEach((sl,idx)=>{
+    sl.querySelectorAll(".ovl").forEach(o=>o.remove());
+    const NS="http://www.w3.org/2000/svg";
+    const svg=document.createElementNS(NS,"svg"); svg.setAttribute("class","ovl"); svg.setAttribute("viewBox","0 0 1080 1350"); sl.appendChild(svg);
+    const cs=getComputedStyle(sl); const ink=cs.getPropertyValue("--ink").trim()||"#111", ac=cs.getPropertyValue("--ac").trim()||ink, muted=cs.getPropertyValue("--muted").trim()||"#777";
+    const rc=rough.svg(svg); let seed=hashSeed(sl.textContent.slice(0,60)+idx);
+    const O=(o={})=>Object.assign({stroke:ink,strokeWidth:2.6,roughness:1.6,bowing:1.4,seed:(seed=seed+11)},o);
+    const add=n=>svg.appendChild(n);
+    const txt=(x,y,t,size=40,anchor="start",fill=ink,rot=0)=>{const e=document.createElementNS(NS,"text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("font-size",size);e.setAttribute("text-anchor",anchor);e.setAttribute("fill",fill);if(rot)e.setAttribute("transform",`rotate(${rot} ${x} ${y})`);e.textContent=t;add(e)};
+    const arrow=(x1,y1,x2,y2,o={})=>{const mx=(x1+x2)/2+(o.bend||0), my=(y1+y2)/2-(o.lift??30);
+      add(rc.curve([[x1,y1],[mx,my],[x2,y2]],O({strokeWidth:2.4,...o})));
+      const a=Math.atan2(y2-my,x2-mx), L=20;
+      add(rc.line(x2,y2,x2-L*Math.cos(a-0.5),y2-L*Math.sin(a-0.5),O({strokeWidth:2.4,...o})));
+      add(rc.line(x2,y2,x2-L*Math.cos(a+0.5),y2-L*Math.sin(a+0.5),O({strokeWidth:2.4,...o})))};
+    // marcações no texto
+    sl.querySelectorAll(".hc").forEach(e=>{const b=offs(e,sl); add(rc.ellipse(b.x+b.w/2,b.y+b.h/2+3,b.w+34,b.h+14,O({stroke:ac,strokeWidth:3,roughness:.9,bowing:.4})))});
+    sl.querySelectorAll(".hu").forEach(e=>{const b=offs(e,sl); const y=b.y+b.h-2;
+      add(rc.curve([[b.x-4,y],[b.x+b.w*.5,y+7],[b.x+b.w+6,y-3]],O({stroke:ac,strokeWidth:3.4,roughness:1.8})));
+      add(rc.curve([[b.x+8,y+10],[b.x+b.w*.55,y+15],[b.x+b.w-4,y+8]],O({stroke:ac,strokeWidth:2.2,roughness:2})))});
+    // gancho: seta à mão depois do texto
+    const g=sl.querySelector(".gancho"); if(g){const b=offs(g,sl); arrow(b.x+b.w+12,b.y+b.h*.55,b.x+b.w+70,b.y+b.h*.55+4,{lift:14,stroke:ink})}
+    // desenhos
+    sl.querySelectorAll(".draw").forEach(d=>{
+      const b=offs(d,sl), k=d.dataset.kind, L=(d.dataset.labels||"").split("|").map(x=>x.trim());
+      const {x,y,w,h}=b;
+      if(k==="funil"){
+        const top=y+24, neck=y+h*.64, cx=x+w*.5, tw=w*.46, nw=w*.10;
+        add(rc.line(cx-tw/2,top,cx-nw/2,neck,O())); add(rc.line(cx+tw/2,top,cx+nw/2,neck,O()));
+        add(rc.ellipse(cx,top,tw,38,O()));
+        add(rc.line(cx-nw/2,neck,cx-nw/2,neck+56,O())); add(rc.line(cx+nw/2,neck,cx+nw/2,neck+56,O()));
+        txt(cx,top+12,L[0]||"leads",40,"middle",muted);
+        txt(cx,neck+108,L[4]||"vendas",46,"middle",ink);
+        const edge=(t,side)=>[cx+side*(tw/2+(nw/2-tw/2)*t), top+(neck-top)*t];
+        const holes=[[.22,-1],[.42,1],[.66,-1]];
+        holes.forEach(([t,side],i)=>{ const [hx,hy]=edge(t,side);
+          add(rc.circle(hx,hy,14,O({fill:ac,fillStyle:"solid",stroke:ac})));
+          for(let j=1;j<=2;j++) add(rc.circle(hx+side*14*j,hy+24*j,8,O({fill:ac,fillStyle:"solid",stroke:ac,roughness:1})));
+          txt(hx+side*36, hy+12, L[i+1]||"", 38, side<0?"end":"start", ac, side*-2)});
+      } else if(k==="bolhas"){
+        const c1x=x+w*.20, c2x=x+w*.66, cy=y+h*.5;
+        add(rc.circle(c1x,cy,h*.42,O()));
+        add(rc.circle(c2x,cy,h*.86,O({stroke:ac,fill:ac,fillStyle:"hachure",hachureGap:14,fillWeight:1.6})));
+        txt(c1x,cy+10,L[0]||"novo",40,"middle",ink);
+        txt(c1x,cy+h*.21+48,L[1]||"",36,"middle",muted);
+        txt(c2x,cy+14,L[2]||"base",56,"middle",ink);
+        txt(c2x,cy+h*.43+48,L[3]||"",36,"middle",muted);
+      } else if(k==="grafico"){
+        const ox=x+60, oy=y+h-60, ex=x+w-20, ey=y+10;
+        add(rc.line(ox,oy,ex,oy,O())); add(rc.line(ox,oy,ox,ey,O()));
+        add(rc.line(ex,oy,ex-18,oy-10,O())); add(rc.line(ex,oy,ex-18,oy+10,O()));
+        add(rc.line(ox,ey,ox-10,ey+18,O())); add(rc.line(ox,ey,ox+10,ey+18,O()));
+        const W=ex-ox, H=oy-ey;
+        const pts=[[ox+10,ey+30],[ox+W*.12,ey+H*.2],[ox+W*.25,ey+H*.52],[ox+W*.45,ey+H*.74],[ox+W*.7,ey+H*.86],[ex-30,ey+H*.9]];
+        add(rc.curve(pts,O({stroke:ac,strokeWidth:4,roughness:1.2})));
+        txt(ox-20,ey+6,L[0]||"",36,"end",muted,-90);
+        const ticks=(L[1]||"").split(",").map(t=>t.trim()).filter(Boolean);
+        ticks.forEach((t,i)=>{const tx=ox+W*[.1,.42,.82][i]; add(rc.line(tx,oy-8,tx,oy+8,O({strokeWidth:2}))); txt(tx,oy+46,t,36,"middle",muted)});
+        if(L[2]){ txt(ox+W*.62,ey+H*.42,L[2],44,"middle",ink,-4); arrow(ox+W*.62,ey+H*.48,ox+W*.72,ey+H*.8,{lift:-10,bend:20}) }
+      } else if(k==="pipeline"){
+        const n=3, bw=(w-2*70)/n, by=y+h*.18, bh=h*.5;
+        for(let i=0;i<n;i++){ const bx=x+i*(bw+70);
+          add(rc.rectangle(bx,by,bw,bh,O(i===n-1?{stroke:ac,fill:ac,fillStyle:"hachure",hachureGap:12}:{})));
+          txt(bx+bw/2,by+bh/2+16,L[i]||"",46,"middle",ink);
+          if(i<n-1) arrow(bx+bw+10,by+bh/2,bx+bw+60,by+bh/2,{lift:10}) }
+        if(L[3]) txt(x+w/2,by+bh+72,L[3],40,"middle",muted);
+      } else if(k==="alvo"){
+        const lx=x+10, ly=y+40, lw=w*.36;
+        add(rc.rectangle(lx,ly,lw,h-90,O()));
+        for(let i=0;i<5;i++){ const yy=ly+50+i*((h-170)/4); add(rc.line(lx+30,yy,lx+lw-30-(i%2)*40,yy,O({strokeWidth:2,stroke:muted}))) }
+        add(rc.line(lx-10,ly-10,lx+lw+10,ly+h-80,O({stroke:ac,strokeWidth:4}))); add(rc.line(lx+lw+10,ly-10,lx-10,ly+h-80,O({stroke:ac,strokeWidth:4})));
+        txt(lx+lw/2,ly+h-40,L[0]||"",38,"middle",muted);
+        const cx=x+w*.76, cy=y+(h-50)/2+10, r=(h-90)/2;
+        [1,.66,.33].forEach((f,i)=>add(rc.circle(cx,cy,2*r*f,O(i===2?{fill:ac,fillStyle:"solid",stroke:ac}:{}))));
+        txt(cx,ly+h-40,L[1]||"",42,"middle",ink);
+        arrow(lx+lw+30,cy,cx-r-20,cy,{lift:40});
+      } else if(k==="sublinhado"){
+        add(rc.curve([[x,y+20],[x+w*.5,y+30],[x+w*.85,y+14]],O({stroke:ac,strokeWidth:4})));
+      }
+    });
+  });
 }
 
 /* ajusta o título da capa para ocupar ~68% da largura */
@@ -418,6 +521,7 @@ async function renderAll(){
       <div style="transform:scale(${zoom});transform-origin:0 0;width:1080px;height:1350px">${renderSlide(s,i,n)}</div></div>`).join("");
   try { await document.fonts.ready } catch(e){}
   fitCovers(stage);
+  try { drawAll(stage) } catch(e){ console.error(e) }
   stage.querySelectorAll(".frame").forEach(f=>f.onclick=()=>{ sel=+f.dataset.i; renderCards(); document.querySelector(`.card[data-i="${sel}"]`)?.scrollIntoView({behavior:"smooth",block:"start"}) });
   renderChecks();
 }

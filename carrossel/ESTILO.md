@@ -60,3 +60,11 @@ Objetivo: parar o scroll sendo elegante. O hook é o herói.
 - Tudo branco/neutro, sem neon. Margem de segurança de 80 px.
 - Referências de tipografia: contraste de peso/estilo, escala extrema, palavras pequenas encaixadas nos vãos.
 O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.
+
+## Storyboard (curiosidade slide a slide)
+- Todo slide de conteúdo termina com um **gancho** (`"gancho"`): uma frase em letra de mão (Caveat) + seta desenhada,
+  que abre uma pergunta respondida só no slide seguinte. Uma linha, sem ponto final. Ex.: "E o maior vazamento nem está no anúncio".
+- **Desenhos à mão** (`"desenho"` + `"rotulos"` separados por `|`), estilo rabisco (rough.js):
+  `alvo` (lista riscada → alvo), `funil` (funil com furos), `bolhas` (pequeno vs grande), `grafico` (curva caindo), `pipeline` (3 etapas).
+- Marcações no texto: `[[palavra]]` = círculo à mão · `{{palavra}}` = sublinhado à mão.
+- Um desenho por slide no máximo; o texto encolhe para dar espaço ao desenho.
