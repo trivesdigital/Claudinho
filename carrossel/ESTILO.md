@@ -41,6 +41,7 @@ O gerador avisa (e pede confirmação ao exportar) se a capa não tem foto ou se
 `**negrito**` · `*cor de destaque*` · `_serifa itálica_` · linha em branco = novo parágrafo.
 
 ## Escrita (copy)
+- **Depois de dois-pontos, sempre letra maiúscula** (aplicado automaticamente em todo texto).
 - Capa: promessa + "do zero" / "em X dias". Uma palavra gigante, poucas palavras ao redor.
 - Cada slide de conteúdo: **um** ensinamento. Título no imperativo curto ("Documente, não performe"), subtítulo com a tensão, corpo de 2 a 4 frases curtas.
 - Feche cada slide com uma frase de contraste ("Viral é acidente. Valor é intenção.").
@@ -66,6 +67,9 @@ O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.
   que abre uma pergunta respondida só no slide seguinte. Uma linha, sem ponto final. Ex.: "E o maior vazamento nem está no anúncio".
 - **Desenhos à mão** (`"desenho"` + `"rotulos"` separados por `|`), estilo rabisco (rough.js):
   `alvo` (lista riscada → alvo), `funil` (funil com furos), `bolhas` (pequeno vs grande), `grafico` (curva caindo), `pipeline` (3 etapas).
+- **Exemplo concreto** (`"exemplo"`): nota em letra de mão numa moldura desenhada com fita, logo acima do gancho. Uma situação real, curta.
+- Desenhos disponíveis: `alvo` (lista riscada → alvo com dardo), `funil` (leads entrando, furos pingando R$), `iceberg` (ponta = cliente novo, base submersa),
+  `grafico` (curva caindo com marcadores quente/morno/frio — rótulos: eixo|tempos|anotação|marcadores), `pipeline` (rótulos `nome:número`, calcula a % entre etapas), `bolhas`.
 - Marcações no texto: `[[palavra]]` = círculo à mão · `{{palavra}}` = sublinhado à mão.
 - Um desenho por slide no máximo; ele ocupa o espaço livre entre o texto e o gancho, centralizado.
 - **Margens:** 128 px nas laterais e 150 px em cima e embaixo. Tudo alinhado à mesma margem esquerda.
