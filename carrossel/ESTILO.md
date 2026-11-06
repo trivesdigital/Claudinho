@@ -68,6 +68,5 @@ O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.
   `alvo` (lista riscada → alvo), `funil` (funil com furos), `bolhas` (pequeno vs grande), `grafico` (curva caindo), `pipeline` (3 etapas).
 - Marcações no texto: `[[palavra]]` = círculo à mão · `{{palavra}}` = sublinhado à mão.
 - Um desenho por slide no máximo; ele ocupa o espaço livre entre o texto e o gancho, centralizado.
-- **Margens proporcionais:** 96 px nos 4 lados. Título começa na margem de cima; gancho apoia na margem de baixo.
-- **Gancho varia** de slide para slide (alterna sozinho, ou fixe com `"gancho_estilo"` 0–4):
-  0 direita + seta curta · 1 esquerda + seta com laço · 2 centro + seta curva embaixo · 3 dentro de caixa à mão + seta · 4 esquerda sublinhado + seta.
+- **Margens:** 128 px nas laterais e 150 px em cima e embaixo. Tudo alinhado à mesma margem esquerda.
+- **Gancho:** sempre na mesma posição (embaixo, alinhado à esquerda com o texto), letra de mão + seta curta; só o traço da seta varia levemente.
