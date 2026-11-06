@@ -71,6 +71,8 @@ O slide 1 do roteiro usa `"tipo": "pronta"` apontando para `capa/capa.png`.
 - Desenhos disponíveis: `alvo` (lista riscada → alvo com dardo), `funil` (leads entrando, furos pingando R$), `iceberg` (ponta = cliente novo, base submersa),
   `grafico` (curva caindo com marcadores quente/morno/frio — rótulos: eixo|tempos|anotação|marcadores), `pipeline` (rótulos `nome:número`, calcula a % entre etapas), `bolhas`.
 - Marcações no texto: `[[palavra]]` = círculo à mão · `{{palavra}}` = sublinhado à mão.
+- **Menos é mais:** cada slide = título + subtítulo (1 linha) + desenho simples + exemplo + gancho. Sem parágrafo extra.
+- Desenhos limpos: traço pouco tremido, poucos rótulos, um único elemento na cor de destaque. Sem bonequinhos, hachuras ou enfeites.
 - Um desenho por slide no máximo; ele ocupa o espaço livre entre o texto e o gancho, centralizado.
 - **Margens:** 128 px nas laterais e 150 px em cima e embaixo. Tudo alinhado à mesma margem esquerda.
 - **Gancho:** sempre na mesma posição (embaixo, alinhado à esquerda com o texto), letra de mão + seta curta; só o traço da seta varia levemente.

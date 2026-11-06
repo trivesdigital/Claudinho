@@ -422,7 +422,7 @@ function drawAll(root){
     const svg=document.createElementNS(NS,"svg"); svg.setAttribute("class","ovl"); svg.setAttribute("viewBox","0 0 1080 1350"); sl.appendChild(svg);
     const cs=getComputedStyle(sl); const ink=cs.getPropertyValue("--ink").trim()||"#111", ac=cs.getPropertyValue("--ac").trim()||ink, muted=cs.getPropertyValue("--muted").trim()||"#777";
     const rc=rough.svg(svg); let seed=hashSeed(sl.textContent.slice(0,60)+idx);
-    const O=(o={})=>Object.assign({stroke:ink,strokeWidth:2.6,roughness:1.6,bowing:1.4,seed:(seed=seed+11)},o);
+    const O=(o={})=>Object.assign({stroke:ink,strokeWidth:2.4,roughness:1.05,bowing:.9,seed:(seed=seed+11)},o);
     const add=n=>svg.appendChild(n);
     const txt=(x,y,t,size=40,anchor="start",fill=ink,rot=0)=>{const e=document.createElementNS(NS,"text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("font-size",size);e.setAttribute("text-anchor",anchor);e.setAttribute("fill",fill);if(rot)e.setAttribute("transform",`rotate(${rot} ${x} ${y})`);e.textContent=t;add(e)};
     const arrow=(x1,y1,x2,y2,o={})=>{const mx=(x1+x2)/2+(o.bend||0), my=(y1+y2)/2-(o.lift??30);
@@ -456,46 +456,35 @@ function drawAll(root){
       const fill=(o={})=>O({fill:ac,fillStyle:"hachure",hachureGap:10,fillWeight:1.4,stroke:ac,...o});
       const dot=(cx,cy,r=7,c=ac)=>add(rc.circle(cx,cy,r*2,O({fill:c,fillStyle:"solid",stroke:c,roughness:.8})));
       if(k==="alvo"){
-        const lw=w*.30, lh=h-70, lx=x+8, ly=y+10;
-        add(rc.polygon([[lx,ly],[lx+lw-34,ly],[lx+lw,ly+34],[lx+lw,ly+lh],[lx,ly+lh]],O()));
-        add(rc.line(lx+lw-34,ly,lx+lw-34,ly+34,O({strokeWidth:1.8}))); add(rc.line(lx+lw-34,ly+34,lx+lw,ly+34,O({strokeWidth:1.8})));
-        add(rc.line(lx+24,ly+44,lx+lw*.62,ly+44,O({strokeWidth:4})));
-        for(let i=0;i<5;i++){ const yy=ly+92+i*((lh-120)/5); add(rc.rectangle(lx+24,yy-12,18,18,O({strokeWidth:1.8})));
-          add(rc.line(lx+54,yy-3,lx+lw-24-(i%3)*22,yy-3,O({strokeWidth:1.8,stroke:muted}))) }
-        add(rc.line(lx-14,ly+lh*.2,lx+lw+14,ly+lh*.86,O({stroke:ac,strokeWidth:5}))); add(rc.line(lx+lw+14,ly+lh*.2,lx-14,ly+lh*.86,O({stroke:ac,strokeWidth:5})));
-        txt(lx+lw/2,ly+lh+48,L[0]||"",36,"middle",muted);
-        const r=Math.min((h-90)/2,w*.2), cx=x+w-r-30, cy=y+10+(h-70)/2;
-        [1,.72,.44].forEach(f=>add(rc.circle(cx,cy,2*r*f,O())));
-        add(rc.circle(cx,cy,2*r*.2,O({fill:ac,fillStyle:"solid",stroke:ac})));
-        const dx=cx+r*.9, dy=cy-r*1.0; add(rc.line(dx,dy,cx+4,cy-4,O({strokeWidth:3.4})));
-        add(rc.line(dx,dy,dx+22,dy-6,O({strokeWidth:2.4}))); add(rc.line(dx,dy,dx+6,dy-22,O({strokeWidth:2.4})));
-        add(rc.line(dx-12,dy+12,dx+10,dy+6,O({strokeWidth:2.4}))); add(rc.line(dx-12,dy+12,dx-6,dy-10,O({strokeWidth:2.4})));
-        txt(cx,ly+lh+48,L[1]||"",40,"middle",ink);
-        arrow(lx+lw+40,cy+10,cx-r-24,cy+10,{lift:46});
+        const lw=w*.24, lh=Math.min(h-70,300), lx=x+w*.06, ly=y+(h-70-lh)/2;
+        add(rc.rectangle(lx,ly,lw,lh,O()));
+        for(let i=0;i<4;i++){ const yy=ly+56+i*((lh-90)/3); add(rc.line(lx+28,yy,lx+lw-28-(i%2)*30,yy,O({strokeWidth:1.8,stroke:muted}))) }
+        add(rc.line(lx-12,ly+lh+12,lx+lw+12,ly-12,O({stroke:ac,strokeWidth:3.4})));
+        txt(lx+lw/2,ly+lh+56,L[0]||"",34,"middle",muted);
+        const r=Math.min(lh/2,w*.17), cx=x+w*.74, cy=ly+lh/2;
+        [1,.62].forEach(f=>add(rc.circle(cx,cy,2*r*f,O())));
+        add(rc.circle(cx,cy,2*r*.22,O({fill:ac,fillStyle:"solid",stroke:ac})));
+        txt(cx,ly+lh+56,L[1]||"",38,"middle",ink);
+        arrow(lx+lw+44,cy,cx-r-30,cy,{lift:36});
       } else if(k==="funil"){
-        const top=y+70, neck=y+h*.66, cx=x+w*.5, tw=w*.44, nw=w*.09;
-        for(let i=0;i<7;i++){ const px=cx-tw*.36+i*(tw*.72/6), py=y+16+(i%2)*10; add(rc.circle(px,py,15,O({strokeWidth:1.8}))); add(rc.line(px,py+8,px,py+22,O({strokeWidth:1.6}))) }
+        const top=y+30, neck=y+h*.62, cx=x+w*.5, tw=w*.46, nw=w*.09;
         add(rc.line(cx-tw/2,top,cx-nw/2,neck,O())); add(rc.line(cx+tw/2,top,cx+nw/2,neck,O()));
-        add(rc.ellipse(cx,top,tw,34,O()));
-        add(rc.line(cx-nw/2,neck,cx-nw/2,neck+46,O())); add(rc.line(cx+nw/2,neck,cx+nw/2,neck+46,O()));
-        txt(cx+tw/2+18,y+34,L[0]||"leads",36,"start",muted);
-        for(let i=0;i<2;i++) dot(cx-6+i*12,neck+64+i*16,6,ink);
-        txt(cx,neck+128,L[4]||"vendas",42,"middle",ink);
+        add(rc.ellipse(cx,top,tw,32,O()));
+        add(rc.line(cx-nw/2,neck,cx-nw/2,neck+44,O())); add(rc.line(cx+nw/2,neck,cx+nw/2,neck+44,O()));
+        txt(cx,top-30,L[0]||"leads",36,"middle",muted);
+        txt(cx,neck+100,L[4]||"vendas",40,"middle",ink);
         const edge=(t,side)=>[cx+side*(tw/2+(nw/2-tw/2)*t), top+(neck-top)*t];
-        [[.22,-1],[.42,1],[.66,-1]].forEach(([t,side],i)=>{ const [hx,hy]=edge(t,side);
+        [[.25,-1],[.45,1],[.7,-1]].forEach(([t,side],i)=>{ const [hx,hy]=edge(t,side);
           add(rc.circle(hx,hy,12,O({fill:ac,fillStyle:"solid",stroke:ac})));
-          add(rc.curve([[hx,hy],[hx+side*8,hy+14],[hx+side*10,hy+34]],O({stroke:ac,strokeWidth:2})));
-          dot(hx+side*10,hy+44,6); if(side>0) txt(hx+side*28,hy+56,"R$",30,"start",ac);
-          txt(hx+side*44, hy-10, L[i+1]||"", 36, side<0?"end":"start", ink, side*-2)});
+          txt(hx+side*30, hy+10, L[i+1]||"", 34, side<0?"end":"start", ink)});
       } else if(k==="iceberg"){
         const wl=y+h*.30, cx=x+w*.5;
-        add(rc.curve(Array.from({length:12},(_,i)=>[x+i*w/11, wl+(i%2?7:-7)]),O({stroke:muted,strokeWidth:2})));
-        add(rc.polygon([[cx-70,wl],[cx-26,wl-h*.20],[cx+8,wl-h*.24],[cx+52,wl-h*.10],[cx+80,wl]],O()));
-        add(rc.polygon([[cx-80,wl],[cx-w*.36,wl+h*.30],[cx-w*.30,wl+h*.62],[cx-w*.06,wl+h*.68],[cx+w*.26,wl+h*.60],[cx+w*.38,wl+h*.28],[cx+80,wl]],fill({hachureGap:13})));
-        txt(cx+100,wl-h*.16,L[0]||"",38,"start",ink); arrow(cx+96,wl-h*.15,cx+40,wl-h*.11,{lift:-12});
-        txt(x+4,wl-24,L[1]||"",30,"start",muted);
-        txt(cx,wl+h*.36,L[2]||"",54,"middle",ink);
-        txt(cx,wl+h*.36+48,L[3]||"",34,"middle",ink);
+        add(rc.line(x,wl,x+w,wl,O({stroke:muted,strokeWidth:2})));
+        add(rc.polygon([[cx-60,wl],[cx-14,wl-h*.18],[cx+50,wl]],O()));
+        add(rc.polygon([[cx-70,wl],[cx-w*.34,wl+h*.34],[cx-w*.16,wl+h*.64],[cx+w*.2,wl+h*.62],[cx+w*.36,wl+h*.30],[cx+60,wl]],O({stroke:ac,strokeWidth:2.8})));
+        txt(cx+76,wl-h*.10,L[0]||"",36,"start",ink);
+        txt(cx,wl+h*.38,L[2]||"",50,"middle",ink);
+        txt(cx,wl+h*.38+46,L[3]||"",32,"middle",muted);
       } else if(k==="bolhas"){
         const c1x=x+w*.20, c2x=x+w*.66, cy=y+h*.5;
         add(rc.circle(c1x,cy,h*.42,O()));
@@ -503,24 +492,20 @@ function drawAll(root){
         txt(c1x,cy+10,L[0]||"novo",40,"middle",ink); txt(c1x,cy+h*.21+48,L[1]||"",36,"middle",muted);
         txt(c2x,cy+14,L[2]||"base",56,"middle",ink); txt(c2x,cy+h*.43+48,L[3]||"",36,"middle",muted);
       } else if(k==="grafico"){
-        const ox=x+60, oy=y+h-64, ex=x+w-20, ey=y+30, W=ex-ox, H=oy-ey;
+        const ox=x+56, oy=y+h-60, ex=x+w-20, ey=y+24, W=ex-ox, H=oy-ey;
         add(rc.line(ox,oy,ex,oy,O())); add(rc.line(ox,oy,ox,ey,O()));
-        add(rc.line(ex,oy,ex-18,oy-10,O())); add(rc.line(ex,oy,ex-18,oy+10,O()));
-        add(rc.line(ox,ey,ox-10,ey+18,O())); add(rc.line(ox,ey,ox+10,ey+18,O()));
-        const f=t=>ey+H*(0.08+0.84*(1-Math.exp(-t*3.2)));
-        const pts=Array.from({length:14},(_,i)=>{const t=i/13; return [ox+14+t*(W-40), f(t)]});
-        add(rc.polygon([...pts,[pts[13][0],oy],[pts[0][0],oy]],O({stroke:"none",fill:ac,fillStyle:"hachure",hachureGap:12,fillWeight:1})));
-        add(rc.curve(pts,O({stroke:ac,strokeWidth:4.2,roughness:1})));
-        txt(ox-22,ey+8,L[0]||"",34,"end",muted,-90);
-        const ticks=(L[1]||"").split(",").map(t=>t.trim()).filter(Boolean), tv=[.04,.36,.86], tags=(L[3]||"").split(",").map(t=>t.trim());
-        ticks.forEach((t,i)=>{const tx=ox+14+tv[i]*(W-40), ty=f(tv[i]); add(rc.line(tx,oy-8,tx,oy+8,O({strokeWidth:2}))); txt(tx,oy+46,t,34,"middle",muted);
-          dot(tx,ty,8,ink); if(tags[i]) txt(tx+(i===0?18:0),ty-22,tags[i],34,i===0?"start":"middle",ink)});
-        if(L[2]){ txt(ox+W*.58,ey+H*.30,L[2],40,"middle",ink,-3); arrow(ox+W*.62,ey+H*.36,ox+W*.80,ey+H*.74,{lift:-6,bend:24}) }
+        const f=t=>ey+H*(0.06+0.86*(1-Math.exp(-t*3.2)));
+        const pts=Array.from({length:12},(_,i)=>{const t=i/11; return [ox+14+t*(W-40), f(t)]});
+        add(rc.curve(pts,O({stroke:ac,strokeWidth:3.6,roughness:.8})));
+        txt(ox-20,ey+6,L[0]||"",32,"end",muted,-90);
+        const ticks=(L[1]||"").split(",").map(t=>t.trim()).filter(Boolean), tv=[.04,.36,.86];
+        ticks.forEach((t,i)=>{const tx=ox+14+tv[i]*(W-40); add(rc.line(tx,oy-8,tx,oy+8,O({strokeWidth:2}))); txt(tx,oy+44,t,32,"middle",muted)});
+        if(L[2]){ txt(ox+W*.60,ey+H*.28,L[2],38,"middle",ink); arrow(ox+W*.64,ey+H*.36,ox+W*.80,ey+H*.74,{lift:-6,bend:24}) }
       } else if(k==="pipeline"){
         const n=3, gap=86, bw=(w-2*gap)/n, by=y+h*.12, bh=Math.min(h*.56,230);
         const P=L.slice(0,3).map(t=>{const [a,b]=t.split(":");return {nome:(a||"").trim(),num:(b||"").trim()}});
         P.forEach((p,i)=>{ const bx=x+i*(bw+gap);
-          add(rc.rectangle(bx,by,bw,bh,O(i===n-1?{stroke:ac,fill:ac,fillStyle:"hachure",hachureGap:14,fillWeight:1}:{})));
+          add(rc.rectangle(bx,by,bw,bh,O(i===n-1?{stroke:ac,strokeWidth:3.2}:{})));
           txt(bx+bw/2,by+52,p.nome,38,"middle",muted);
           if(p.num) txt(bx+bw/2,by+bh*.5+58,p.num,96,"middle",ink);
           if(i<n-1){ arrow(bx+bw+12,by+bh/2,bx+bw+gap-12,by+bh/2,{lift:12});
