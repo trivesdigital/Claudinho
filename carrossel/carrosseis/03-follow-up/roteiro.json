@@ -1,7 +1,7 @@
 {
   "capa": {
-    "foto": "capa/foto-rio.jpg",
-    "pessoa": "capa/pessoa-rio.png",
+    "foto": "capa/foto.jpg",
+    "pessoa": "capa/pessoa.png",
     "layout": "riscado",
     "linhas": [
       "Seu problema não é",
