@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@0;1&family=Poppins:ital,wght@0,300;0,500;0,600;0,800;1,500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<style>
+html,body{margin:0;background:#000}
+.c{position:relative;width:1080px;height:1350px;overflow:hidden}
+.c>img,.c>svg{position:absolute;inset:0;width:100%;height:100%}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.20),rgba(0,0,0,0) 55%)}
+.L{position:absolute;inset:0;color:#fff}
+.L>div{position:absolute;white-space:nowrap;line-height:1}
+.bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+.pill{color:#111;background:#fff;border-radius:99px;padding:8px 24px 10px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+</style></head><body>
+<div class="c"><img src="foto-rio.jpg"><div class="shade"></div><div class="L" id="back"></div><svg id="sv" viewBox="0 0 1080 1350"></svg><img src="pessoa-rio.png"><div class="L" id="front"></div></div>
+<script>
+const v=new URLSearchParams(location.search).get('v');
+const S={
+ a:[['back','Seu problema não é',"font:500 24px Poppins;letter-spacing:.42em;text-transform:uppercase",{cx:540,base:178}],
+    ['back','TRÁFEGO',"font:400 230px Anton",{cx:540,base:418,fit:600}],
+    ['front','é o',"font:italic 500 42px Poppins",{cx:540,base:472,pill:1}],
+    ['back','FOLLOW-UP',"font:400 300px Anton",{cx:540,base:664,fit:920}]],
+ b:[['back','Seu problema não é',"font:600 52px Poppins;letter-spacing:-.02em",{x:80,base:192}],
+    ['back','TRÁFEGO',"font:400 230px Anton",{x:80,base:418,fit:640,strike:1}],
+    ['back','É O FOLLOW-UP',"font:400 300px Anton",{x:80,base:664,fit:920}]],
+ c:[['back','Seu problema',"font:500 24px Poppins;letter-spacing:.42em;text-transform:uppercase",{x:84,base:178}],
+    ['back','não é tráfego.',"font:300 150px Poppins;letter-spacing:-.05em",{x:76,base:388,fit:920}],
+    ['back','É follow-up.',"font:800 170px Poppins;letter-spacing:-.06em",{x:76,base:632,fit:920}]],
+ d:[['back','Seu problema',"font:600 56px Poppins;letter-spacing:-.03em",{x:84,base:178}],
+    ['back','não é tráfego,',"font:italic 400 200px 'Instrument Serif';letter-spacing:-.02em",{x:76,base:374,fit:920}],
+    ['back','É O FOLLOW-UP',"font:900 200px Archivo;font-stretch:62%;letter-spacing:-.01em",{x:80,base:658,fit:920}]]
+}[v];
+const made=S.map(([layer,html,css,p])=>{const d=document.createElement('div');d.innerHTML=html+'<i class="bl"></i>';d.style.cssText=css;if(p.pill)d.classList.add('pill');document.getElementById(layer).appendChild(d);return [d,p]});
+function ink(e){const r=document.createRange();r.selectNodeContents(e);return r.getBoundingClientRect()}
+Promise.all(S.map(x=>document.fonts.load(x[2].split(';')[0].replace('font:','')).catch(()=>0))).then(()=>document.fonts.ready).then(()=>new Promise(r=>setTimeout(r,300))).then(()=>{
+ for(const [d,p] of made){ if(p.fit){const fs=parseFloat(getComputedStyle(d).fontSize);d.style.fontSize=fs*p.fit/ink(d).width+'px'} }
+ for(const [d,p] of made){ d.style.top='0px'; const b=d.querySelector('.bl').getBoundingClientRect().top-d.getBoundingClientRect().top; d.style.top=(p.base-b)+'px';
+   const w=d.getBoundingClientRect().width; if(p.x!=null)d.style.left=p.x+'px'; if(p.cx!=null)d.style.left=(p.cx-w/2)+'px';
+   if(p.strike){const r=ink(d), rc=rough.svg(document.getElementById('sv')); const y=p.base-parseFloat(d.style.fontSize)*.36;
+     document.getElementById('sv').appendChild(rc.curve([[r.left-14,y+10],[r.left+r.width*.5,y-6],[r.right+18,y+4]],{stroke:'#fff',strokeWidth:9,roughness:1.4,seed:4}));
+     document.getElementById('sv').appendChild(rc.curve([[r.left-6,y+26],[r.left+r.width*.55,y+10],[r.right+10,y+20]],{stroke:'#fff',strokeWidth:5,roughness:1.6,seed:9}))}
+ }
+ document.body.dataset.ok=1});
+</script></body></html>
