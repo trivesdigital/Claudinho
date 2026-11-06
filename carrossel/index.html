@@ -269,7 +269,7 @@ const TIPOS = {
     ["texto","area","Texto (linha em branco = novo parágrafo)"],
     ["itens","area","Lista — uma por linha: Termo | descrição"],
     ["texto_final","area","Texto depois da lista"],
-    ["desenho","sel","Desenho à mão",["","alvo","funil","iceberg","bolhas","grafico","pipeline"]],
+    ["desenho","sel","Desenho à mão",["","alvo","funil","bolhas","grafico","pipeline","linha"]],
     ["exemplo","area","Exemplo concreto (nota à mão)"],
     ["rotulos","text","Rótulos do desenho (separe com |)"],
     ["gancho","area","Gancho para o próximo slide (letra de mão)"],
@@ -434,7 +434,7 @@ function drawAll(root){
     sl.querySelectorAll(".hc").forEach(e=>{const b=offs(e,sl); add(rc.ellipse(b.x+b.w/2,b.y+b.h/2+3,b.w+34,b.h+14,O({stroke:ac,strokeWidth:3,roughness:.9,bowing:.4})))});
     sl.querySelectorAll(".hu").forEach(e=>{const b=offs(e,sl); const y=b.y+b.h-2;
       add(rc.curve([[b.x-4,y],[b.x+b.w*.5,y+7],[b.x+b.w+6,y-3]],O({stroke:ac,strokeWidth:3.4,roughness:1.8})));
-      add(rc.curve([[b.x+8,y+10],[b.x+b.w*.55,y+15],[b.x+b.w-4,y+8]],O({stroke:ac,strokeWidth:2.2,roughness:2})))});
+      add(rc.curve([[b.x+8,y+7],[b.x+b.w*.55,y+10],[b.x+b.w-4,y+6]],O({stroke:ac,strokeWidth:2,roughness:1.6})))});
     // gancho: seta à mão depois do texto
     const head=(pts,o={})=>{const n=pts.length,[x1,y1]=pts[n-2],[x2,y2]=pts[n-1],a=Math.atan2(y2-y1,x2-x1),L=22;
       add(rc.curve(pts,O({strokeWidth:2.6,...o})));
@@ -495,12 +495,21 @@ function drawAll(root){
         const ticks=(L[1]||"").split(",").map(t=>t.trim()).filter(Boolean);
         ticks.forEach((t,i)=>{const tx=ox+W*[.1,.42,.82][i]; add(rc.line(tx,oy-8,tx,oy+8,O({strokeWidth:2}))); txt(tx,oy+46,t,34,"middle",muted)});
         if(L[2]){ txt(ox+W*.6,ey+H*.42,L[2],42,"middle",ink,-4); arrow(ox+W*.62,ey+H*.48,ox+W*.73,ey+H*.8,{lift:-10,bend:20}) }
+      } else if(k==="linha"){
+        const P=L.filter(Boolean).map(t=>{const [a,b]=t.split(":");return {top:(a||"").trim(),bot:(b||"").trim()}});
+        const ly=y+h*.48, x0=x+30, x1=x+w-30;
+        add(rc.line(x0-10,ly,x1+10,ly,O()));
+        add(rc.line(x1+10,ly,x1-8,ly-10,O())); add(rc.line(x1+10,ly,x1-8,ly+10,O()));
+        P.forEach((p,i)=>{const px=x0+i*((x1-x0-30)/(P.length-1));
+          add(rc.circle(px,ly,i===0?30:22,O(i===0?{fill:ac,fillStyle:"solid",stroke:ac}:{fill:"#fff",fillStyle:"solid"})));
+          txt(px,ly-40,p.top,38,"middle",ink,i%2?-3:3);
+          txt(px,ly+(i%2?112:66),p.bot,32,"middle",muted)});
       } else if(k==="pipeline"){
         const n=3, gap=86, bw=(w-2*gap)/n, by=y+h*.12, bh=Math.min(h*.56,230);
         const P=L.slice(0,3).map(t=>{const [a,b]=t.split(":");return {nome:(a||"").trim(),num:(b||"").trim()}});
         P.forEach((p,i)=>{ const bx=x+i*(bw+gap);
           add(rc.rectangle(bx,by,bw,bh,O(i===n-1?{stroke:ac,strokeWidth:4}:{})));
-          txt(bx+bw/2,by+52,p.nome,38,"middle",muted);
+          if(p.num) txt(bx+bw/2,by+52,p.nome,38,"middle",muted); else txt(bx+bw/2,by+bh/2+14,p.nome,38,"middle",ink);
           if(p.num) txt(bx+bw/2,by+bh*.5+58,p.num,96,"middle",ink);
           if(i<n-1){ arrow(bx+bw+12,by+bh/2,bx+bw+gap-12,by+bh/2,{lift:12});
             const a=parseFloat(P[i].num), b=parseFloat(P[i+1].num); if(a&&b) txt(bx+bw+gap/2,by+bh/2-30,Math.round(b/a*100)+"%",32,"middle",ac) } });

@@ -1,0 +1,80 @@
+{
+  "marca": {
+    "mark": "",
+    "brand": "",
+    "handle": "@zanellato",
+    "tema": "claro",
+    "cor": "",
+    "logo": ""
+  },
+  "slides": [
+    {
+      "tipo": "pronta",
+      "foto": "capa/capa.png"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "01",
+      "titulo": "A venda não morre no anúncio",
+      "subtitulo": "Ela morre no silêncio depois do primeiro contato.",
+      "texto": "O lead respondeu, pediu preço… e {{ninguém voltou a falar}}.",
+      "desenho": "grafico",
+      "rotulos": "interesse do lead|dia 1, dia 3, dia 7|aqui ninguém chamou",
+      "exemplo": "Proposta enviada na segunda. Nenhuma mensagem até sexta. Na outra semana, ele fechou com quem ligou.",
+      "gancho": "E o motivo é quase sempre o mesmo"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "02",
+      "titulo": "Ninguém insiste por medo de ser chato",
+      "subtitulo": "Só que o cliente não lembra de você como chato.",
+      "texto": "Ele simplesmente [[esquece]] de você.",
+      "desenho": "bolhas",
+      "rotulos": "parecer chato|seu medo|ele esqueceu|o que acontece de verdade",
+      "exemplo": "Quem pediu orçamento recebeu outros 3. Lembra de quem voltou a falar com ele.",
+      "gancho": "Então qual é o jeito certo de insistir?"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "03",
+      "titulo": "A cadência de 5 toques",
+      "subtitulo": "Simples, educada e com data marcada.",
+      "texto": "Cada toque com {{um motivo novo}} para responder:",
+      "desenho": "linha",
+      "rotulos": "Dia 0:responde|Dia 1:retoma a dúvida|Dia 3:mostra um caso|Dia 7:pergunta direta|Dia 15:encerra",
+      "exemplo": "Dia 7: “Ainda faz sentido conversarmos sobre isso este mês?” — curta, direta e fácil de responder.",
+      "gancho": "Mas o que escrever para reabrir a conversa?"
+    },
+    {
+      "tipo": "conteudo",
+      "tema": "escuro",
+      "numero": "04",
+      "titulo": "Volte com algo útil",
+      "subtitulo": "Nada de “só passando para saber”.",
+      "texto": "Um dado, um caso parecido ou uma pergunta. Algo que faça [[valer a resposta]].",
+      "desenho": "alvo",
+      "rotulos": "“só passando…”|mensagem útil",
+      "exemplo": "“Lembrei de você: um cliente do seu segmento resolveu exatamente aquela dúvida de prazo. Quer que eu te mostre como?”",
+      "gancho": "E como garantir que isso aconteça toda vez"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "05",
+      "titulo": "Follow-up é processo, não memória",
+      "subtitulo": "Se depende de alguém lembrar, não acontece.",
+      "texto": "No CRM, todo lead aberto tem {{próximo passo e data}}.",
+      "desenho": "pipeline",
+      "rotulos": "lead|próximo passo|data|",
+      "exemplo": "Toda segunda, 15 minutos: quem está sem próximo passo recebe um na hora.",
+      "gancho": "Resumindo em uma frase"
+    },
+    {
+      "tipo": "cta",
+      "tema": "escuro",
+      "kicker": "O resumo",
+      "titulo": "Venda é {{insistência}}\ncom elegância.",
+      "texto": "O lead que não respondeu ontem pode ser o melhor contrato do mês.",
+      "chamada": "Comente **CADÊNCIA** e eu te mando o roteiro dos 5 toques."
+    }
+  ]
+}

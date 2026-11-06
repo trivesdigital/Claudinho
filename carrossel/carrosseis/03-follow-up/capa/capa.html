@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,500;0,600;1,500&display=swap">
+<style>
+html,body{margin:0;background:#000}
+.c{position:relative;width:1080px;height:1350px;overflow:hidden}
+.c>img{position:absolute;inset:0;width:100%;height:100%}
+.t{position:absolute;inset:0;color:#fff}
+.t>*{position:absolute;white-space:nowrap;left:0;right:0;text-align:center}
+.kick{top:186px;font:500 22px/1 Poppins;letter-spacing:.42em;text-transform:uppercase;padding-left:.42em}
+.marca{top:222px;font:400 200px/.84 Anton;text-transform:uppercase;letter-spacing:.01em}
+.pessoal{top:330px;font:400 300px/.84 Anton;text-transform:uppercase;letter-spacing:-.005em}
+.tag{top:0;left:50%;right:auto;transform:translateX(-50%) rotate(-3deg);font:italic 500 40px/1 Poppins;color:#111;background:#fff;padding:8px 26px 10px;border-radius:99px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,0) 38%)}
+</style></head><body>
+<div class="c">
+  <img src="foto.jpg">
+  <div class="shade"></div>
+  <div class="t">
+    <div class="kick">Seu problema não é</div>
+    <div class="marca">Tráfego</div>
+    <div class="pessoal">Follow-up</div>
+  </div>
+  <img src="pessoa.png">
+  <div class="t"><div class="tag">é o</div></div>
+</div>
+<script>
+function fit(e,target){const r=document.createRange();r.selectNodeContents(e);const w=r.getBoundingClientRect().width;
+ e.style.fontSize=(parseFloat(getComputedStyle(e).fontSize)*target/w)+'px'}
+document.fonts.ready.then(()=>{
+ const m=document.querySelector('.marca'), p=document.querySelector('.pessoal'), tag=document.querySelector('.tag');
+ fit(m,600); fit(p,920);
+ // PESSOAL logo abaixo de MARCA, com sobreposição leve
+ const mb=m.getBoundingClientRect(); const capH=parseFloat(getComputedStyle(m).fontSize)*.84;
+ const mfs=parseFloat(getComputedStyle(m).fontSize), mBottom=mb.top+mfs*.84;
+ const gap=70; p.style.top=(mBottom+gap)+'px';
+ const th=tag.getBoundingClientRect().height; tag.style.top=(mBottom+gap/2-th/2+6)+'px';
+ document.body.dataset.ok=1});
+</script>
+</body></html>
