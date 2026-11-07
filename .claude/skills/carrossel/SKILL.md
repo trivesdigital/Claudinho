@@ -38,6 +38,15 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 | `grafico` | eixo Y \| marca1, marca2, marca3 \| anotação |
 | `pipeline` | etapa:número \| etapa:número \| etapa:número \| nota (número opcional; % é calculada) |
 | `linha` | Dia 0:ação \| Dia 1:ação \| … (linha do tempo) |
+| `baloes` | fala \| legenda \| pensamento \| legenda |
+| `escada` | degrau 1 \| degrau 2 \| degrau 3 \| nota |
+| `balanca` | lado leve \| lado pesado (vence) |
+| `cartoes` | título A \| texto A (✗) \| título B \| texto B (✓) |
+| `troca` | você dá \| valor \| você recebe \| valor |
+
+**Nunca repetir a ilustração de um carrossel anterior** (regra do usuário). Se nenhum desenho existente servir sem repetir, crie um novo tipo em `index.html` (função `drawAll`) e registre aqui.
+Já usados: 02 → alvo, funil, bolhas, grafico, pipeline · 03 → grafico, bolhas, linha, alvo, pipeline · 04 → baloes, escada, balanca, cartoes, troca.
+**Fácil de entender:** títulos curtos e do dia a dia; uma ideia por slide; "Na prática" como diálogo (**Cliente:** / **Você:**).
 
 ## Linha editorial (base: Método Trives — dono para dono)
 Comercial (follow-up, qualificação, reativação da base), gestão (CRM, números da semana, previsibilidade), visão de fundador (+1.200 clientes, 9 anos), tecnologia (IA de pré-vendas no WhatsApp), marketing × comercial integrados. **Não** usar "marca pessoal" como tema.

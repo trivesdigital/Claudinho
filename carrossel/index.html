@@ -271,7 +271,7 @@ const TIPOS = {
     ["texto","area","Texto (linha em branco = novo parágrafo)"],
     ["itens","area","Lista — uma por linha: Termo | descrição"],
     ["texto_final","area","Texto depois da lista"],
-    ["desenho","sel","Desenho à mão",["","alvo","funil","bolhas","grafico","pipeline","linha"]],
+    ["desenho","sel","Desenho à mão",["","alvo","funil","bolhas","grafico","pipeline","linha","baloes","escada","balanca","cartoes","troca"]],
     ["exemplo","area","Exemplo concreto (nota à mão)"],
     ["rotulos","text","Rótulos do desenho (separe com |)"],
     ["gancho","area","Gancho para o próximo slide (letra de mão)"],
@@ -422,7 +422,7 @@ function drawAll(root){
     sl.querySelectorAll(".ovl").forEach(o=>o.remove());
     const NS="http://www.w3.org/2000/svg";
     const svg=document.createElementNS(NS,"svg"); svg.setAttribute("class","ovl"); svg.setAttribute("viewBox","0 0 1080 1350"); sl.appendChild(svg);
-    const cs=getComputedStyle(sl); const ink=cs.getPropertyValue("--ink").trim()||"#111", ac=cs.getPropertyValue("--ac").trim()||ink, muted=cs.getPropertyValue("--muted").trim()||"#777";
+    const cs=getComputedStyle(sl); const ink=cs.getPropertyValue("--ink").trim()||"#111", ac=cs.getPropertyValue("--ac").trim()||ink, muted=cs.getPropertyValue("--muted").trim()||"#777"; const bg=cs.getPropertyValue("--bg").trim()||"#fff";
     const rc=rough.svg(svg); let seed=hashSeed(sl.textContent.slice(0,60)+idx);
     const O=(o={})=>Object.assign({stroke:ink,strokeWidth:2.6,roughness:1.4,bowing:1.2,seed:(seed=seed+11)},o);
     const add=n=>svg.appendChild(n);
@@ -516,6 +516,63 @@ function drawAll(root){
           if(i<n-1){ arrow(bx+bw+12,by+bh/2,bx+bw+gap-12,by+bh/2,{lift:12});
             const a=parseFloat(P[i].num), b=parseFloat(P[i+1].num); if(a&&b) txt(bx+bw+gap/2,by+bh/2-30,Math.round(b/a*100)+"%",32,"middle",ac) } });
         if(L[3]) txt(x+w/2,by+bh+64,L[3],38,"middle",muted);
+      } else if(k==="baloes"){
+        // balão de fala (o que ele diz) + balão de pensamento (o que ele sente)
+        const bw=w*.46, bh=Math.min(h*.34,160), b1x=x+10, b1y=y+40;
+        add(rc.rectangle(b1x,b1y,bw,bh,O()));
+        add(rc.polygon([[b1x+bw*.22,b1y+bh],[b1x+bw*.16,b1y+bh+46],[b1x+bw*.36,b1y+bh]],O({fill:bg,fillStyle:"solid"})));
+        add(rc.line(b1x+bw*.22,b1y+bh,b1x+bw*.36,b1y+bh,O({stroke:bg,strokeWidth:5,roughness:0})));
+        txt(b1x+bw/2,b1y+bh/2+14,L[0]||"",46,"middle",ink);
+        txt(b1x,b1y-14,L[1]||"",30,"start",muted);
+        const rx=w*.27, ry=Math.min(h*.22,110), cx=x+w-rx-6, cy=Math.max(b1y+bh+ry+30, y+h*.62);
+        add(rc.ellipse(cx,cy,rx*2,ry*2,O({stroke:ac,strokeWidth:3})));
+        [[cx-rx*.85,cy+ry*.9,22],[cx-rx*1.05,cy+ry*1.25,14]].forEach(([a,b,r])=>add(rc.circle(a,b,r,O({stroke:ac}))));
+        txt(cx,cy+14,L[2]||"",46,"middle",ink);
+        txt(cx+rx,cy+ry+44,L[3]||"",30,"end",muted);
+      } else if(k==="escada"){
+        // degraus descendo com preços; nota de que a confiança desce junto
+        const P=L.slice(0,3), n=P.length, sw=(w-60)/n, sh=Math.min((h-90)/n,90), top=y+30;
+        for(let i=0;i<n;i++){ const sx=x+i*sw, sy=top+i*sh;
+          add(rc.line(sx,sy,sx+sw,sy,O({strokeWidth:3})));
+          if(i<n-1) add(rc.line(sx+sw,sy,sx+sw,sy+sh,O({strokeWidth:3})));
+          txt(sx+sw/2,sy-18,P[i]||"",40,"middle",i===n-1?ac:ink); }
+        const ex=x+w-60, ey=top+(n-1)*sh;
+        arrow(x+30,top+60,ex,ey+60,{lift:-20,stroke:ac});
+        if(L[3]) txt(x+w*.5,ey+sh+70,L[3],38,"middle",ac,-2);
+      } else if(k==="balanca"){
+        // balança: o lado pesado vence
+        const cx=x+w/2, base=y+h-20, top=y+60, arm=w*.38, tilt=46, pw=130;
+        add(rc.line(cx,top,cx,base,O({strokeWidth:3.4})));
+        add(rc.line(cx-90,base,cx+90,base,O({strokeWidth:3.4})));
+        add(rc.polygon([[cx-18,top],[cx+18,top],[cx,top-30]],O({fill:ink,fillStyle:"solid"})));
+        const lx=cx-arm, ly=top-tilt, rx2=cx+arm, ry2=top+tilt;
+        add(rc.line(lx,ly,rx2,ry2,O({strokeWidth:4})));
+        const pan=(px,py,label,heavy)=>{ const st=heavy?{stroke:ac,strokeWidth:3.6}:{strokeWidth:2.6};
+          add(rc.line(px,py,px-pw*.8,py+120,O({strokeWidth:1.8}))); add(rc.line(px,py,px+pw*.8,py+120,O({strokeWidth:1.8})));
+          add(rc.curve([[px-pw,py+120],[px,py+160],[px+pw,py+120]],O(st))); add(rc.line(px-pw,py+120,px+pw,py+120,O(st)));
+          txt(px,py+214,label,48,"middle",heavy?ac:muted) };
+        pan(lx,ly,L[0]||"",false); pan(rx2,ry2,L[1]||"",true);
+      } else if(k==="cartoes"){
+        // promessa (riscada) × caso real (com check)
+        const cw=(w-50)/2, ch=Math.min(h-40,280), cy0=y+(h-ch)/2;
+        const card=(cx0,title,body,ok)=>{ add(rc.rectangle(cx0,cy0,cw,ch,O(ok?{stroke:ac,strokeWidth:3.2}:{})));
+          txt(cx0+28,cy0+52,title,30,"start",muted);
+          const words=body.split(" "), lines=[]; let cur="";
+          words.forEach(wd=>{ if((cur+" "+wd).trim().length>16){ lines.push(cur.trim()); cur=wd } else cur+=" "+wd }); if(cur.trim()) lines.push(cur.trim());
+          lines.slice(0,4).forEach((ln,i)=>txt(cx0+28,cy0+108+i*46,ln,42,"start",ink));
+          if(ok){ add(rc.linearPath([[cx0+cw-86,cy0+ch-58],[cx0+cw-62,cy0+ch-30],[cx0+cw-24,cy0+ch-86]],O({stroke:ac,strokeWidth:5}))) }
+          else { add(rc.line(cx0+cw-80,cy0+ch-80,cx0+cw-30,cy0+ch-30,O({stroke:muted,strokeWidth:4}))); add(rc.line(cx0+cw-30,cy0+ch-80,cx0+cw-80,cy0+ch-30,O({stroke:muted,strokeWidth:4}))) } };
+        card(x,L[0]||"promessa",L[1]||"",false); card(x+cw+50,L[2]||"caso",L[3]||"",true);
+      } else if(k==="troca"){
+        // duas caixas trocando: o que você dá ⇄ o que você recebe
+        const bw=w*.34, bh=Math.min(h*.55,200), by=y+(h-bh)/2-10;
+        const b1=x+10, b2=x+w-bw-10;
+        add(rc.rectangle(b1,by,bw,bh,O())); add(rc.rectangle(b2,by,bw,bh,O({stroke:ac,strokeWidth:3.2})));
+        txt(b1+bw/2,by+46,L[0]||"você dá",30,"middle",muted); txt(b1+bw/2,by+bh/2+38,L[1]||"",58,"middle",ink);
+        txt(b2+bw/2,by+46,L[2]||"você recebe",30,"middle",muted); txt(b2+bw/2,by+bh/2+38,L[3]||"",50,"middle",ac);
+        const mx1=b1+bw+20, mx2=b2-20;
+        head([[mx1,by+bh*.36],[(mx1+mx2)/2,by+bh*.24],[mx2,by+bh*.36]]);
+        head([[mx2,by+bh*.66],[(mx1+mx2)/2,by+bh*.78],[mx1,by+bh*.66]]);
       } else if(k==="sublinhado"){
         add(rc.curve([[x,y+20],[x+w*.5,y+30],[x+w*.85,y+14]],O({stroke:ac,strokeWidth:4})));
       }
