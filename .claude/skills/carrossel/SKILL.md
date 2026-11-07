@@ -48,6 +48,8 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 | `cartoes` | título A \| texto A (✗) \| título B \| texto B (✓) |
 | `troca` | você dá \| valor \| você recebe \| valor |
 
+**Manifesto (trilha viral):** `{"tipo":"manifesto","linha1":"frase forte","linha2":"contraponto (mais leve)","linha3":"opcional pequeno","desenho":"…","citacao":true,"cta":true}` — sem desenho, a frase fica centralizada. Desenhos de manifesto: `sementes`, `enxada`, `nuvem`, `despertador`, `broto` (05 já usou todos).
+
 **Nunca repetir a ilustração de um carrossel anterior** (regra do usuário). Se nenhum desenho existente servir sem repetir, crie um novo tipo em `index.html` (função `drawAll`) e registre aqui.
 Já usados: 02 → alvo, funil, bolhas, grafico, pipeline · 03 → grafico, bolhas, linha, alvo, pipeline · 04 → baloes, escada, balanca, cartoes, troca.
 **Fácil de entender:** títulos curtos e do dia a dia; uma ideia por slide; "Na prática" como diálogo (**Cliente:** / **Você:**).

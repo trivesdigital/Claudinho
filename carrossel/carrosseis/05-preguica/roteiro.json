@@ -1,0 +1,73 @@
+{
+  "marca": {
+    "handle": "@zanellato",
+    "tema": "claro"
+  },
+  "slides": [
+    {
+      "tipo": "manifesto",
+      "linha1": "Ele abençoa o que você planta.",
+      "linha2": "Não o que você deseja.",
+      "desenho": "sementes"
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "Muita gente ora pela colheita…",
+      "linha2": "e nunca pegou na enxada.",
+      "desenho": "enxada"
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "Pede cliente novo.",
+      "linha2": "Mas não liga para ninguém."
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "Pede um time melhor.",
+      "linha2": "Mas não treina quem já tem."
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "Pede prosperidade.",
+      "linha2": "Mas trata o trabalho como castigo."
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "Fé não é terceirizar o esforço para o céu.",
+      "desenho": "nuvem"
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "É acordar cedo",
+      "linha2": "quando ninguém está vendo.",
+      "desenho": "despertador",
+      "rotulos": "5:00"
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "É fazer o certo",
+      "linha2": "antes de ter resultado.",
+      "desenho": "broto"
+    },
+    {
+      "tipo": "manifesto",
+      "tema": "escuro",
+      "citacao": true,
+      "linha1": "“A alma do preguiçoso deseja e coisa nenhuma alcança, mas a alma dos diligentes se farta.”",
+      "linha2": "— Provérbios 13:4"
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "Ore como se tudo dependesse de Deus.",
+      "linha2": "**{{Trabalhe}} como se tudo dependesse de você.**"
+    },
+    {
+      "tipo": "manifesto",
+      "tema": "escuro",
+      "cta": true,
+      "linha1": "Se isso te confrontou,",
+      "linha2": "**manda para quem precisa ler.**",
+      "linha3": "Segue {handle}"
+    }
+  ]
+}
