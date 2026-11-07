@@ -52,5 +52,8 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 Já usados: 02 → alvo, funil, bolhas, grafico, pipeline · 03 → grafico, bolhas, linha, alvo, pipeline · 04 → baloes, escada, balanca, cartoes, troca.
 **Fácil de entender:** títulos curtos e do dia a dia; uma ideia por slide; "Na prática" como diálogo (**Cliente:** / **Você:**).
 
-## Linha editorial (base: Método Trives — dono para dono)
-Comercial (follow-up, qualificação, reativação da base), gestão (CRM, números da semana, previsibilidade), visão de fundador (+1.200 clientes, 9 anos), tecnologia (IA de pré-vendas no WhatsApp), marketing × comercial integrados. **Não** usar "marca pessoal" como tema.
+## Linha editorial Zanellato
+Público: donos de empresas de **10 a 200 funcionários**, **multissegmento** (falar com dores comuns a qualquer setor).
+**5 pilares, equilibrados** (vendas é só um deles): **Negócios · IA · Gestão · Vendas · Marketing**.
+Hook no formato que funcionou: curto (≤ 6 palavras), virada **"não é X, é Y"** com palavra riscada + palavra gigante, ou "O que N anos/clientes me ensinaram sobre X".
+Já publicados: marca pessoal (não repetir o tema), +1.200 clientes/crescer, follow-up, desconto/confiança.
