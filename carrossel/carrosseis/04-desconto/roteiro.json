@@ -1,0 +1,33 @@
+{
+  "marca": {"handle": "@zanellato", "tema": "claro"},
+  "slides": [
+    {"tipo": "conteudo", "numero": "01", "titulo": "Quem pede desconto está pedindo segurança", "subtitulo": "Desconto é o sintoma. Insegurança é a causa.",
+     "texto": "Sem [[certeza]], o cliente tenta diminuir o risco pelo preço.",
+     "desenho": "bolhas", "rotulos": "desconto|o que ele pede|segurança|o que ele quer",
+     "exemplo": "“Consegue fazer por menos?” quase sempre quer dizer “e se não der certo?”.",
+     "gancho": "E dar o desconto costuma piorar isso"},
+    {"tipo": "conteudo", "numero": "02", "titulo": "Desconto sem motivo tira valor", "subtitulo": "Se o preço cai fácil, o cliente se pergunta o que mais é negociável.",
+     "texto": "Cada desconto improvisado ensina o cliente a {{pedir mais um}}.",
+     "desenho": "grafico", "rotulos": "valor percebido|1º desconto, 2º, 3º|aqui ele já desconfia",
+     "exemplo": "Baixou 15% na primeira objeção? Na renovação, ele pede 15% de novo.",
+     "gancho": "Então o que oferecer no lugar"},
+    {"tipo": "conteudo", "tema": "escuro", "numero": "03", "titulo": "Troque desconto por garantia", "subtitulo": "Reduza o risco, não o preço.",
+     "texto": "Etapas, validação, garantia de entrega: tudo que deixa o sim [[mais seguro]].",
+     "desenho": "alvo", "rotulos": "desconto|garantia",
+     "exemplo": "“Em vez de desconto, começamos com 30 dias e você valida o resultado antes de seguir.”",
+     "gancho": "Mas a confiança começa antes da proposta"},
+    {"tipo": "conteudo", "numero": "04", "titulo": "Prova vale mais que promessa", "subtitulo": "Ninguém confia em adjetivo. Confia em caso.",
+     "texto": "Um cliente parecido com ele, com {{resultado concreto}}, encerra a negociação.",
+     "desenho": "pipeline", "rotulos": "dúvida|caso parecido|sim|",
+     "exemplo": "“Uma empresa do seu porte passou por isso. Posso te mostrar o que mudou em 60 dias?”",
+     "gancho": "E se mesmo assim ele pedir desconto?"},
+    {"tipo": "conteudo", "numero": "05", "titulo": "Desconto só em troca de algo", "subtitulo": "Negociação é troca, não concessão.",
+     "texto": "Se for dar, peça uma {{contrapartida}}:",
+     "itens": "À vista | desconto pelo caixa\nContrato maior | desconto pelo prazo\nIndicação | desconto pela confiança",
+     "exemplo": "Pediu 10%? “Consigo, se fecharmos 12 meses em vez de 6.”",
+     "gancho": "Resumindo em uma frase"},
+    {"tipo": "cta", "tema": "escuro", "kicker": "O resumo", "titulo": "Quem vende confiança\nnão precisa de {{desconto}}.",
+     "texto": "Preço é a última objeção de quem ainda não confia.",
+     "chamada": "**Salva esse post** para a próxima vez que te pedirem desconto."}
+  ]
+}

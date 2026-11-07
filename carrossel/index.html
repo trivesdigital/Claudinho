@@ -111,6 +111,8 @@ body.render .frame .num{display:none}
 .flow .txt{font-size:31px;margin-top:38px}
 .draw{position:relative;width:100%;flex:1 1 auto;min-height:220px;max-height:430px;margin:auto 0}
 .spacer{flex:1 1 auto}
+.flow.nodraw .txt{font-size:34px}
+.flow.nodraw .lst{font-size:42px;line-height:1.85;margin-top:28px}
 .ex{position:relative;align-self:stretch;margin-top:30px;padding:2px 0 4px 30px;font:400 29px/1.38 Poppins,sans-serif;letter-spacing:-.01em;color:var(--body)}
 .ex .exl{display:block;font:600 16px/1 Poppins,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--ac);margin-bottom:12px}
 .ovl{position:absolute;left:0;top:0;width:1080px;height:1350px;z-index:6;pointer-events:none;overflow:visible}
@@ -394,7 +396,7 @@ function renderSlide(s, i, total){
   const corpo = (s.texto||itens||s.texto_final)?`<div class="txt">${paras(s.texto)}${itens?`<ul class="lst">${itens}</ul>`:""}${paras(s.texto_final)}</div>`:"";
   return `<div class="slide paper ${tema}" style="${acc}">
     ${header()}
-    <div class="body flow">
+    <div class="body flow${s.desenho?"":" nodraw"}">
       ${pos==="antes do título"?pics:""}
       ${s.titulo||num?`<h2 class="ttl">${num}${fmt(s.titulo)}</h2>`:""}
       ${s.subtitulo?`<div class="st">${fmt(s.subtitulo)}</div>`:""}
