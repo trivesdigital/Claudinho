@@ -1,1 +1,1 @@
-{"capa":{"foto":"capa-b/foto.jpg","pessoa":"capa-b/pessoa.png","layout":"riscado","linhas":["Seu cliente não quer","Desconto","Quer confiança"],"base":540,"saida":"capa-b/capa.png"},"slides":[]}
+{"capa": {"foto": "capa-b/foto.jpg", "pessoa": "capa-b/pessoa.png", "layout": "riscado", "linhas": ["Seu cliente não quer", "Desconto", "Quer confiança"], "base": 540, "saida": "capa-b/capa.png", "pb": true}, "slides": []}

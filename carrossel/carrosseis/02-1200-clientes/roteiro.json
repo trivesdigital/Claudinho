@@ -1,4 +1,16 @@
 {
+  "capa": {
+    "foto": "capa/foto.jpg",
+    "pessoa": "capa/pessoa.png",
+    "layout": "padrao",
+    "linhas": [
+      "O que",
+      "+1.200 clientes",
+      "me ensinaram sobre",
+      "Crescer"
+    ],
+    "base": 650
+  },
   "marca": {
     "mark": "",
     "brand": "",

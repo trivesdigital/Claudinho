@@ -1,1 +1,1 @@
-{"capa": {"foto": "capa-a/foto.jpg", "pessoa": "capa-a/pessoa.png", "layout": "riscado", "linhas": ["Seu cliente não quer", "Desconto", "Quer confiança"], "base": 690, "saida": "capa-a/capa.png", "cor_risco": "#E5322D"}, "slides": []}
+{"capa": {"foto": "capa-a/foto.jpg", "pessoa": "capa-a/pessoa.png", "layout": "riscado", "linhas": ["Seu cliente não quer", "Desconto", "Quer confiança"], "base": 690, "saida": "capa-a/capa.png", "cor_risco": "#E5322D", "pb": true}, "slides": []}

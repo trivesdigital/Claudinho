@@ -24,9 +24,9 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 ## Regras de estilo (aprovadas pelo usuário)
 - Público AAA, minimalista e elegante. Fundo branco na maioria; **1–2 slides** com `"tema":"escuro"` (verde Trives escuro, flat com granulado). Sem neon, sem logo, sem nome no topo, sem rodapé.
 - Fontes: Poppins (texto), Anton/Archivo (capa), Caveat (letra de mão). Margens 128 px laterais / 150 px vertical (automático).
-- Capa: foto colorida, **título grande**, pessoa recortada na frente da última linha, margem 80 px.
+- Capa: foto P&B com pretos profundos (preferência atual), **título grande**, pessoa recortada na frente da última linha. **Respiro:** margem 120 px nas laterais e 150 px no topo (`margem`, `margem_topo`); o título se ajusta à largura útil.
   Linhas encaixam sozinhas pela forma real das letras (acentos incluídos, sem encostar); se um acento bater, a linha de cima desliza até 90 px p/ a direita (`"encaixe": false` desliga).
-  Legibilidade: máscara preta em toda a foto (`mascara`, padrão 0.18) + fade preto do topo até abaixo do título (`fade_forca` 0.66, `fade_extra` 300 px; `"fade": false` desliga). O recorte recebe o mesmo escurecimento.
+  Legibilidade (**só em capas P&B**, com `"pb": true`): máscara preta em toda a foto (`mascara`, padrão 0.18) + fade preto do topo até abaixo do título (`fade_forca` 0.66, `fade_extra` 300 px; `"fade": false` desliga). O recorte recebe o mesmo escurecimento. Capas coloridas: só o sombreado leve do topo (`escurecer`, padrão 0.2). `escala` (padrão 1) reduz/aumenta o título inteiro.
   `espaco` (opcional, padrão 1) multiplica o espaço entre as linhas do título: 0.5 = mais junto, 1.5 = mais solto.
   Layouts: `riscado` (3 linhas: pequena · palavra riscada · gigante) · `padrao` (4: pequena espaçada · média · selo · gigante) · `dois-pesos` (3: pequena · fina · pesada) · `serifa` (3: pequena · itálico serifado · condensada).
 - Slide de conteúdo = título + subtítulo (1 linha) + 1 frase curta com `[[círculo]]`/`{{sublinhado}}` + desenho + **Na prática** (`exemplo`, 1–2 linhas, situação real) + **gancho** (1 linha, sem ponto final, abre curiosidade p/ o próximo).

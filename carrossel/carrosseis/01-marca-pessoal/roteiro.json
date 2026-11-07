@@ -1,4 +1,17 @@
 {
+  "capa": {
+    "foto": "capa/foto.jpg",
+    "pessoa": "capa/pessoa.png",
+    "layout": "padrao",
+    "linhas": [
+      "Como eu construiria uma",
+      "Marca",
+      "do zero",
+      "Pessoal"
+    ],
+    "base": 650,
+    "escala": 0.86
+  },
   "marca": {
     "mark": "",
     "brand": "",
