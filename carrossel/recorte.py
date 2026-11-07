@@ -22,7 +22,7 @@ Preto e branco com pretos profundos (rode DEPOIS do recorte; converte foto.jpg e
 
 Aceita .heic (iPhone) se `pillow-heif` estiver instalado (pip install pillow-heif).
 """
-import sys, numpy as np
+import sys, json, numpy as np
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
 try:
@@ -43,6 +43,7 @@ def enquadrar(foto, pasta, y0=None):
     else:
         w = round(H * .8); x0 = (W - w) // 2; box = (x0, 0, x0 + w, H)
     im = src.crop(box).resize((1080, 1350), Image.LANCZOS); im.save(pasta / "foto.jpg", quality=93)
+    (pasta / "meta.json").write_text(json.dumps({"orig": str(Path(foto).resolve()), "box": list(box)}))
     g = im.copy(); d = ImageDraw.Draw(g)
     for x in range(0, 1080, 100): d.line([(x, 0), (x, 1350)], fill=(255, 0, 0), width=2); d.text((x + 4, 4), str(x), fill=(255, 0, 0))
     for y in range(0, 1350, 100): d.line([(0, y), (1080, y)], fill=(255, 0, 0), width=2); d.text((4, y + 4), str(y), fill=(255, 0, 0))
@@ -50,31 +51,45 @@ def enquadrar(foto, pasta, y0=None):
     print(f"ok → {pasta}/foto.jpg e {pasta}/grade.jpg (grade reduzida pela metade: multiplique as leituras por 2)")
 
 def pessoa(pasta, pontos, ate=800, modo="cor"):
+    """Recorte em alta resolução (foto original) e reduzido no fim → bordas nítidas."""
     pasta = Path(pasta); im = Image.open(pasta / "foto.jpg").convert("RGB")
-    poly = [tuple(map(float, p.split(","))) for p in pontos.split()]
-    P = Image.new("L", im.size, 0); ImageDraw.Draw(P).polygon(poly, fill=255); P = np.asarray(P) > 0
-    h, s, v = hsv(im); yy = np.arange(im.size[1])[:, None] * np.ones((1, im.size[0]))
+    k, hi = 1.0, im
+    meta = pasta / "meta.json"
+    if meta.exists():
+        m_ = json.loads(meta.read_text())
+        try:
+            hi = ImageOps.exif_transpose(Image.open(m_["orig"])).convert("RGB").crop(tuple(m_["box"])); k = hi.size[0] / 1080
+        except Exception:
+            hi, k = im, 1.0
+    poly = [tuple(float(c) * k for c in p.split(",")) for p in pontos.split()]
+    P = Image.new("L", hi.size, 0); ImageDraw.Draw(P).polygon(poly, fill=255); P = np.asarray(P) > 0
+    h, s, v = hsv(hi); yy = np.arange(hi.size[1])[:, None] * np.ones((1, hi.size[0])); A = ate * k
+    def fechar(b, r=21):
+        r = int(r * k) | 1
+        x = Image.fromarray((b * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(r)).filter(ImageFilter.MinFilter(r))
+        return np.asarray(x) > 127
+    def abrir(b, r=3):
+        r = int(r * k) | 1
+        x = Image.fromarray((b * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(r)).filter(ImageFilter.MaxFilter(r))
+        return np.asarray(x) > 127
     ceu = (h > 195) & (h < 235) & (s > .35)
-    folha = (h > 55) & (h < 125) & (s > .45) & (v > .42)
-    telhado = (h > 100) & (h < 170) & (s > .25)
-    neblina = (v > .60) & (s < .42) & (yy < ate)
-    def fechar(b, k=21):
-        im = Image.fromarray((b * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(k)).filter(ImageFilter.MinFilter(k))
-        return np.asarray(im) > 127
     if modo == "poligono": m = P
-    elif modo == "escuro": m = P & (fechar(v < .42, 45) | (yy >= ate))
+    elif modo == "escuro": m = P & (fechar(v < .42, 45) | (yy >= A))
     elif modo == "pele":
-        manga = mangay if (mangay := globals().get("MANGA_Y")) else ate
-        pele = ((h < 50) & (s > .18) & (v > .22)) | ((v < .30) & (yy >= manga))
-        m = P & (fechar(pele, 15) | (yy >= ate))
-    else: m = P & ~ceu & ~((folha | telhado | neblina) & (yy < ate))
-    mi = Image.fromarray((m * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(5))
-    mi = mi.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1))
+        manga = globals().get("MANGA_Y") or ate
+        pele = ((h < 50) & (s > .15) & (v > .42)) | ((v < .30) & (yy >= manga * k))
+        m = P & (fechar(abrir(pele, 3), 5) | (yy >= A))
+    else:
+        folha = (h > 55) & (h < 125) & (s > .45) & (v > .42); telhado = (h > 100) & (h < 170) & (s > .25)
+        neblina = (v > .60) & (s < .42) & (yy < A)
+        m = P & ~ceu & ~((folha | telhado | neblina) & (yy < A))
+    mi = Image.fromarray((m * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(int(3 * k) | 1))
+    mi = mi.filter(ImageFilter.GaussianBlur(.6 * k)).resize(im.size, Image.LANCZOS)   # borda nítida e suave
     rgba = im.convert("RGBA"); rgba.putalpha(mi); rgba.save(pasta / "pessoa.png")
-    xs = [p[0] for p in poly]; ys = [p[1] for p in poly]
+    xs = [p[0] / k for p in poly]; ys = [p[1] / k for p in poly]
     box = (max(0, int(min(xs)) - 30), max(0, int(min(ys)) - 30), min(1080, int(max(xs)) + 30), min(int(ate) + 40, 1350))
     bg = Image.new("RGBA", im.size, (255, 0, 200, 255)); bg.alpha_composite(rgba)
-    prev = bg.convert("RGB").crop(box); prev.thumbnail((500, 500)); prev.save(pasta / "previa-recorte.jpg", quality=80)
+    prev = bg.convert("RGB").crop(box); prev.thumbnail((500, 500)); prev.save(pasta / "previa-recorte.jpg", quality=85)
     print(f"ok → {pasta}/pessoa.png  (confira {pasta}/previa-recorte.jpg)")
 
 def ceu(pasta):

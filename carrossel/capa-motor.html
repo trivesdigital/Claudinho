@@ -121,15 +121,15 @@ window.loadCapa = async function(spec){
   // risco à mão
   els.forEach(({d,cfg,t},i)=>{ if(!cfg.strike) return; const r=d.getBoundingClientRect(); const fs=parseFloat(d.style.fontSize);
     const y=pos[i].base-fs*.36, rc=rough.svg(document.getElementById("sv")), sv=document.getElementById("sv");
-    sv.appendChild(rc.curve([[r.left-14,y+10],[r.left+r.width*.5,y-6],[r.right+18,y+4]],{stroke:"#fff",strokeWidth:9,roughness:1.4,seed:4}));
-    sv.appendChild(rc.curve([[r.left-6,y+26],[r.left+r.width*.55,y+10],[r.right+10,y+20]],{stroke:"#fff",strokeWidth:5,roughness:1.6,seed:9})); });
+    sv.appendChild(rc.curve([[r.left-14,y+10],[r.left+r.width*.5,y-6],[r.right+18,y+4]],{stroke:spec.cor_risco||"#fff",strokeWidth:9,roughness:1.4,seed:4}));
+    sv.appendChild(rc.curve([[r.left-6,y+26],[r.left+r.width*.55,y+10],[r.right+10,y+20]],{stroke:spec.cor_risco||"#fff",strokeWidth:5,roughness:1.6,seed:9})); });
   // FADE: degradê preto do topo até um pouco abaixo do título (também escurece o recorte da pessoa)
   if(spec.fade!==false){
     const tops=pos.filter(Boolean).map(p=>p.top), bots=pos.filter(Boolean).map(p=>p.bottom);
-    const fim=Math.min(1350, Math.max(...bots)+(spec.fade_extra??300)), meio=Math.max(...bots)-40, forca=spec.fade_forca??.82;
+    const fim=Math.min(1350, Math.max(...bots)+(spec.fade_extra??300)), meio=Math.max(...bots)-40, forca=spec.fade_forca??.66;
     const stops=[[0,forca],[Math.max(0,meio)/1350,forca*.72],[fim/1350,0]];
     const css=`linear-gradient(180deg,${stops.map(([p,a])=>`rgba(0,0,0,${a.toFixed(3)}) ${(p*100).toFixed(1)}%`).join(",")})`;
-    const mk=spec.mascara??.35;
+    const mk=spec.mascara??.18;
     document.getElementById("shade").style.background=`${css},linear-gradient(rgba(0,0,0,${mk}),rgba(0,0,0,${mk}))`;
     const pimg=document.getElementById("pessoa");
     if(pimg && pimg.isConnected && pimg.src){ await (pimg.decode?pimg.decode().catch(()=>0):0);
