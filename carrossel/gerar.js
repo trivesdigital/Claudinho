@@ -2,7 +2,7 @@
 /*
  * MOTOR DE CARROSSEL — um comando gera tudo.
  *
- *   node carrossel/gerar.js carrossel/carrosseis/<pasta>/roteiro.json
+ *   node carrossel/gerar.js carrossel/carrosseis/<pasta>/roteiro.json [--so-capa]
  *
  * Saída (na pasta do roteiro):
  *   01.png … NN.png   slides finais 1080×1350
@@ -44,7 +44,9 @@ function inline(obj, baseDir, avisos) {
     const r = await page.evaluate(s => window.loadCapa(s), spec);
     (r.avisos || []).forEach(a => avisos.push(a));
     fs.mkdirSync(path.join(dir, "capa"), { recursive: true });
-    await (await page.$(".c")).screenshot({ path: path.join(dir, "capa", "capa.png") });
+    const saida = path.join(dir, data.capa.saida || "capa/capa.png");
+    await (await page.$(".c")).screenshot({ path: saida });
+    if (process.argv.includes("--so-capa")) { await browser.close(); console.log("capa → " + path.relative(process.cwd(), saida)); (avisos.length?avisos:["OK"]).forEach(a=>console.log("  "+a)); return; }
     if (!data.slides.length || data.slides[0].tipo !== "pronta" || data.slides[0].foto !== "capa/capa.png")
       data.slides.unshift({ tipo: "pronta", foto: "capa/capa.png" });
   }

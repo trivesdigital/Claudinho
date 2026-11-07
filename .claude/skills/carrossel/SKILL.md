@@ -12,7 +12,10 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 2. Criar pasta `carrossel/carrosseis/NN-tema/` e escrever `roteiro.json` (copie o formato de `carrossel/carrosseis/_modelo/roteiro.json`).
 3. Foto de capa (se houver):
    - `python3 carrossel/recorte.py FOTO carrossel/carrosseis/NN-tema/capa` → leia só `capa/grade.jpg` (coordenadas ×2).
-   - `python3 carrossel/recorte.py --pessoa .../capa "x,y x,y …"` → polígono em volta de cabeça/boné/mão; confira só `previa-recorte.jpg`.
+   - `python3 carrossel/recorte.py --pessoa .../capa "x,y x,y …" [--modo cor|pele|escuro|poligono] [--ate Y] [--manga Y]` → confira só `previa-recorte.jpg`.
+     Modos: `cor` (céu/folhas atrás) · `pele` (mão/braço sobre tela/mesa; manga escura abaixo de --manga) · `escuro` (boné/cabelo preto sobre fundo cinza) · `poligono` (só o contorno).
+   - P&B com pretos profundos (preferência do usuário para fotos de capa): `python3 carrossel/recorte.py --pb .../capa` depois do recorte. HEIC funciona (pillow-heif).
+   - Várias opções de capa: um JSON por opção com `{"capa":{…,"saida":"capa-x/capa.png"},"slides":[]}` + `node carrossel/gerar.js arquivo.json --so-capa`.
    - A última linha do título deve ter `base` ~40–60 px **abaixo do topo da cabeça/boné** (a pessoa cobre só a base das letras).
 4. `node carrossel/gerar.js carrossel/carrosseis/NN-tema/roteiro.json` → relatório no terminal. Corrija os avisos no JSON e rode de novo.
 5. Confira **apenas** `previa.jpg` (1 imagem). Só abra um slide individual se a prévia mostrar problema.
