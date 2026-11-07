@@ -6,48 +6,42 @@
   "slides": [
     {
       "tipo": "manifesto",
-      "linha1": "Ele abençoa o que você planta.",
-      "linha2": "Não o que você deseja.",
-      "desenho": "sementes"
+      "linha1": "Ele abençoa o que você {{planta}}.",
+      "linha2": "Não o que você deseja."
     },
     {
       "tipo": "manifesto",
       "linha1": "Muita gente ora pela colheita…",
-      "linha2": "e nunca pegou na enxada.",
-      "desenho": "enxada"
+      "linha2": "e nunca pegou na {{enxada}}."
     },
     {
       "tipo": "manifesto",
       "linha1": "Pede cliente novo.",
-      "linha2": "Mas não liga para ninguém."
+      "linha2": "Mas não liga para {{ninguém}}."
     },
     {
       "tipo": "manifesto",
       "linha1": "Pede um time melhor.",
-      "linha2": "Mas não treina quem já tem."
+      "linha2": "Mas não {{treina}} quem já tem."
     },
     {
       "tipo": "manifesto",
       "linha1": "Pede prosperidade.",
-      "linha2": "Mas trata o trabalho como castigo."
+      "linha2": "Mas trata o trabalho como {{castigo}}."
     },
     {
       "tipo": "manifesto",
-      "linha1": "Fé não é terceirizar o esforço para o céu.",
-      "desenho": "nuvem"
+      "linha1": "Fé não é {{terceirizar}} o esforço para o céu."
     },
     {
       "tipo": "manifesto",
-      "linha1": "É acordar cedo",
-      "linha2": "quando ninguém está vendo.",
-      "desenho": "despertador",
-      "rotulos": "5:00"
+      "linha1": "É acordar {{cedo}}",
+      "linha2": "quando ninguém está vendo."
     },
     {
       "tipo": "manifesto",
       "linha1": "É fazer o certo",
-      "linha2": "antes de ter resultado.",
-      "desenho": "broto"
+      "linha2": "{{antes}} de ter resultado."
     },
     {
       "tipo": "manifesto",
