@@ -19,17 +19,20 @@
     {
       "tipo": "manifesto",
       "linha1": "Pede cliente novo.",
-      "linha2": "Mas não liga para {{ninguém}}."
+      "linha2": "Mas não liga para {{ninguém}}.",
+      "ilustracao": "ilustracoes/ora-ligacao.png"
     },
     {
       "tipo": "manifesto",
       "linha1": "Pede um time melhor.",
-      "linha2": "Mas não {{treina}} quem já tem."
+      "linha2": "Mas não {{treina}} quem já tem.",
+      "ilustracao": "ilustracoes/chefe.png"
     },
     {
       "tipo": "manifesto",
       "linha1": "Pede prosperidade.",
-      "linha2": "Mas trata o trabalho como {{castigo}}."
+      "linha2": "Mas trata o trabalho como {{castigo}}.",
+      "ilustracao": "ilustracoes/castigo.png"
     },
     {
       "tipo": "manifesto",
@@ -50,22 +53,26 @@
     },
     {
       "tipo": "manifesto",
+      "estilo": "versiculo",
       "tema": "escuro",
-      "citacao": true,
-      "linha1": "“A alma do preguiçoso deseja e coisa nenhuma alcança, mas a alma dos {{diligentes}} se farta.”",
-      "linha2": "— Provérbios 13:4"
+      "linha1": "A alma do preguiçoso deseja e coisa nenhuma alcança, mas a alma dos {{diligentes}} se farta.",
+      "linha2": "Provérbios 13:4"
     },
     {
       "tipo": "manifesto",
-      "linha1": "Ore como se tudo dependesse de Deus.",
-      "linha2": "**{{Trabalhe}} como se tudo dependesse de você.**"
+      "estilo": "paralelo",
+      "a1": "Ore",
+      "a2": "como se tudo dependesse de Deus.",
+      "b1": "Trabalhe",
+      "b2": "como se tudo dependesse de você."
     },
     {
       "tipo": "manifesto",
+      "estilo": "cta",
       "tema": "escuro",
       "cta": true,
-      "linha1": "Se isso te confrontou,",
-      "linha2": "**manda para quem {{precisa ler}}.**",
+      "linha1": "Isso te confrontou?",
+      "linha2": "Manda para alguém que precisa ler.",
       "linha3": "Segue {handle}"
     }
   ]

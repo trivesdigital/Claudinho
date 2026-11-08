@@ -6,7 +6,7 @@
 <title>Gerador de Carrossel Zanellato</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link crossorigin="anonymous" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Caveat:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;0,8..60,900;1,8..60,600&display=swap">
+<link crossorigin="anonymous" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;700;800;900&family=Instrument+Serif:ital@0;1&family=Caveat:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;0,8..60,900;1,8..60,600&display=swap">
 <style>
 /* ============================================================
    UI DO EDITOR
@@ -117,6 +117,16 @@ body.render .frame .num{display:none}
 .slide.t-preto{--bg:#0D0D0D;--ink:#FFFFFF;--body:#E6E6E6;--muted:#9A9A9A;--grid:rgba(255,255,255,.035);--glow:rgba(0,0,0,0);--ac:#3FD18A}
 .slide{--hl:#12965A}.slide.t-escuro,.slide.t-preto{--hl:#3FD18A}
 .t-preto .man .mil img{mix-blend-mode:screen;filter:invert(1)}
+.vers .aspas{font:400 300px/.55 "Instrument Serif",serif;color:var(--muted);opacity:.55;margin-bottom:6px}
+.vers .vt{font:italic 400 80px/1.1 "Instrument Serif",serif;letter-spacing:-.01em;color:var(--ink)}
+.vers .vref{font:600 20px Poppins,sans-serif;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);margin-top:46px}
+.par .pw{font:400 190px/.86 Anton,sans-serif;letter-spacing:.005em;text-transform:uppercase;color:var(--ink)}
+.par .pt{font:400 54px/1.18 Poppins,sans-serif;text-wrap:balance;max-width:700px;letter-spacing:-.02em;color:var(--muted);margin-top:18px}
+.par .psep{height:110px;position:relative}
+.ctam .plane{width:118px;height:118px;fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;margin-bottom:46px}
+.ctam .m1{margin-top:0}
+.ctam .chandle{align-self:flex-start;margin-top:56px;font:600 22px Poppins,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);border:2px solid var(--muted);border-radius:99px;padding:16px 30px}
+.ctam .chandle em{color:var(--ink)}
 .man .m3{font:600 30px Poppins,sans-serif;color:var(--muted);margin-top:40px}
 .man.cit .m1{font:500 66px/1.22 Poppins,sans-serif;letter-spacing:-.03em}
 .man.cit .m2{font:500 30px Poppins,sans-serif;letter-spacing:.02em;margin-top:34px}
@@ -393,6 +403,29 @@ function renderSlide(s, i, total){
       ${footer(s.rodape)}
     </div>`;
   }
+  if (s.tipo === "manifesto" && s.estilo === "versiculo"){
+    return `<div class="slide paper ${tema}" style="${acc}"><div class="body flow man vers">
+      <div class="spacer"></div><div class="aspas">“</div><div class="vt">${fmt(s.linha1)}</div><div class="vref">${fmt(s.linha2)}</div><div class="spacer"></div>
+    </div></div>`;
+  }
+  if (s.tipo === "manifesto" && s.estilo === "paralelo"){
+    return `<div class="slide paper ${tema}" style="${acc}"><div class="body flow man par">
+      <div class="spacer"></div>
+      <div class="pw">${fmt(s.a1)}</div><div class="pt">${fmt(s.a2)}</div>
+      <div class="psep"></div>
+      <div class="pw">${fmt(s.b1)}</div><div class="pt">${fmt(s.b2)}</div>
+      <div class="spacer"></div>
+    </div></div>`;
+  }
+  if (s.tipo === "manifesto" && s.estilo === "cta"){
+    return `<div class="slide paper ${tema}" style="${acc}"><div class="body flow man ctam">
+      <div class="spacer"></div>
+      <svg class="plane" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+      <div class="m1">${fmt(s.linha1)}</div><div class="m2">${fmt(s.linha2)}</div>
+      <div class="chandle">${fmt(s.linha3||"Segue {handle}")}</div>
+      <div class="spacer"></div>
+    </div></div>`;
+  }
   if (s.tipo === "manifesto"){
     return `<div class="slide paper ${tema}" style="${acc}">
       <div class="body flow man${s.citacao?" cit":""}">
@@ -470,6 +503,8 @@ function drawAll(root){
       add(rc.line(x2,y2,x2-L*Math.cos(a+0.5),y2-L*Math.sin(a+0.5),O({strokeWidth:2.6,...o})))};
     sl.querySelectorAll(".ex").forEach(e=>{const b=offs(e,sl);
       add(rc.line(b.x+4,b.y+2,b.x+2,b.y+b.h,O({stroke:ac,strokeWidth:4,roughness:1.2})))});
+    sl.querySelectorAll(".psep").forEach(e=>{const b=offs(e,sl); const y=b.y+b.h/2;
+      add(rc.curve([[b.x,y+4],[b.x+160,y-6],[b.x+320,y+2]],O({stroke:hl,strokeWidth:4.2,roughness:1.3})))});
     const g=sl.querySelector(".gancho");
     if(g){const b=offs(g,sl); const r=b.x+b.w, my=b.y+b.h*.55, v=+(g.dataset.v||0)%3;
       if(v===0) head([[r-70,my+2],[r-38,my-6],[r-6,my+2]]);
