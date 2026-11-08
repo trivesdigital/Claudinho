@@ -114,6 +114,10 @@ body.render .frame .num{display:none}
 .man .m1{font:700 100px/1.06 Poppins,sans-serif;letter-spacing:-.05em;color:var(--ink);margin-top:40px}
 .man .m2{font:400 70px/1.14 Poppins,sans-serif;letter-spacing:-.035em;color:var(--muted);margin-top:30px}
 .man .m2 b,.man .m1 b{color:var(--ink)}
+.slide.t-preto{--bg:#0D0D0D;--ink:#FFFFFF;--body:#E6E6E6;--muted:#9A9A9A;--grid:rgba(255,255,255,.035);--glow:rgba(0,0,0,0);--ac:#3FD18A}
+.slide{--hl:#12965A}.slide.t-escuro,.slide.t-preto{--hl:#3FD18A}
+.man .hu,.man .hc{color:var(--hl)}
+.t-preto .man .mil img{mix-blend-mode:screen;filter:invert(1)}
 .man .m3{font:600 30px Poppins,sans-serif;color:var(--ac);margin-top:40px}
 .man.cit .m1{font:500 66px/1.22 Poppins,sans-serif;letter-spacing:-.03em}
 .man.cit .m2{font:500 30px Poppins,sans-serif;letter-spacing:.02em;margin-top:34px}
@@ -455,10 +459,11 @@ function drawAll(root){
       add(rc.line(x2,y2,x2-L*Math.cos(a-0.5),y2-L*Math.sin(a-0.5),O({strokeWidth:2.4,...o})));
       add(rc.line(x2,y2,x2-L*Math.cos(a+0.5),y2-L*Math.sin(a+0.5),O({strokeWidth:2.4,...o})))};
     // marcações no texto
-    sl.querySelectorAll(".hc").forEach(e=>{const b=offs(e,sl); add(rc.ellipse(b.x+b.w/2,b.y+b.h/2+3,b.w+34,b.h+14,O({stroke:ac,strokeWidth:3,roughness:.9,bowing:.4})))});
+    const hl=cs.getPropertyValue("--hl").trim()||ac, mk=sl.querySelector(".man")?hl:ac;
+    sl.querySelectorAll(".hc").forEach(e=>{const b=offs(e,sl); add(rc.ellipse(b.x+b.w/2,b.y+b.h/2+3,b.w+34,b.h+14,O({stroke:mk,strokeWidth:3,roughness:.9,bowing:.4})))});
     sl.querySelectorAll(".hu").forEach(e=>{const b=offs(e,sl); const y=b.y+b.h-2;
-      add(rc.curve([[b.x-4,y],[b.x+b.w*.5,y+7],[b.x+b.w+6,y-3]],O({stroke:ac,strokeWidth:3.4,roughness:1.8})));
-      add(rc.curve([[b.x+8,y+7],[b.x+b.w*.55,y+10],[b.x+b.w-4,y+6]],O({stroke:ac,strokeWidth:2,roughness:1.6})))});
+      add(rc.curve([[b.x-4,y],[b.x+b.w*.5,y+7],[b.x+b.w+6,y-3]],O({stroke:mk,strokeWidth:3.4,roughness:1.8})));
+      add(rc.curve([[b.x+8,y+7],[b.x+b.w*.55,y+10],[b.x+b.w-4,y+6]],O({stroke:mk,strokeWidth:2,roughness:1.6})))});
     // gancho: seta à mão depois do texto
     const head=(pts,o={})=>{const n=pts.length,[x1,y1]=pts[n-2],[x2,y2]=pts[n-1],a=Math.atan2(y2-y1,x2-x1),L=22;
       add(rc.curve(pts,O({strokeWidth:2.6,...o})));

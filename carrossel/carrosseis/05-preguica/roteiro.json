@@ -50,9 +50,9 @@
     },
     {
       "tipo": "manifesto",
-      "tema": "escuro",
+      "tema": "preto",
       "citacao": true,
-      "linha1": "“A alma do preguiçoso deseja e coisa nenhuma alcança, mas a alma dos diligentes se farta.”",
+      "linha1": "“A alma do preguiçoso deseja e coisa nenhuma alcança, mas a alma dos {{diligentes}} se farta.”",
       "linha2": "— Provérbios 13:4"
     },
     {
@@ -62,10 +62,10 @@
     },
     {
       "tipo": "manifesto",
-      "tema": "escuro",
+      "tema": "preto",
       "cta": true,
       "linha1": "Se isso te confrontou,",
-      "linha2": "**manda para quem precisa ler.**",
+      "linha2": "**manda para quem {{precisa ler}}.**",
       "linha3": "Segue {handle}"
     }
   ]
