@@ -23,13 +23,15 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 
 ## Regras de estilo (aprovadas pelo usuário)
 - Público AAA, minimalista e elegante. Fundo branco na maioria; **1–2 slides** com `"tema":"escuro"` (verde Trives escuro, flat com granulado). Sem neon, sem logo, sem nome no topo, sem rodapé.
-- Fontes: Poppins (texto), Anton/Archivo (capa), Caveat (letra de mão). Margens 128 px laterais / 150 px vertical (automático).
+- Fontes: Poppins (texto), Anton/Archivo (capa), Caveat só em notas pequenas de ícone. Margens 128 px laterais / 150 px vertical (automático).
 - Capa: foto P&B com pretos profundos (preferência atual), **título grande**, pessoa recortada na frente da última linha. **Respiro:** margem 120 px nas laterais e 150 px no topo (`margem`, `margem_topo`); o título se ajusta à largura útil.
   Linhas encaixam sozinhas pela forma real das letras (acentos incluídos, sem encostar); se um acento bater, a linha de cima desliza até 90 px p/ a direita (`"encaixe": false` desliga).
   Legibilidade (**só em capas P&B**, com `"pb": true`): máscara preta em toda a foto (`mascara`, padrão 0.18) + fade preto do topo até abaixo do título (`fade_forca` 0.66, `fade_extra` 300 px; `"fade": false` desliga). O recorte recebe o mesmo escurecimento. Capas coloridas: só o sombreado leve do topo (`escurecer`, padrão 0.2). `escala` (padrão 1) reduz/aumenta o título inteiro.
   `espaco` (opcional, padrão 1) multiplica o espaço entre as linhas do título: 0.5 = mais junto, 1.5 = mais solto.
   Layouts: `riscado` (3 linhas: pequena · palavra riscada · gigante) · `padrao` (4: pequena espaçada · média · selo · gigante) · `dois-pesos` (3: pequena · fina · pesada) · `serifa` (3: pequena · itálico serifado · condensada).
-- Slide de conteúdo = título + subtítulo (1 linha) + 1 frase curta com `[[círculo]]`/`{{sublinhado}}` + desenho + **Na prática** (`exemplo`, 1–2 linhas, situação real) + **gancho** (1 linha, sem ponto final, abre curiosidade p/ o próximo).
+- Slide de conteúdo = título + subtítulo (1 linha) + 1 frase curta com `[[círculo]]`/`{{sublinhado}}` + desenho + **Na prática** (`exemplo`, 1–2 linhas, situação real) + **gancho** (1 linha de até ~34 caracteres, Poppins semibold + seta à mão, sem ponto final, abre curiosidade p/ o próximo).
+- **Legibilidade no celular é prioridade:** subtítulo 36 px peso 500, frase 34 px, gancho 36 px Poppins. Nunca voltar ganchos para letra cursiva. CTA: frase de abertura (`pre`) forte, título grande, `chamada` em caixa tingida.
+- Capa sobre fundo claro/movimentado: use `"sombra":true` (texto com sombra), `"risco_fino":true` (risco único proporcional, não esconde a palavra) e `"acento_abaixo":true` (acento do É não sobe ao lado da linha de cima). Objeto recortado na frente do título: cobrir no máx. ~15% da altura das letras.
 - Depois de dois-pontos: maiúscula (automático). Último slide sempre `cta` com palavra para comentar.
 - Não invente dados como se fossem reais; números de exemplo devem soar ilustrativos.
 

@@ -107,8 +107,8 @@ body.render .frame .num{display:none}
 .pics{display:flex;gap:20px;margin-top:44px}
 .body.flow{top:150px;bottom:150px;left:128px;right:128px;justify-content:flex-start;padding-bottom:0}
 .flow .ttl{font-size:64px}
-.flow .st{font:600 31px/1.3 Poppins,sans-serif;letter-spacing:-.015em;color:var(--body);max-width:100%;margin-top:18px}
-.flow .txt{font-size:31px;margin-top:38px}
+.flow .st{font:500 36px/1.4 Poppins,sans-serif;letter-spacing:-.005em;color:var(--body);max-width:780px;margin-top:26px;text-wrap:pretty}
+.flow .txt{font-size:34px;margin-top:36px}
 .draw{position:relative;width:100%;flex:1 1 auto;min-height:220px;max-height:430px;margin:auto 0}
 .spacer{flex:1 1 auto}
 .man .m1{font:700 100px/1.06 Poppins,sans-serif;letter-spacing:-.05em;color:var(--ink);margin-top:40px}
@@ -162,8 +162,9 @@ body.render .frame .num{display:none}
 .ex .exl{display:block;font:600 16px/1 Poppins,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--ac);margin-bottom:12px}
 .ovl{position:absolute;left:0;top:0;width:1080px;height:1350px;z-index:6;pointer-events:none;overflow:visible}
 .ovl text{font-family:Caveat,cursive;font-weight:600}
-.gancho{position:relative;z-index:5;margin-top:36px;align-self:flex-start;padding-right:84px;font:600 44px/1.1 Caveat,cursive;color:var(--ink);opacity:.9;max-width:100%}
+.gancho{position:relative;z-index:5;margin-top:40px;align-self:flex-start;padding-right:96px;font:600 36px/1.25 Poppins,sans-serif;letter-spacing:-.015em;color:var(--ink);max-width:100%}
 .hc,.hu{position:relative;white-space:nowrap}
+.hc{margin:0 .35em}
 .pics.first{margin-top:0;margin-bottom:48px}
 .pic{flex:1;min-width:0;border-radius:22px;overflow:hidden;background:#e6e6e6}
 .pic img{width:100%;height:100%;object-fit:cover;display:block}
@@ -172,9 +173,9 @@ body.render .frame .num{display:none}
 /* CTA / resumo */
 .ctt{font:700 86px/1.14 Poppins,sans-serif;letter-spacing:-.04em;margin:0;color:var(--ink)}
 .ctt em{font-style:italic}
-.ctpre{font:500 50px/1.15 Poppins,sans-serif;letter-spacing:-.03em;color:var(--muted);margin-bottom:22px}
-.ctx{margin-top:40px;font:400 31px/1.42 Poppins,sans-serif;color:var(--muted);max-width:560px}
-.cta{margin-top:70px;font:700 31px Poppins,sans-serif;letter-spacing:-.01em;color:var(--ink)}
+.ctpre{font:600 58px/1.15 Poppins,sans-serif;letter-spacing:-.03em;color:var(--ink);opacity:.62;margin-bottom:24px}
+.ctx{margin-top:44px;font:500 35px/1.4 Poppins,sans-serif;color:var(--body);max-width:720px}
+.cta{margin-top:60px;font:700 40px/1.3 Poppins,sans-serif;letter-spacing:-.015em;color:var(--ink);background:var(--exbg);border-radius:22px;padding:34px 40px}
 .cta em{color:var(--ac)}
 .avatar{width:132px;height:132px;border-radius:50%;overflow:hidden;margin-bottom:40px;border:4px solid var(--bg);box-shadow:0 0 0 2px var(--ac)}
 .avatar img{width:100%;height:100%;object-fit:cover}
@@ -320,7 +321,7 @@ const TIPOS = {
     ["desenho","sel","Desenho à mão",["","alvo","funil","bolhas","grafico","pipeline","linha","baloes","escada","balanca","cartoes","troca","sementes","enxada","nuvem","maos","despertador","broto"]],
     ["exemplo","area","Exemplo concreto (nota à mão)"],
     ["rotulos","text","Rótulos do desenho (separe com |)"],
-    ["gancho","area","Gancho para o próximo slide (letra de mão)"],
+    ["gancho","area","Gancho para o próximo slide"],
     ["rodape","text","Rodapé (opcional)"],
   ]},
   foto:{nome:"Foto cheia", campos:[
@@ -545,9 +546,10 @@ function drawAll(root){
       add(rc.curve([[b.x,y+4],[b.x+160,y-6],[b.x+320,y+2]],O({stroke:hl,strokeWidth:4.2,roughness:1.3})))});
     const g=sl.querySelector(".gancho");
     if(g){const b=offs(g,sl); const r=b.x+b.w, my=b.y+b.h*.55, v=+(g.dataset.v||0)%3;
-      if(v===0) head([[r-70,my+2],[r-38,my-6],[r-6,my+2]]);
-      else if(v===1) head([[r-72,my+8],[r-50,my-6],[r-28,my+6],[r-6,my-2]]);
-      else head([[r-72,my-10],[r-40,my+8],[r-6,my]]);
+      const ao={strokeWidth:3.4};
+      if(v===0) head([[r-80,my+2],[r-44,my-6],[r-6,my+2]],ao);
+      else if(v===1) head([[r-82,my+8],[r-58,my-6],[r-32,my+6],[r-6,my-2]],ao);
+      else head([[r-82,my-10],[r-44,my+8],[r-6,my]],ao);
     }
     // desenhos
     sl.querySelectorAll(".draw").forEach(d=>{

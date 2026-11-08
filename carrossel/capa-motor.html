@@ -123,8 +123,10 @@ window.loadCapa = async function(spec){
   // risco à mão
   els.forEach(({d,cfg,t},i)=>{ if(!cfg.strike) return; const r=d.getBoundingClientRect(); const fs=parseFloat(d.style.fontSize);
     const y=pos[i].base-fs*.36, rc=rough.svg(document.getElementById("sv")), sv=document.getElementById("sv");
-    sv.appendChild(rc.curve([[r.left-14,y+10],[r.left+r.width*.5,y-6],[r.right+18,y+4]],{stroke:spec.cor_risco||"#fff",strokeWidth:9,roughness:1.4,seed:4}));
-    sv.appendChild(rc.curve([[r.left-6,y+26],[r.left+r.width*.55,y+10],[r.right+10,y+20]],{stroke:spec.cor_risco||"#fff",strokeWidth:5,roughness:1.6,seed:9})); });
+    const fino=spec.risco_fino, w1=fino?Math.max(5,fs*.075):9;
+    sv.appendChild(rc.curve([[r.left-14,y+10],[r.left+r.width*.5,y-6],[r.right+18,y+4]],{stroke:spec.cor_risco||"#fff",strokeWidth:w1,roughness:fino?1:1.4,seed:4}));
+    if(!fino) sv.appendChild(rc.curve([[r.left-6,y+26],[r.left+r.width*.55,y+10],[r.right+10,y+20]],{stroke:spec.cor_risco||"#fff",strokeWidth:5,roughness:1.6,seed:9})); });
+  if(spec.sombra) document.querySelectorAll(".L>div:not(.pill)").forEach(d=>d.style.textShadow="0 2px 6px rgba(0,0,0,.45), 0 4px 34px rgba(0,0,0,.6)");
   // FADE: degradê preto do topo até um pouco abaixo do título (também escurece o recorte da pessoa)
   if(spec.fade ?? (spec.pb===true)){
     const tops=pos.filter(Boolean).map(p=>p.top), bots=pos.filter(Boolean).map(p=>p.bottom);

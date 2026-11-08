@@ -9,13 +9,15 @@
       "Para vender",
       "É isca"
     ],
-    "base": 620,
+    "base": 585,
     "cor_risco": "#E5322D",
     "fade": true,
     "mascara": 0.15,
     "fade_forca": 0.7,
-    "escala": 0.76,
-    "acento_abaixo": true
+    "escala": 0.7,
+    "acento_abaixo": true,
+    "risco_fino": true,
+    "sombra": true
   },
   "marca": {
     "handle": "@caiozanellato",
@@ -50,7 +52,7 @@
       "subtitulo": "Ele não precisa vender. Precisa fazer o do meio parecer óbvio.",
       "texto": "Quem vê R$ 15 mil acha R$ 9 mil {{razoável}}.",
       "exemplo": "Quase ninguém leva o plano de R$ 15 mil. Mas é ele que fecha o de R$ 9 mil.",
-      "gancho": "Mas só funciona se você parar de fazer isso",
+      "gancho": "Só funciona se você parar com isso",
       "ilustracao": "ilustracoes/isca-v2.png",
       "ilustracao_recortada": true
     },
@@ -61,7 +63,7 @@
       "subtitulo": "Com três, a conversa muda para valor.",
       "texto": "Com duas, ele escolhe a {{mais barata}}. Com três, a que faz sentido.",
       "exemplo": "Básico × Completo vira pedido de desconto. Básico × Recomendado × Completo vira Recomendado.",
-      "gancho": "Quantas opções tinha sua última proposta?",
+      "gancho": "Quantas opções sua proposta tem?",
       "ilustracao": "ilustracoes/opcoes.png"
     },
     {
