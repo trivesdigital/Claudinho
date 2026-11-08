@@ -135,6 +135,7 @@ body.render .frame .num{display:none}
 .t-escuro .cil img{mix-blend-mode:screen;filter:invert(1)}
 .cil img[src^="data:image/svg"]{mix-blend-mode:normal;filter:none}
 .t-escuro .cil img:not([src^="data:image/svg"]),.t-preto .cil img:not([src^="data:image/svg"]){mix-blend-mode:normal;filter:none;background:#fff;border-radius:26px;padding:22px;box-sizing:border-box}
+.cil.nocard img{background:none !important;padding:0 !important;border-radius:0 !important;mix-blend-mode:normal !important;filter:drop-shadow(0 18px 30px rgba(0,0,0,.25)) !important}
 .slide{--icc:#CFCFCF;--icp:#1B1B1B;--icv:#12965A}.slide.t-escuro,.slide.t-preto{--icc:rgba(255,255,255,.32);--icp:#FFFFFF;--icv:#3FD18A}
 .icset{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;gap:40px;margin-top:30px}
 .icg{display:flex;flex-direction:column;align-items:center}
@@ -498,7 +499,7 @@ function renderSlide(s, i, total){
       ${pos==="depois do subtítulo"?pics:""}
       ${corpo}
       ${pos==="depois do texto"?pics:""}
-      ${s.icones?renderIcones(s.icones):s.ilustracao?`<div class="mil cil"><img src="${esc(s.ilustracao)}" alt=""></div>`:s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:`<div class="spacer"></div>`}
+      ${s.icones?renderIcones(s.icones):s.ilustracao?`<div class="mil cil${s.ilustracao_recortada?" nocard":""}"><img src="${esc(s.ilustracao)}" alt=""></div>`:s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:`<div class="spacer"></div>`}
       ${s.exemplo?`<div class="ex"><span class="exl">Na prática</span>${fmt(s.exemplo)}</div>`:""}
       ${s.gancho?`<div class="gancho" data-v="${i}">${fmt(s.gancho)}</div>`:""}
     </div>

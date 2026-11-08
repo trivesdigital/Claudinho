@@ -68,7 +68,8 @@
       "texto": "Quem vê R$ 15 mil acha R$ 9 mil {{razoável}}.",
       "exemplo": "Quase ninguém leva o plano de R$ 15 mil. Mas é ele que fecha o de R$ 9 mil.",
       "gancho": "Mas só funciona se você parar de fazer isso",
-      "ilustracao": "ilustracoes/isca.png"
+      "ilustracao": "ilustracoes/isca-recorte.png",
+      "ilustracao_recortada": true
     },
     {
       "tipo": "conteudo",

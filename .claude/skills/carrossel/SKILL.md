@@ -59,6 +59,8 @@ Prompt-base para o usuário: "Estilo: ilustração em linha preta grossa e unifo
 `"icones":{"grupos":[{"titulo":"opcional","itens":[{"icone":"popcorn","tam":160,"cor":"cinza|preto|verde","preco":"R$ 22","rotulo":"Média","nota":"a que você leva"}]}]}` — mesma base, preço em cima, nome embaixo, nota em letra de mão; o `verde` ganha rótulo sublinhado. `"icone":"carta"` = cartão liso (aceita `rot`, `sobe`). Vários grupos = comparação lado a lado com divisória. Ícones ficam em `carrossel/icones/*.svg` (copie novos de `@phosphor-icons/core/assets/fill/<nome>-fill.svg`).
 **Formato de dicas aprovado:** o do carrossel 02 (número + título, subtítulo legível, frase com marcação, ilustração, "Na prática" em caixa tingida, gancho). A 2ª imagem (contracapa) também precisa funcionar como capa (Instagram testa A/B). Ganchos podem pedir uma ação pontual ("Abre sua última proposta…").
 
+**Ilustração em slide verde:** nunca em caixa branca (o usuário achou horrível). Recorte o fundo branco (flood fill a partir das bordas com limiar estrito, ex.: min(RGB)>240) → PNG transparente, clareie traços escuros que somem no verde, e use `"ilustracao_recortada": true` (fica direto no fundo, com sombra suave).
+
 **Nunca repetir a ilustração de um carrossel anterior** (regra do usuário). Se nenhum desenho existente servir sem repetir, crie um novo tipo em `index.html` (função `drawAll`) e registre aqui.
 Já usados: 02 → alvo, funil, bolhas, grafico, pipeline · 03 → grafico, bolhas, linha, alvo, pipeline · 04 → baloes, escada, balanca, cartoes, troca.
 **Fácil de entender:** títulos curtos e do dia a dia; uma ideia por slide; "Na prática" como diálogo (**Cliente:** / **Você:**).
