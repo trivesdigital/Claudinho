@@ -19,7 +19,7 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
    - A última linha do título deve ter `base` ~40–60 px **abaixo do topo da cabeça/boné** (a pessoa cobre só a base das letras).
 4. `node carrossel/gerar.js carrossel/carrosseis/NN-tema/roteiro.json` → relatório no terminal. Corrija os avisos no JSON e rode de novo.
 5. Confira **apenas** `previa.jpg` (1 imagem). Só abra um slide individual se a prévia mostrar problema.
-6. Commit + push; envie ao usuário **o `.zip` da pasta** (todos os slides de uma vez) com `SendUserFile`, em vez dos PNGs um a um.
+6. Escreva `legenda.txt` na pasta (curta, máx. 5 tags) **antes de gerar**, para ela ir junto no zip. Commit + push; envie ao usuário **o `.zip` da pasta** (todos os slides de uma vez) com `SendUserFile`, em vez dos PNGs um a um.
 
 ## Regras de estilo (aprovadas pelo usuário)
 - Público AAA, minimalista e elegante. Fundo branco na maioria; **1–2 slides** com `"tema":"escuro"` (verde Trives escuro, flat com granulado). Sem neon, sem logo, sem nome no topo, sem rodapé.
@@ -72,3 +72,7 @@ Público: donos de empresas de **10 a 200 funcionários**, **multissegmento** (f
 **5 pilares, equilibrados** (vendas é só um deles): **Negócios · IA · Gestão · Vendas · Marketing**.
 Hook no formato que funcionou: curto (≤ 6 palavras), virada **"não é X, é Y"** com palavra riscada + palavra gigante, ou "O que N anos/clientes me ensinaram sobre X".
 Já publicados: marca pessoal (não repetir o tema), +1.200 clientes/crescer, follow-up, desconto/confiança.
+
+**Observações do usuário (ganchos):**
+- O gancho do último slide de conteúdo precisa puxar o CTA pelo conteúdo, nunca uma frase genérica (ruim: "Resumindo em uma frase"). Ex.: se o CTA é "O cliente não compra o mais barato…", o gancho prepara essa virada.
+- Regra geral: o título do slide seguinte responde ao gancho do anterior (início, meio e fim conectados).
