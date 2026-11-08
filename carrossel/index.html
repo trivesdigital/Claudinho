@@ -134,6 +134,21 @@ body.render .frame .num{display:none}
 .cil img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
 .t-escuro .cil img{mix-blend-mode:screen;filter:invert(1)}
 .cil img[src^="data:image/svg"]{mix-blend-mode:normal;filter:none}
+.slide{--icc:#CFCFCF;--icp:#1B1B1B;--icv:#12965A}.slide.t-escuro,.slide.t-preto{--icc:rgba(255,255,255,.32);--icp:#FFFFFF;--icv:#3FD18A}
+.icset{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;gap:40px;margin-top:30px}
+.icg{display:flex;flex-direction:column;align-items:center}
+.icrow{display:flex;align-items:flex-end;justify-content:center;gap:40px}
+.ici{display:flex;flex-direction:column;align-items:center}
+.ic-preco{font:700 32px Poppins,sans-serif;letter-spacing:-.02em;color:var(--ink);margin-bottom:12px}
+.ici:not(.dest) .ic-preco{color:var(--muted)}
+.ic-rot{font:600 26px Poppins,sans-serif;color:var(--muted);margin-top:14px;white-space:nowrap}
+.ici.dest .ic-rot{color:var(--ink)}
+.ic-nota{font:600 32px/1 Caveat,cursive;color:var(--muted);margin-top:8px;white-space:nowrap}
+.ici.dest .ic-nota{color:var(--ink)}
+.ic-carta{border-radius:16px}
+.icsep{width:3px;align-self:stretch;margin:20px 0;background:var(--icc);border-radius:2px}
+.icg-t{font:600 26px Poppins,sans-serif;color:var(--ink);margin-top:22px;text-align:center}
+.man .icset{flex:1 1 auto;margin-top:50px}
 .man .mil{flex:1 1 auto;min-height:0;display:flex;align-items:flex-end;justify-content:flex-end;margin-top:40px}
 .man .mil img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
 .t-escuro .man .mil img{mix-blend-mode:screen;filter:invert(1)}
@@ -356,6 +371,20 @@ const img = (src, cls, foco) => src
   ? `<img class="${cls}" src="${esc(src)}" style="object-position:${esc(foco||"50% 50%")}" alt="">`
   : (cls==="bgimg" ? `<div class="ph">Adicione sua foto</div>` : "");
 
+function renderIcones(spec){
+  if(!spec || !spec.grupos) return "";
+  const cor = c => c==="verde"?"var(--icv)":c==="preto"?"var(--icp)":"var(--icc)";
+  return `<div class="icset">${spec.grupos.map(g=>`<div class="icg">
+    <div class="icrow">${(g.itens||[]).map(it=>`<div class="ici${it.cor==="verde"?" dest":""}">
+      ${it.preco?`<div class="ic-preco">${fmt(it.preco)}</div>`:""}
+      ${it.icone==="carta"?`<div class="ic-carta" style="width:${(it.tam||170)*.68}px;height:${it.tam||170}px;background:${cor(it.cor)};transform:rotate(${it.rot||0}deg) translateY(${it.sobe?-(it.sobe):0}px)"></div>`
+        :`<svg viewBox="0 0 256 256" style="width:${it.tam||170}px;height:${it.tam||170}px;fill:${cor(it.cor)}">${it.svg||""}</svg>`}
+      ${it.rotulo?`<div class="ic-rot">${it.cor==="verde"?`<span class="hu">${fmt(it.rotulo)}</span>`:fmt(it.rotulo)}</div>`:""}
+      ${it.nota?`<div class="ic-nota">${fmt(it.nota)}</div>`:""}
+    </div>`).join("")}</div>
+    ${g.titulo?`<div class="icg-t">${fmt(g.titulo)}</div>`:""}
+  </div>`).join(`<div class="icsep"></div>`)}</div>`;
+}
 function renderSlide(s, i, total){
   const tema = "t-"+(s.tema||state.marca.tema||"claro");
   const acc = state.marca.cor ? `--ac:${esc(state.marca.cor)};` : "";
@@ -434,13 +463,13 @@ function renderSlide(s, i, total){
   if (s.tipo === "manifesto"){
     return `<div class="slide paper ${tema}" style="${acc}">
       <div class="body flow man${s.citacao?" cit":""}">
-        ${(s.desenho||s.ilustracao)?"":`<div class="spacer"></div>`}
+        ${(s.desenho||s.ilustracao||s.icones)?"":`<div class="spacer"></div>`}
         <div class="m1">${fmt(s.linha1)}</div>
         ${s.linha2?`<div class="m2">${fmt(s.linha2)}</div>`:""}
         ${s.linha3?`<div class="m3">${fmt(s.linha3)}</div>`:""}
         <div class="spacer"></div>
         ${s.desenho?`<div class="draw mdraw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:""}
-        ${s.ilustracao?`<div class="mil"><img src="${esc(s.ilustracao)}" alt=""></div>`:""}
+        ${s.icones?renderIcones(s.icones):s.ilustracao?`<div class="mil"><img src="${esc(s.ilustracao)}" alt=""></div>`:""}
       </div></div>`;
   }
   /* conteudo */
@@ -459,14 +488,14 @@ function renderSlide(s, i, total){
   const corpo = (s.texto||itens||s.texto_final)?`<div class="txt">${paras(s.texto)}${itens?`<ul class="lst">${itens}</ul>`:""}${paras(s.texto_final)}</div>`:"";
   return `<div class="slide paper ${tema}" style="${acc}">
     ${header()}
-    <div class="body flow${(s.desenho||s.ilustracao)?"":" nodraw"}">
+    <div class="body flow${(s.desenho||s.ilustracao||s.icones)?"":" nodraw"}">
       ${pos==="antes do título"?pics:""}
       ${s.titulo||num?`<h2 class="ttl">${num}${fmt(s.titulo)}</h2>`:""}
       ${s.subtitulo?`<div class="st">${fmt(s.subtitulo)}</div>`:""}
       ${pos==="depois do subtítulo"?pics:""}
       ${corpo}
       ${pos==="depois do texto"?pics:""}
-      ${s.ilustracao?`<div class="mil cil"><img src="${esc(s.ilustracao)}" alt=""></div>`:s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:`<div class="spacer"></div>`}
+      ${s.icones?renderIcones(s.icones):s.ilustracao?`<div class="mil cil"><img src="${esc(s.ilustracao)}" alt=""></div>`:s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:`<div class="spacer"></div>`}
       ${s.exemplo?`<div class="ex"><span class="exl">Na prática</span>${fmt(s.exemplo)}</div>`:""}
       ${s.gancho?`<div class="gancho" data-v="${i}">${fmt(s.gancho)}</div>`:""}
     </div>

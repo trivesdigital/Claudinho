@@ -53,6 +53,15 @@ function inline(obj, baseDir, avisos) {
   }
 
   // 2) SLIDES
+  // ícones flat (Phosphor) embutidos no slide
+  const icDir = path.join(__dirname, "icones");
+  data.slides.forEach(sl => (sl.icones?.grupos || []).forEach(g => (g.itens || []).forEach(it => {
+    if (it.icone && it.icone !== "carta") {
+      const f = path.join(icDir, it.icone + ".svg");
+      if (fs.existsSync(f)) it.svg = (fs.readFileSync(f, "utf8").match(/<svg[^>]*>([\s\S]*)<\/svg>/) || [])[1] || "";
+      else avisos.push(`ícone não encontrado: ${it.icone} (copie de @phosphor-icons/core para carrossel/icones/)`);
+    }
+  })));
   inline(data.marca || {}, dir, avisos);
   data.slides.forEach(s => inline(s, dir, avisos));
   await page.goto("file://" + path.join(__dirname, "index.html") + "?render=1");
