@@ -76,3 +76,14 @@ Já publicados: marca pessoal (não repetir o tema), +1.200 clientes/crescer, fo
 **Observações do usuário (ganchos):**
 - O gancho do último slide de conteúdo precisa puxar o CTA pelo conteúdo, nunca uma frase genérica (ruim: "Resumindo em uma frase"). Ex.: se o CTA é "O cliente não compra o mais barato…", o gancho prepara essa virada.
 - Regra geral: o título do slide seguinte responde ao gancho do anterior (início, meio e fim conectados).
+
+**Estrutura de manifesto aprovada (base: 05-preguica) — seguir sempre:**
+1. Tese (contracapa, funciona como capa): frase de 2 linhas com virada ("Ele abençoa o que você {{planta}}. / Não o que você deseja.")
+2. O problema em uma imagem ("Muita gente ora pela colheita… / e nunca pegou na {{enxada}}.")
+3–5. Trio em anáfora, mesmo molde nos 3 ("Pede X. / Mas não {{Y}}.") — exemplos do dia a dia do dono
+6. Definição negativa ("Fé não é {{terceirizar}} o esforço…")
+7–8. Definição positiva em anáfora ("É acordar {{cedo}} / quando ninguém está vendo.")
+9. Versículo (verde, estilo versiculo)
+10. Paralelo-símbolo (a1/a2 · b1/b2)
+11. CTA verde ("Isso te confrontou? / Manda para… / Segue {handle}")
+Frases curtas, 1 ilustração por slide (exceto 9–11). Não inventar estruturas novas.
