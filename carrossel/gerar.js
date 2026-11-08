@@ -8,6 +8,7 @@
  *   01.png … NN.png   slides finais 1080×1350
  *   capa/capa.png     capa gerada (quando o roteiro tem "capa")
  *   previa.jpg        UMA imagem com todos os slides (é a única que precisa ser conferida)
+ *   <pasta>.zip       todos os slides num arquivo só (para enviar ao usuário)
  * No terminal: um relatório curto com problemas encontrados (ou "OK").
  */
 const fs = require("fs");
@@ -89,8 +90,15 @@ function inline(obj, baseDir, avisos) {
   await page.screenshot({ path: path.join(dir, "previa.jpg"), type: "jpeg", quality: 70, fullPage: true });
   await browser.close();
 
+  // 6) ZIP com todos os slides (para baixar de uma vez)
+  const nome = path.basename(dir);
+  const zipPath = path.join(dir, `${nome}.zip`);
+  require("child_process").execFileSync("python3", ["-c",
+    "import sys,zipfile;z=zipfile.ZipFile(sys.argv[1],'w',zipfile.ZIP_DEFLATED);[z.write(f,f.split('/')[-1]) for f in sys.argv[2:]];z.close()",
+    zipPath, ...files]);
+
   // 6) RELATÓRIO curto
   const rel = path.relative(process.cwd(), dir);
-  console.log(`${slides.length} slides → ${rel}/  ·  prévia: ${rel}/previa.jpg`);
+  console.log(`${slides.length} slides → ${rel}/  ·  prévia: ${rel}/previa.jpg  ·  zip: ${rel}/${nome}.zip`);
   console.log(avisos.length ? avisos.map(a => "  ! " + a).join("\n") : "  OK — nenhum problema encontrado");
 })();

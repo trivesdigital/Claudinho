@@ -19,7 +19,7 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
    - A última linha do título deve ter `base` ~40–60 px **abaixo do topo da cabeça/boné** (a pessoa cobre só a base das letras).
 4. `node carrossel/gerar.js carrossel/carrosseis/NN-tema/roteiro.json` → relatório no terminal. Corrija os avisos no JSON e rode de novo.
 5. Confira **apenas** `previa.jpg` (1 imagem). Só abra um slide individual se a prévia mostrar problema.
-6. Commit + push; envie os PNGs ao usuário com `SendUserFile`.
+6. Commit + push; envie ao usuário **o `.zip` da pasta** (todos os slides de uma vez) com `SendUserFile`, em vez dos PNGs um a um.
 
 ## Regras de estilo (aprovadas pelo usuário)
 - Público AAA, minimalista e elegante. Fundo branco na maioria; **1–2 slides** com `"tema":"escuro"` (verde Trives escuro, flat com granulado). Sem neon, sem logo, sem nome no topo, sem rodapé.
