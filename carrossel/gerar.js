@@ -104,7 +104,7 @@ function inline(obj, baseDir, avisos) {
   const zipPath = path.join(dir, `${nome}.zip`);
   require("child_process").execFileSync("python3", ["-c",
     "import sys,zipfile;z=zipfile.ZipFile(sys.argv[1],'w',zipfile.ZIP_DEFLATED);[z.write(f,f.split('/')[-1]) for f in sys.argv[2:]];z.close()",
-    zipPath, ...files]);
+    zipPath, ...files, ...["legenda.txt"].map(f => path.join(dir, f)).filter(fs.existsSync)]);
 
   // 6) RELATÓRIO curto
   const rel = path.relative(process.cwd(), dir);
