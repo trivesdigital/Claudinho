@@ -48,7 +48,8 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 | `cartoes` | título A \| texto A (✗) \| título B \| texto B (✓) |
 | `troca` | você dá \| valor \| você recebe \| valor |
 
-**Manifesto (trilha viral):** `{"tipo":"manifesto","linha1":"frase forte","linha2":"contraponto (mais leve)","linha3":"opcional pequeno","desenho":"…","citacao":true,"cta":true}` — **manifesto é só tipografia** (o usuário achou os desenhos abstratos/ruins): frase grande centralizada + `{{palavra-chave}}` sublinhada à mão. Não usar desenho no manifesto.
+**Manifesto (trilha viral):** `{"tipo":"manifesto","linha1":"frase forte","linha2":"contraponto (mais leve)","linha3":"opcional pequeno","desenho":"…","citacao":true,"cta":true}` — **manifesto é só tipografia** (o usuário achou os desenhos abstratos/ruins): frase grande centralizada + `{{palavra-chave}}` sublinhada à mão. Não usar desenho de código no manifesto. **Ilustração externa** (traço preto grosso estilo vetor, fundo branco — o usuário gera no GPT): salve em `carrosseis/<pasta>/ilustracoes/*.png` e use `"ilustracao": "ilustracoes/x.png"` no slide (fica abaixo do texto, fundo branco some com multiply).
+Prompt-base para o usuário: "Estilo: ilustração em linha preta grossa e uniforme, estilo vetor (line art), traço limpo e contínuo, sem sombreado, sem hachura, sem cor, sem texto. Fundo branco puro. Composição minimalista, objeto centralizado com bastante espaço em branco ao redor. Formato 4:3, alta resolução." 
 
 **Nunca repetir a ilustração de um carrossel anterior** (regra do usuário). Se nenhum desenho existente servir sem repetir, crie um novo tipo em `index.html` (função `drawAll`) e registre aqui.
 Já usados: 02 → alvo, funil, bolhas, grafico, pipeline · 03 → grafico, bolhas, linha, alvo, pipeline · 04 → baloes, escada, balanca, cartoes, troca.

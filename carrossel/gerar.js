@@ -15,7 +15,7 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const MIME = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
-const IMG_KEYS = ["foto", "pessoa", "recorte", "imagem", "imagem2", "logo"];
+const IMG_KEYS = ["foto", "pessoa", "recorte", "imagem", "imagem2", "logo", "ilustracao"];
 const toData = (p) => `data:${MIME[path.extname(p).toLowerCase()] || "image/jpeg"};base64,${fs.readFileSync(p).toString("base64")}`;
 
 function inline(obj, baseDir, avisos) {

@@ -7,12 +7,14 @@
     {
       "tipo": "manifesto",
       "linha1": "Ele abençoa o que você {{planta}}.",
-      "linha2": "Não o que você deseja."
+      "linha2": "Não o que você deseja.",
+      "ilustracao": "ilustracoes/sementes.png"
     },
     {
       "tipo": "manifesto",
       "linha1": "Muita gente ora pela colheita…",
-      "linha2": "e nunca pegou na {{enxada}}."
+      "linha2": "e nunca pegou na {{enxada}}.",
+      "ilustracao": "ilustracoes/enxada.png"
     },
     {
       "tipo": "manifesto",
@@ -31,17 +33,20 @@
     },
     {
       "tipo": "manifesto",
-      "linha1": "Fé não é {{terceirizar}} o esforço para o céu."
+      "linha1": "Fé não é {{terceirizar}} o esforço para o céu.",
+      "ilustracao": "ilustracoes/nuvem.png"
     },
     {
       "tipo": "manifesto",
       "linha1": "É acordar {{cedo}}",
-      "linha2": "quando ninguém está vendo."
+      "linha2": "quando ninguém está vendo.",
+      "ilustracao": "ilustracoes/despertador.png"
     },
     {
       "tipo": "manifesto",
       "linha1": "É fazer o certo",
-      "linha2": "{{antes}} de ter resultado."
+      "linha2": "{{antes}} de ter resultado.",
+      "ilustracao": "ilustracoes/broto.png"
     },
     {
       "tipo": "manifesto",
