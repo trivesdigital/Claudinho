@@ -6,7 +6,7 @@
     "linhas": ["Seu problema não é", "Tráfego", "É o follow-up"],
     "base": 664
   },
-  "marca": {"handle": "@zanellato", "tema": "claro"},
+  "marca": {"handle": "@caiozanellato", "tema": "claro"},
   "slides": [
     {"tipo": "conteudo", "numero": "01", "titulo": "Título curto e afirmativo", "subtitulo": "Uma linha com a tensão.",
      "texto": "Uma frase com [[círculo]] ou {{sublinhado}} à mão.",
