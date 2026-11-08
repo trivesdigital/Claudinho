@@ -227,9 +227,10 @@
       "tipo": "cta",
       "tema": "escuro",
       "kicker": "O resumo",
-      "titulo": "Uma proposta pede {{sim ou não}}.\nTrês pedem qual delas.",
-      "texto": "Não é manipulação. É ajudar o cliente a decidir.",
-      "chamada": "**Manda para quem monta as propostas na sua empresa.**"
+      "titulo": "Compra o que parece mais {{inteligente}}.",
+      "texto": "Quem monta as opções decide o que parece inteligente.",
+      "chamada": "**Manda para quem monta as propostas na sua empresa.**",
+      "pre": "O cliente não compra o mais barato."
     }
   ]
 }

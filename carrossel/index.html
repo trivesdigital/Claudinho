@@ -170,6 +170,7 @@ body.render .frame .num{display:none}
 /* CTA / resumo */
 .ctt{font:700 86px/1.14 Poppins,sans-serif;letter-spacing:-.04em;margin:0;color:var(--ink)}
 .ctt em{font-style:italic}
+.ctpre{font:500 50px/1.15 Poppins,sans-serif;letter-spacing:-.03em;color:var(--muted);margin-bottom:22px}
 .ctx{margin-top:40px;font:400 31px/1.42 Poppins,sans-serif;color:var(--muted);max-width:560px}
 .cta{margin-top:70px;font:700 31px Poppins,sans-serif;letter-spacing:-.01em;color:var(--ink)}
 .cta em{color:var(--ac)}
@@ -429,6 +430,7 @@ function renderSlide(s, i, total){
       <div class="body">
         ${s.foto?`<div class="avatar"><img src="${esc(s.foto)}" alt=""></div>`:""}
         ${s.kicker?`<div class="kick">${fmt(s.kicker)}</div>`:""}
+        ${s.pre?`<div class="ctpre">${fmt(s.pre)}</div>`:""}
         <h2 class="ctt">${fmt(s.titulo)}</h2>
         ${s.texto?`<div class="ctx">${fmt(s.texto)}</div>`:""}
         <div class="cta">${fmt(s.chamada || "Salva esse post e segue {handle}")}</div>
