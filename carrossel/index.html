@@ -107,7 +107,7 @@ body.render .frame .num{display:none}
 .pics{display:flex;gap:20px;margin-top:44px}
 .body.flow{top:150px;bottom:150px;left:128px;right:128px;justify-content:flex-start;padding-bottom:0}
 .flow .ttl{font-size:64px}
-.flow .st{font-size:24px;max-width:100%}
+.flow .st{font:600 31px/1.3 Poppins,sans-serif;letter-spacing:-.015em;color:var(--body);max-width:100%;margin-top:18px}
 .flow .txt{font-size:31px;margin-top:38px}
 .draw{position:relative;width:100%;flex:1 1 auto;min-height:220px;max-height:430px;margin:auto 0}
 .spacer{flex:1 1 auto}
@@ -130,13 +130,18 @@ body.render .frame .num{display:none}
 .man .m3{font:600 30px Poppins,sans-serif;color:var(--muted);margin-top:40px}
 .man.cit .m1{font:500 66px/1.22 Poppins,sans-serif;letter-spacing:-.03em}
 .man.cit .m2{font:500 30px Poppins,sans-serif;letter-spacing:.02em;margin-top:34px}
+.cil{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;margin:34px 0 0;max-height:520px}
+.cil img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
+.t-escuro .cil img{mix-blend-mode:screen;filter:invert(1)}
+.cil img[src^="data:image/svg"]{mix-blend-mode:normal;filter:none}
 .man .mil{flex:1 1 auto;min-height:0;display:flex;align-items:flex-end;justify-content:flex-end;margin-top:40px}
 .man .mil img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
 .t-escuro .man .mil img{mix-blend-mode:screen;filter:invert(1)}
 .man .mdraw{flex:none;align-self:flex-end;width:720px;height:520px;margin:0;max-height:none;min-height:0}
 .flow.nodraw .txt{font-size:34px}
 .flow.nodraw .lst{font-size:42px;line-height:1.85;margin-top:28px}
-.ex{position:relative;align-self:stretch;margin-top:30px;padding:2px 0 4px 30px;font:400 29px/1.38 Poppins,sans-serif;letter-spacing:-.01em;color:var(--body)}
+.ex{position:relative;align-self:stretch;margin-top:30px;padding:24px 30px 26px;border-radius:20px;background:var(--exbg);font:400 30px/1.38 Poppins,sans-serif;letter-spacing:-.01em;color:var(--ink)}
+.slide{--exbg:#EEF4F0}.slide.t-escuro,.slide.t-preto{--exbg:rgba(255,255,255,.09)}
 .ex .exl{display:block;font:600 16px/1 Poppins,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--ac);margin-bottom:12px}
 .ovl{position:absolute;left:0;top:0;width:1080px;height:1350px;z-index:6;pointer-events:none;overflow:visible}
 .ovl text{font-family:Caveat,cursive;font-weight:600}
@@ -148,7 +153,7 @@ body.render .frame .num{display:none}
 .cap{margin-top:14px;font:500 19px Poppins,sans-serif;letter-spacing:.02em;color:var(--muted)}
 .pics.first+.cap{margin:-34px 0 48px}
 /* CTA / resumo */
-.ctt{font:700 86px/1.04 Poppins,sans-serif;letter-spacing:-.04em;margin:0;color:var(--ink)}
+.ctt{font:700 86px/1.14 Poppins,sans-serif;letter-spacing:-.04em;margin:0;color:var(--ink)}
 .ctt em{font-style:italic}
 .ctx{margin-top:40px;font:400 31px/1.42 Poppins,sans-serif;color:var(--muted);max-width:560px}
 .cta{margin-top:70px;font:700 31px Poppins,sans-serif;letter-spacing:-.01em;color:var(--ink)}
@@ -454,14 +459,14 @@ function renderSlide(s, i, total){
   const corpo = (s.texto||itens||s.texto_final)?`<div class="txt">${paras(s.texto)}${itens?`<ul class="lst">${itens}</ul>`:""}${paras(s.texto_final)}</div>`:"";
   return `<div class="slide paper ${tema}" style="${acc}">
     ${header()}
-    <div class="body flow${s.desenho?"":" nodraw"}">
+    <div class="body flow${(s.desenho||s.ilustracao)?"":" nodraw"}">
       ${pos==="antes do título"?pics:""}
       ${s.titulo||num?`<h2 class="ttl">${num}${fmt(s.titulo)}</h2>`:""}
       ${s.subtitulo?`<div class="st">${fmt(s.subtitulo)}</div>`:""}
       ${pos==="depois do subtítulo"?pics:""}
       ${corpo}
       ${pos==="depois do texto"?pics:""}
-      ${s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:`<div class="spacer"></div>`}
+      ${s.ilustracao?`<div class="mil cil"><img src="${esc(s.ilustracao)}" alt=""></div>`:s.desenho?`<div class="draw" data-kind="${esc(s.desenho)}" data-labels="${esc(capColon(s.rotulos||""))}"></div>`:`<div class="spacer"></div>`}
       ${s.exemplo?`<div class="ex"><span class="exl">Na prática</span>${fmt(s.exemplo)}</div>`:""}
       ${s.gancho?`<div class="gancho" data-v="${i}">${fmt(s.gancho)}</div>`:""}
     </div>
@@ -502,7 +507,7 @@ function drawAll(root){
       add(rc.line(x2,y2,x2-L*Math.cos(a-0.5),y2-L*Math.sin(a-0.5),O({strokeWidth:2.6,...o})));
       add(rc.line(x2,y2,x2-L*Math.cos(a+0.5),y2-L*Math.sin(a+0.5),O({strokeWidth:2.6,...o})))};
     sl.querySelectorAll(".ex").forEach(e=>{const b=offs(e,sl);
-      add(rc.line(b.x+4,b.y+2,b.x+2,b.y+b.h,O({stroke:ac,strokeWidth:4,roughness:1.2})))});
+      });
     sl.querySelectorAll(".psep").forEach(e=>{const b=offs(e,sl); const y=b.y+b.h/2;
       add(rc.curve([[b.x,y+4],[b.x+160,y-6],[b.x+320,y+2]],O({stroke:hl,strokeWidth:4.2,roughness:1.3})))});
     const g=sl.querySelector(".gancho");

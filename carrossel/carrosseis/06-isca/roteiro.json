@@ -1,0 +1,79 @@
+{
+  "capa": {
+    "foto": "capa-fundo.png",
+    "layout": "riscado",
+    "linhas": [
+      "Seu plano mais caro não é",
+      "Para vender",
+      "É isca"
+    ],
+    "base": 800,
+    "cor_risco": "#E5322D",
+    "escurecer": 0
+  },
+  "marca": {
+    "handle": "@caiozanellato",
+    "tema": "claro"
+  },
+  "slides": [
+    {
+      "tipo": "pronta",
+      "foto": "capa/capa.png"
+    },
+    {
+      "tipo": "manifesto",
+      "linha1": "O cinema te engana na pipoca.",
+      "linha2": "E a sua empresa deveria fazer {{o mesmo}}.",
+      "ilustracao": "ilustracoes/pipoca.svg"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "01",
+      "titulo": "Por que a pipoca grande existe",
+      "subtitulo": "Ninguém precisa dela. Ela está lá para a média parecer a escolha inteligente.",
+      "texto": "Isso tem nome: [[Efeito chamariz]].",
+      "ilustracao": "ilustracoes/etiquetas.svg",
+      "exemplo": "Média por R$ 22, grande por R$ 25. A grande “vale mais a pena” — e a média deixa de parecer cara.",
+      "gancho": "Agora pensa no seu plano mais caro"
+    },
+    {
+      "tipo": "conteudo",
+      "tema": "escuro",
+      "numero": "02",
+      "titulo": "Seu plano mais caro é a isca",
+      "subtitulo": "Ele não precisa vender. Precisa fazer o do meio parecer óbvio.",
+      "texto": "Quem vê R$ 15 mil acha R$ 9 mil {{razoável}}.",
+      "ilustracao": "ilustracoes/caixas.svg",
+      "exemplo": "Quase ninguém leva o plano de R$ 15 mil. Mas é ele que fecha o de R$ 9 mil.",
+      "gancho": "Mas só funciona se você parar de fazer isso"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "03",
+      "titulo": "Duas opções viram briga de preço",
+      "subtitulo": "Com três, a conversa muda para valor.",
+      "texto": "Com duas, ele escolhe a {{mais barata}}. Com três, a que faz sentido.",
+      "ilustracao": "ilustracoes/cartas.svg",
+      "exemplo": "Básico × Completo vira pedido de desconto. Básico × Recomendado × Completo vira Recomendado.",
+      "gancho": "Quantas opções tinha sua última proposta?"
+    },
+    {
+      "tipo": "conteudo",
+      "numero": "04",
+      "titulo": "Monte sua proposta em 3 níveis",
+      "subtitulo": "Cada nível tem uma função.",
+      "itens": "Essencial | resolve o mínimo\nRecomendado | o que você quer vender\nCompleto | a isca que valoriza o do meio",
+      "ilustracao": "ilustracoes/propostas.svg",
+      "exemplo": "“Temos três formatos. A maioria das empresas do seu porte fica no Recomendado.”",
+      "gancho": "Faz isso antes da próxima reunião"
+    },
+    {
+      "tipo": "cta",
+      "tema": "escuro",
+      "kicker": "O resumo",
+      "titulo": "Uma proposta pede {{sim ou não}}.\nTrês pedem qual delas.",
+      "texto": "Não é manipulação. É ajudar o cliente a decidir.",
+      "chamada": "**Manda para quem monta as propostas na sua empresa.**"
+    }
+  ]
+}
