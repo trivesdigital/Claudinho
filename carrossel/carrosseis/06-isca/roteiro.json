@@ -24,37 +24,7 @@
       "tipo": "manifesto",
       "linha1": "O cinema te engana na pipoca.",
       "linha2": "E a sua empresa deveria fazer {{o mesmo}}.",
-      "icones": {
-        "grupos": [
-          {
-            "itens": [
-              {
-                "icone": "popcorn",
-                "tam": 162,
-                "cor": "cinza",
-                "preco": "R$ 18",
-                "rotulo": "Pequena"
-              },
-              {
-                "icone": "popcorn",
-                "tam": 218,
-                "cor": "verde",
-                "preco": "R$ 22",
-                "rotulo": "Média",
-                "nota": "a que você leva"
-              },
-              {
-                "icone": "popcorn",
-                "tam": 275,
-                "cor": "preto",
-                "preco": "R$ 25",
-                "rotulo": "Grande",
-                "nota": "a isca"
-              }
-            ]
-          }
-        ]
-      }
+      "ilustracao": "ilustracoes/pipoca.png"
     },
     {
       "tipo": "conteudo",
@@ -98,37 +68,7 @@
       "texto": "Quem vê R$ 15 mil acha R$ 9 mil {{razoável}}.",
       "exemplo": "Quase ninguém leva o plano de R$ 15 mil. Mas é ele que fecha o de R$ 9 mil.",
       "gancho": "Mas só funciona se você parar de fazer isso",
-      "icones": {
-        "grupos": [
-          {
-            "itens": [
-              {
-                "icone": "gift",
-                "tam": 162,
-                "cor": "cinza",
-                "preco": "R$ 5 mil",
-                "rotulo": "Básico"
-              },
-              {
-                "icone": "gift",
-                "tam": 218,
-                "cor": "verde",
-                "preco": "R$ 9 mil",
-                "rotulo": "Recomendado",
-                "nota": "o que você vende"
-              },
-              {
-                "icone": "gift",
-                "tam": 275,
-                "cor": "preto",
-                "preco": "R$ 15 mil",
-                "rotulo": "Completo",
-                "nota": "a isca"
-              }
-            ]
-          }
-        ]
-      }
+      "ilustracao": "ilustracoes/isca.png"
     },
     {
       "tipo": "conteudo",
@@ -138,50 +78,7 @@
       "texto": "Com duas, ele escolhe a {{mais barata}}. Com três, a que faz sentido.",
       "exemplo": "Básico × Completo vira pedido de desconto. Básico × Recomendado × Completo vira Recomendado.",
       "gancho": "Quantas opções tinha sua última proposta?",
-      "icones": {
-        "grupos": [
-          {
-            "titulo": "2 opções: Briga de preço",
-            "itens": [
-              {
-                "icone": "carta",
-                "tam": 150,
-                "cor": "cinza",
-                "rot": -6
-              },
-              {
-                "icone": "carta",
-                "tam": 150,
-                "cor": "cinza",
-                "rot": 6
-              }
-            ]
-          },
-          {
-            "titulo": "3 opções: Escolhe o do meio",
-            "itens": [
-              {
-                "icone": "carta",
-                "tam": 150,
-                "cor": "preto",
-                "rot": -8
-              },
-              {
-                "icone": "carta",
-                "tam": 170,
-                "cor": "verde",
-                "sobe": 24
-              },
-              {
-                "icone": "carta",
-                "tam": 150,
-                "cor": "preto",
-                "rot": 8
-              }
-            ]
-          }
-        ]
-      }
+      "ilustracao": "ilustracoes/opcoes.png"
     },
     {
       "tipo": "conteudo",
@@ -190,38 +87,7 @@
       "subtitulo": "Cada nível tem uma função.",
       "exemplo": "“Temos três formatos. A maioria das empresas do seu porte fica no Recomendado.”",
       "gancho": "Faz isso antes da próxima reunião",
-      "icones": {
-        "grupos": [
-          {
-            "itens": [
-              {
-                "icone": "file-text",
-                "tam": 162,
-                "cor": "cinza",
-                "preco": "R$ 5 mil",
-                "rotulo": "Essencial",
-                "nota": "o mínimo"
-              },
-              {
-                "icone": "file-text",
-                "tam": 218,
-                "cor": "verde",
-                "preco": "R$ 9 mil",
-                "rotulo": "Recomendado",
-                "nota": "o que você quer vender"
-              },
-              {
-                "icone": "file-text",
-                "tam": 275,
-                "cor": "preto",
-                "preco": "R$ 15 mil",
-                "rotulo": "Completo",
-                "nota": "a âncora"
-              }
-            ]
-          }
-        ]
-      }
+      "ilustracao": "ilustracoes/propostas.png"
     },
     {
       "tipo": "cta",
