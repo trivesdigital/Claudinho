@@ -1,15 +1,21 @@
 {
   "capa": {
-    "foto": "capa-fundo.png",
+    "foto": "capa/foto.jpg",
+    "pessoa": "capa/pessoa.png",
     "layout": "riscado",
+    "alinhar": "centro",
     "linhas": [
       "Seu plano mais caro não é",
       "Para vender",
       "É isca"
     ],
-    "base": 800,
+    "base": 620,
     "cor_risco": "#E5322D",
-    "escurecer": 0
+    "fade": true,
+    "mascara": 0.15,
+    "fade_forca": 0.7,
+    "escala": 0.76,
+    "acento_abaixo": true
   },
   "marca": {
     "handle": "@caiozanellato",
@@ -34,30 +40,7 @@
       "texto": "Isso tem nome: [[Efeito chamariz]].",
       "exemplo": "Média por R$ 22, grande por R$ 25. A grande “vale mais a pena” — e a média deixa de parecer cara.",
       "gancho": "Agora pensa no seu plano mais caro",
-      "icones": {
-        "grupos": [
-          {
-            "itens": [
-              {
-                "icone": "tag",
-                "tam": 250,
-                "cor": "verde",
-                "preco": "R$ 22",
-                "rotulo": "Média",
-                "nota": "parece barata"
-              },
-              {
-                "icone": "tag",
-                "tam": 312,
-                "cor": "preto",
-                "preco": "R$ 25",
-                "rotulo": "Grande",
-                "nota": "existe para comparar"
-              }
-            ]
-          }
-        ]
-      }
+      "ilustracao": "ilustracoes/pipocas2.png"
     },
     {
       "tipo": "conteudo",
@@ -68,7 +51,7 @@
       "texto": "Quem vê R$ 15 mil acha R$ 9 mil {{razoável}}.",
       "exemplo": "Quase ninguém leva o plano de R$ 15 mil. Mas é ele que fecha o de R$ 9 mil.",
       "gancho": "Mas só funciona se você parar de fazer isso",
-      "ilustracao": "ilustracoes/isca-recorte.png",
+      "ilustracao": "ilustracoes/isca-v2.png",
       "ilustracao_recortada": true
     },
     {

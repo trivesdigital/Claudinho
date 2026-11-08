@@ -99,6 +99,7 @@ window.loadCapa = async function(spec){
         for(let x=0;x<1080;x++){ if(P.desc[x]==null) continue;
           if(below.absTopB[x]!=null) best=Math.min(best, below.absTopB[x]-gap-P.desc[x]);
           if(below.absTop[x]!=null)  best=Math.min(best, below.absTop[x]-gapA-P.desc[x]); }
+        if(spec.acento_abaixo){ const mt=Math.min(...below.absTop.filter(v=>v!=null)); best=Math.min(best, mt-(spec.acento_folga ?? 4)) }
         return best===Infinity ? below.top-gap-P.maxDesc : best };
       base=fitBase(pr);
       // encaixe: se um acento da linha de baixo bate na de cima, desloca a de cima até 90px à direita
