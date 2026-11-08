@@ -420,7 +420,7 @@ function renderSlide(s, i, total){
   if (s.tipo === "manifesto" && s.estilo === "cta"){
     return `<div class="slide paper ${tema}" style="${acc}"><div class="body flow man ctam">
       <div class="spacer"></div>
-      <svg class="plane" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+      ${s.icone?`<svg class="plane" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>`:""}
       <div class="m1">${fmt(s.linha1)}</div><div class="m2">${fmt(s.linha2)}</div>
       <div class="chandle">${fmt(s.linha3||"Segue {handle}")}</div>
       <div class="spacer"></div>

@@ -48,7 +48,7 @@ Objetivo: máxima qualidade com o mínimo de tokens. **Não leia** `index.html`,
 | `cartoes` | título A \| texto A (✗) \| título B \| texto B (✓) |
 | `troca` | você dá \| valor \| você recebe \| valor |
 
-**Estilos especiais do manifesto** (`"estilo"`): `versiculo` (Instrument Serif itálico + aspas grandes + referência em caixa alta; `linha1` texto, `linha2` referência) · `paralelo` (`a1`/`a2` e `b1`/`b2`: palavra gigante em Anton + frase, separados por traço à mão) · `cta` (ícone de enviar, `linha1` pergunta, `linha2` pedido, `linha3` @ em etiqueta).
+**Estilos especiais do manifesto** (`"estilo"`): `versiculo` (Instrument Serif itálico + aspas grandes + referência em caixa alta; `linha1` texto, `linha2` referência) · `paralelo` (`a1`/`a2` e `b1`/`b2`: palavra gigante em Anton + frase, separados por traço à mão) · `cta` (sem ícone por padrão — `"icone": true` liga o aviãozinho; `linha1` pergunta, `linha2` pedido, `linha3` @ em etiqueta).
 
 **Cores do manifesto:** monocromático (branco/preto + cinza) para o texto; **verde só no traço do destaque** (`{{palavra}}` mantém a cor do texto; só o sublinhado à mão é verde `#12965A`, no fundo preto `#3FD18A`). Slides escuros do manifesto usam o fundo verde (`"tema":"escuro"`); `"preto"` existe mas o usuário prefere o verde. Handle: **@caiozanellato**.
 
